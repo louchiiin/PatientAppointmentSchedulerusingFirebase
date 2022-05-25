@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MyClinicPH</string>
+    <string name="tvNoAccountYet">No Account yet? Click Here</string>
+    <string name="btnLogin">Login</string>
+    <string name="etEnterPassword">Enter Password</string>
+    <string name="etEmailAddress">Enter Email Address</string>
+</resources>

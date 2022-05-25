@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_alignParentBottom="true"
+    tools:showIn="@layout/activity_main">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="85dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/custom_border_shadow_top"
+        android:gravity="center_vertical">
+        <TextView
+            android:background="@drawable/custom_border_shadow_right"
+            android:drawableTop="@drawable/custom_home_icon_for_nav"
+            android:fontFamily= "@font/ubuntu_bold"
+            android:id="@+id/btnHome"
+            android:layout_width="match_parent"
+            android:layout_height="81dp"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:text="HOME"
+            android:paddingTop="20dp"/>
+
+        <TextView
+            android:background="@drawable/custom_border_shadow_right"
+            android:drawableTop="@drawable/custom_profile_icon_for_nav"
+            android:fontFamily= "@font/ubuntu_bold"
+            android:id="@+id/btnViewPersonalInfo"
+            android:layout_width="match_parent"
+            android:layout_height="81dp"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:text="PROFILE"
+            android:paddingTop="20dp"/>
+
+        <TextView
+            android:background="@drawable/custom_border_shadow_right"
+            android:drawableTop="@drawable/custom_schedule_icon_for_nav"
+            android:fontFamily= "@font/ubuntu_bold"
+            android:id="@+id/btnSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="81dp"
+            android:layout_weight="1"
+            android:textSize="11sp"
+            android:gravity="center"
+            android:text="SCHEDULE"
+            android:paddingTop="20dp"/>
+
+        <TextView
+            android:background="@drawable/custom_border_shadow_right"
+            android:drawableTop="@drawable/custom_calendar_icon_for_nav"
+            android:fontFamily= "@font/ubuntu_bold"
+            android:id="@+id/btnReservation"
+            android:layout_width="match_parent"
+            android:layout_height="81dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:textSize="10sp"
+            android:gravity="center"
+            android:text="RESERVATION"
+            android:paddingTop="20dp"/>
+        <TextView
+            android:drawableTop="@drawable/custom_logout_icon_for_nav"
+            android:fontFamily= "@font/ubuntu_bold"
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="81dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:textSize="12sp"
+            android:gravity="center"
+            android:text="LOGOUT"
+            android:paddingTop="20dp"/>
+         </LinearLayout>
+
+</RelativeLayout>

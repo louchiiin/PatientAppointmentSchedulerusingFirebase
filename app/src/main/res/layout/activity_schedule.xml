@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ScheduleActivity"
+    android:background="@drawable/background"
+    android:orientation="vertical"
+    android:fontFamily="">
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/custom_border_shadow_bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <FrameLayout
+            android:layout_width="70dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="left">
+
+            <TextView
+                android:id="@+id/tvScheduleBack"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:drawableEnd="@drawable/nav_bar_back_2"
+                android:background="?selectableItemBackground"
+                android:clickable="true"/>
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="325dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:background="@drawable/custom_border_shadow_left">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:fontFamily="@font/ubuntu_bold"
+                android:gravity="center_vertical"
+                android:paddingLeft="50dp"
+                android:text="SCHEDULE A VISIT"
+                android:textAlignment="textStart"
+                android:textAllCaps="true"
+                android:textSize="20sp"
+                tools:ignore="RtlCompat" />
+        </FrameLayout>
+    </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_bold"
+            android:text="Patient's Name"
+            android:textSize="20sp" />
+        <TextView
+            android:id="@+id/tvSchedulePatientsName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_regular"
+            android:text="Logged in user"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_bold"
+            android:text="Choose Category"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"/>
+
+        <Spinner
+            android:id="@+id/spAppointmentCategory"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:fontFamily="@font/ubuntu_regular"
+            android:textSize="18sp"
+            android:padding="10dp"/>
+
+        <TextView
+            android:id="@+id/tvDoctor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_bold"
+            android:text="Choose Attending Physician"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"/>
+
+        <Spinner
+            android:id="@+id/spDoctors"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/ubuntu_regular"
+            android:textSize="18sp"
+            android:padding="10dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/ubuntu_bold"
+            android:text="Schedule of Visit"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+            <Button
+                android:id="@+id/btnSelectAppointmentDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:hint="Select a date"
+                android:textColor="@color/black"
+                style="?android:spinnerStyle"
+                android:fontFamily="@font/ubuntu_regular"
+                android:layout_weight="1"/>
+            <Button
+                android:id="@+id/btnSelectAppointmentTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:hint="Select Time"
+                android:textColor="@color/black"
+                style="?android:spinnerStyle"
+                android:fontFamily="@font/ubuntu_regular"
+                android:layout_weight="1"/>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnSubmitAppointment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:backgroundTint="#056A7C"
+            android:fontFamily="@font/ubuntu_bold"
+            android:text="Submit"
+            android:textSize="24dp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
