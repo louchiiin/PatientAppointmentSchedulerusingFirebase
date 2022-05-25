@@ -79,7 +79,6 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
         //time picker
         timeOfAppointment = findViewById(R.id.btnSelectAppointmentTime);
         selectTime();
-
         //get logged in user and cast into a textview
         getPatientsName();
         getAppointmentCategory();
@@ -234,7 +233,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
 
             //get set date
             LocalDateTime getCurrentDateTime = LocalDateTime.now();
-            DateTimeFormatter format = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss a");
+            DateTimeFormatter format = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
             String currentDate = getCurrentDateTime.format(format);
 
             //get set date/time
@@ -255,7 +254,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                     emptyTimeDialog().show();
                 } else if (appointmentCategory != null && doctorsName!= null) {
                     Reservations reservations = new Reservations(loggedInUid, appointmentCategory,
-                            doctorsName, patientsName, appointmentDate, appointmentTime, currentDate, status);
+                            doctorsName, patientsName, dateAndTime, currentDate, status);
                     databaseReference.push().setValue(reservations);
                     addSuccessDialog().show();
                 } else {
@@ -269,7 +268,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                 } else if (appointmentCategory != null) {
                     String multipleDoctors = "N/A";
                     Reservations reservations = new Reservations(loggedInUid, appointmentCategory, multipleDoctors,
-                            patientsName, appointmentDate, appointmentTime, currentDate, status);
+                            patientsName, dateAndTime, currentDate, status);
                     databaseReference.push().setValue(reservations);
                     addSuccessDialog().show();
                 } else {

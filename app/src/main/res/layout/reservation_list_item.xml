@@ -94,18 +94,11 @@
                         android:text="Scheduled Date"/>
                     <TextView
                         android:fontFamily= "@font/ubuntu_regular"
-                        android:id="@+id/tvReservationScheduleDate"
+                        android:id="@+id/tvReservationScheduleDateTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Reservation Date"
                         android:layout_marginStart="10dp"/>
-                    <TextView
-                        android:fontFamily= "@font/ubuntu_regular"
-                        android:id="@+id/tvReservationScheduleTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Time"
-                        android:layout_marginStart="5dp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"

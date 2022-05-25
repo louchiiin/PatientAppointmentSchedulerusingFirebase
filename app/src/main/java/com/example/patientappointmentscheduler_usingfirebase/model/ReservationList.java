@@ -6,22 +6,20 @@ public class ReservationList {
     String appointmentCategory;
     String patientsName;
     String doctorsName;
-    String appointmentDate;
-    String appointmentTime;
+    String appointmentDateTime;
     String currentDate;
     String status;
 
     public ReservationList() {
     }
 
-    public ReservationList(String reservationID, String loggedInUid, String appointmentCategory, String patientsName, String doctorsName, String appointmentDate, String appointmentTime, String currentDate, String status) {
+    public ReservationList(String reservationID, String loggedInUid, String appointmentCategory, String patientsName, String doctorsName, String appointmentDateTime, String currentDate, String status) {
         this.reservationID = reservationID;
         this.loggedInUid = loggedInUid;
         this.appointmentCategory = appointmentCategory;
         this.patientsName = patientsName;
         this.doctorsName = doctorsName;
-        this.appointmentDate = appointmentDate;
-        this.appointmentTime = appointmentTime;
+        this.appointmentDateTime = appointmentDateTime;
         this.currentDate = currentDate;
         this.status = status;
     }
@@ -66,20 +64,12 @@ public class ReservationList {
         this.doctorsName = doctorsName;
     }
 
-    public String getAppointmentDate() {
-        return appointmentDate;
+    public String getAppointmentDateTime() {
+        return appointmentDateTime;
     }
 
-    public void setAppointmentDate(String appointmentDate) {
-        this.appointmentDate = appointmentDate;
-    }
-
-    public String getAppointmentTime() {
-        return appointmentTime;
-    }
-
-    public void setAppointmentTime(String appointmentTime) {
-        this.appointmentTime = appointmentTime;
+    public void setAppointmentDateTime(String appointmentDateTime) {
+        this.appointmentDateTime = appointmentDateTime;
     }
 
     public String getCurrentDate() {

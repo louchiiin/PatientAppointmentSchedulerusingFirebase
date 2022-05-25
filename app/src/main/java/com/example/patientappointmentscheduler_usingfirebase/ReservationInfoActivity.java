@@ -12,11 +12,10 @@ public class ReservationInfoActivity extends AppCompatActivity {
     public static final String CATEGORY_NAME = "CATEGORY NAME";
     public static final String DOCTORS_NAME = "DOCTORS NAME";
     public static final String PATIENTS_NAME = "PATIENTS NAME";
-    public static final String SCHEDULE_DATE = "SCHEDULE DATE";
-    public static final String SCHEDULE_TIME = "SCHEDULE TIME";
+    public static final String SCHEDULE_DATETIME = "SCHEDULE DATETIME";
     public static final String CREATED_DATE = "CREATED DATE";
 
-    private TextView tvReservationInfoBack, tvGetCategoryName, tvGetDoctorsName, tvGetPatientsName, tvGetScheduleDate, tvGetScheduleTime, tvGetCreatedDate;
+    private TextView tvReservationInfoBack, tvGetCategoryName, tvGetDoctorsName, tvGetPatientsName, tvGetScheduleDateTime, tvGetCreatedDate;
 
     private ProgressDialog dialog;
 
@@ -44,22 +43,19 @@ public class ReservationInfoActivity extends AppCompatActivity {
         tvGetCategoryName = findViewById(R.id.tvGetCategoryName);
         tvGetDoctorsName = findViewById(R.id.tvGetDoctorsName);
         tvGetPatientsName = findViewById(R.id.tvGetPatientsName);
-        tvGetScheduleDate = findViewById(R.id.tvGetScheduleDate);
-        tvGetScheduleTime = findViewById(R.id.tvGetScheduleTime);
+        tvGetScheduleDateTime = findViewById(R.id.tvGetScheduleDateTime);
         tvGetCreatedDate = findViewById(R.id.tvGetCreatedDate);
         //to string
         String getCategoryName = getIntent().getStringExtra(CATEGORY_NAME);
         String getDoctorsName = getIntent().getStringExtra(DOCTORS_NAME);
         String getPatientsName = getIntent().getStringExtra(PATIENTS_NAME);
-        String getScheduleDate = getIntent().getStringExtra(SCHEDULE_DATE);
-        String getScheduleTime = getIntent().getStringExtra(SCHEDULE_TIME);
+        String getScheduleDateTime = getIntent().getStringExtra(SCHEDULE_DATETIME);
         String getCreatedDate = getIntent().getStringExtra(CREATED_DATE);
 
         tvGetCategoryName.setText(getCategoryName);
         tvGetDoctorsName.setText(getDoctorsName);
         tvGetPatientsName.setText(getPatientsName);
-        tvGetScheduleDate.setText(getScheduleDate);
-        tvGetScheduleTime.setText(getScheduleTime);
+        tvGetScheduleDateTime.setText(getScheduleDateTime);
         tvGetCreatedDate.setText(getCreatedDate);
     }
 

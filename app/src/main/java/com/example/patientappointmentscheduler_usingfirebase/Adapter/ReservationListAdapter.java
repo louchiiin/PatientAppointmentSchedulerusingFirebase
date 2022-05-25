@@ -33,7 +33,7 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder  {
-        TextView tvCategoryName, tvDoctorsName, tvPatientsName, tvReservationScheduleDate, tvReservationScheduleTime, tvCreatedDate;
+        TextView tvCategoryName, tvDoctorsName, tvPatientsName, tvReservationScheduleDateTime, tvCreatedDate;
         LinearLayout lvReservationItem;
 
         public ViewHolder(@NonNull View itemView) {
@@ -41,8 +41,7 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
             tvCategoryName = itemView.findViewById(R.id.tvCategoryName);
             tvDoctorsName = itemView.findViewById(R.id.tvDoctorsName);
             tvPatientsName = itemView.findViewById(R.id.tvPatientsName);
-            tvReservationScheduleDate = itemView.findViewById(R.id.tvReservationScheduleDate);
-            tvReservationScheduleTime = itemView.findViewById(R.id.tvReservationScheduleTime);
+            tvReservationScheduleDateTime = itemView.findViewById(R.id.tvReservationScheduleDateTime);
             tvCreatedDate = itemView.findViewById(R.id.tvCreatedDate);
 
             lvReservationItem = itemView.findViewById(R.id.lvReservationItem);
@@ -54,16 +53,14 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
                     String categoryName = tvCategoryName.getText().toString();
                     String doctorsName = tvDoctorsName.getText().toString();
                     String patientsName = tvPatientsName.getText().toString();
-                    String reservationScheduleDate = tvReservationScheduleDate.getText().toString();
-                    String reservationScheduleTime = tvReservationScheduleTime.getText().toString();
+                    String reservationScheduleDateTime = tvReservationScheduleDateTime.getText().toString();
                     String createdDate = tvCreatedDate.getText().toString();
 
                     Intent intent = new Intent(view.getContext(), ReservationInfoActivity.class);
                     intent.putExtra("CATEGORY NAME", categoryName);
                     intent.putExtra("DOCTORS NAME", doctorsName);
                     intent.putExtra("PATIENTS NAME", patientsName);
-                    intent.putExtra("SCHEDULE DATE", reservationScheduleDate);
-                    intent.putExtra("SCHEDULE TIME", reservationScheduleTime);
+                    intent.putExtra("SCHEDULE DATETIME", reservationScheduleDateTime);
                     intent.putExtra("CREATED DATE", createdDate);
                     view.getContext().startActivity(intent);
                 }
@@ -73,8 +70,7 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
             tvCategoryName.setText(reservationList.getAppointmentCategory());
             tvDoctorsName.setText(reservationList.getDoctorsName());
             tvPatientsName.setText(reservationList.getPatientsName());
-            tvReservationScheduleDate.setText(reservationList.getAppointmentDate());
-            tvReservationScheduleTime.setText(reservationList.getAppointmentTime());
+            tvReservationScheduleDateTime.setText(reservationList.getAppointmentDateTime());
             tvCreatedDate.setText(reservationList.getCurrentDate());
         }
     }
@@ -100,8 +96,7 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
                 oldItem.getAppointmentCategory().equals(newItem.getAppointmentCategory()) &&
                 oldItem.getPatientsName().equals(newItem.getPatientsName()) &&
                 oldItem.getDoctorsName().equals(newItem.getDoctorsName()) &&
-                oldItem.getAppointmentDate().equals(newItem.getAppointmentDate()) &&
-                oldItem.getAppointmentTime().equals(newItem.getAppointmentTime()) &&
+                oldItem.getAppointmentDateTime().equals(newItem.getAppointmentDateTime()) &&
                 oldItem.getCurrentDate().equals(newItem.getCurrentDate()) &&
                 oldItem.getStatus().equals(newItem.getStatus());
         }
