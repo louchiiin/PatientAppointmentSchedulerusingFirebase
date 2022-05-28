@@ -16,7 +16,7 @@
             android:background="?selectableItemBackground"
             android:clickable="true"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="220dp"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="0dp"
@@ -30,7 +30,7 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
@@ -38,7 +38,7 @@
                 android:layout_margin="10dp"
                 android:padding="5dp">
                 <TextView
-                    android:fontFamily= "@font/ubuntu_regular"
+                    android:fontFamily= "@font/ubuntu_bold"
                     android:id="@+id/tvCategoryName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
                         android:fontFamily= "@font/ubuntu_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Scheduled Date"/>
+                        android:text="SCHEDULE DATE"/>
                     <TextView
                         android:fontFamily= "@font/ubuntu_regular"
                         android:id="@+id/tvReservationScheduleDateTime"
@@ -109,7 +109,7 @@
                         android:fontFamily= "@font/ubuntu_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Created Date"/>
+                        android:text="CREATED DATE"/>
                     <TextView
                         android:fontFamily= "@font/ubuntu_regular"
                         android:id="@+id/tvCreatedDate"
@@ -117,6 +117,23 @@
                         android:layout_height="wrap_content"
                         android:text="Created Date"
                         android:layout_marginStart="10dp"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+                    <TextView
+                        android:fontFamily= "@font/ubuntu_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="RESERVATION ID: "/>
+                    <TextView
+                        android:fontFamily= "@font/ubuntu_regular"
+                        android:id="@+id/tvReservationID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="reservation id"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

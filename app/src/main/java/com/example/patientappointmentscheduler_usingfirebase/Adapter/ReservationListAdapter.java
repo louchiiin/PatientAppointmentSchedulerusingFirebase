@@ -33,7 +33,7 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder  {
-        TextView tvCategoryName, tvDoctorsName, tvPatientsName, tvReservationScheduleDateTime, tvCreatedDate;
+        TextView tvCategoryName, tvDoctorsName, tvPatientsName, tvReservationScheduleDateTime, tvCreatedDate, tvReservationID;
         LinearLayout lvReservationItem;
 
         public ViewHolder(@NonNull View itemView) {
@@ -43,6 +43,7 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
             tvPatientsName = itemView.findViewById(R.id.tvPatientsName);
             tvReservationScheduleDateTime = itemView.findViewById(R.id.tvReservationScheduleDateTime);
             tvCreatedDate = itemView.findViewById(R.id.tvCreatedDate);
+            tvReservationID = itemView.findViewById(R.id.tvReservationID);
 
             lvReservationItem = itemView.findViewById(R.id.lvReservationItem);
             //on on click each item
@@ -55,6 +56,7 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
                     String patientsName = tvPatientsName.getText().toString();
                     String reservationScheduleDateTime = tvReservationScheduleDateTime.getText().toString();
                     String createdDate = tvCreatedDate.getText().toString();
+                    String reservationID = tvReservationID.getText().toString();
 
                     Intent intent = new Intent(view.getContext(), ReservationInfoActivity.class);
                     intent.putExtra("CATEGORY NAME", categoryName);
@@ -62,6 +64,7 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
                     intent.putExtra("PATIENTS NAME", patientsName);
                     intent.putExtra("SCHEDULE DATETIME", reservationScheduleDateTime);
                     intent.putExtra("CREATED DATE", createdDate);
+                    intent.putExtra("RESERVATION ID", reservationID);
                     view.getContext().startActivity(intent);
                 }
             });
@@ -72,6 +75,7 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
             tvPatientsName.setText(reservationList.getPatientsName());
             tvReservationScheduleDateTime.setText(reservationList.getAppointmentDateTime());
             tvCreatedDate.setText(reservationList.getCurrentDate());
+            tvReservationID.setText(reservationList.getReservationID());
         }
     }
 

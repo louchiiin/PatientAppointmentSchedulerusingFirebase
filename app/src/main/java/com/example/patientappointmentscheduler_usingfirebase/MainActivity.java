@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent goToMain = new Intent(MainActivity.this, MainActivity.class);
                 startActivity(goToMain);
-                /*finish();*/
             }
         });
     }
@@ -93,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent goToUpdateProfile = new Intent(MainActivity.this, PersonalInformationActivity.class);
                 startActivity(goToUpdateProfile);
-                /*finish();*/
             }
         });
     }
@@ -105,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent goToReservation = new Intent(MainActivity.this, PatientReservationActivity.class);
                 startActivity(goToReservation);
-                /*finish();*/
             }
         });
     }
@@ -117,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent goToSchedule = new Intent(MainActivity.this, ScheduleActivity.class);
                 startActivity(goToSchedule);
-                /*finish();*/
             }
         });
     }

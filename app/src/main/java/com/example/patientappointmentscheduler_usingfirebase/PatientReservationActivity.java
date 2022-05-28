@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -64,7 +65,6 @@ public class PatientReservationActivity extends AppCompatActivity {
         String currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference("Reservations");
 
-
         databaseReference.orderByChild("loggedInUid").equalTo(currentFirebaseUser)
                 .addValueEventListener(new ValueEventListener() {
             @Override
@@ -74,10 +74,16 @@ public class PatientReservationActivity extends AppCompatActivity {
                 List<ReservationList> listReservation = new ArrayList<>();
 
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    Log.d("User key", dataSnapshot.getKey());
+                    Log.d("User ref", dataSnapshot.getRef().toString());
+                    Log.d("User val", dataSnapshot.getValue().toString());
+                    //get unique key for each reservation
+                    String uniqueKey = dataSnapshot.getKey();
                     ReservationList reservationList = dataSnapshot.getValue(ReservationList.class);
-                    reservationList.setReservationID(String.valueOf(index));
+                    reservationList.setReservationID(uniqueKey);
+                    //reservationList.setReservationID(String.valueOf(index));
                     listReservation.add(reservationList);
-                    index++;
+                    //index++;
                 }
                 reservationListAdapter.submitList(listReservation);
             }
@@ -111,6 +117,5 @@ public class PatientReservationActivity extends AppCompatActivity {
         super.onBackPressed();
         Intent intent = new Intent(PatientReservationActivity.this, MainActivity.class);
         startActivity(intent);
-        /*finish();*/
     }
 }

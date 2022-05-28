@@ -7,11 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -60,6 +62,8 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
     //time picker
     private Button timeOfAppointment;
     private int hour, minute;
+
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -270,7 +274,19 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                     Reservations reservations = new Reservations(loggedInUid, appointmentCategory, multipleDoctors,
                             patientsName, dateAndTime, currentDate, status);
                     databaseReference.push().setValue(reservations);
-                    addSuccessDialog().show();
+                    //dialog before displaying values
+                    dialog = new ProgressDialog(this);
+                    dialog.setTitle("Loading..");
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.show();
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            dialog.dismiss();
+                            addSuccessDialog().show();
+                        }
+                    }, 1500); //
+
                 } else {
                     Toast.makeText(ScheduleActivity.this, "Error has occured", Toast.LENGTH_SHORT).show();
                 }
@@ -315,6 +331,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                 });
         return builder.create();
     }
+
     private Dialog addSuccessDialog() {
         android.app.AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Reservation added successfully!")
