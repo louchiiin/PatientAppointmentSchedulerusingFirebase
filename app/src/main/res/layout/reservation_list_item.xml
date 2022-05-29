@@ -42,7 +42,7 @@
                     android:id="@+id/tvCategoryName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Category Name"
+                    android:text="@string/blank_value"
                     android:textSize="18sp"
                     android:textStyle="bold"/>
 
@@ -62,7 +62,7 @@
                         android:id="@+id/tvDoctorsName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Doctor Name"
+                        android:text="@string/blank_value"
                         android:layout_marginStart="5dp" />
 
 
@@ -77,7 +77,7 @@
                         android:id="@+id/tvPatientsName"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Patient Full Name"
+                        android:text="@string/blank_value"
                         android:textStyle="bold"
                         android:textSize="16sp"
                         android:textAllCaps="true"/>
@@ -97,7 +97,7 @@
                         android:id="@+id/tvReservationScheduleDateTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Reservation Date"
+                        android:text="@string/blank_value"
                         android:layout_marginStart="10dp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -115,7 +115,7 @@
                         android:id="@+id/tvCreatedDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Created Date"
+                        android:text="@string/blank_value"
                         android:layout_marginStart="10dp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -133,7 +133,7 @@
                         android:id="@+id/tvReservationID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="reservation id"/>
+                        android:text="@string/blank_value"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

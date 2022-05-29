@@ -13,9 +13,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.patientappointmentscheduler_usingfirebase.Adapter.ReservationListAdapter;
+import com.example.patientappointmentscheduler_usingfirebase.fragments.bottom_app_nav_fragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.ReservationList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -54,6 +58,14 @@ public class PatientReservationActivity extends AppCompatActivity {
 
         displayReservationList();
         backToMain();
+        displayBottomNavBar(new bottom_app_nav_fragment());
+    }
+
+    private void displayBottomNavBar(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayoutReservationsBottomAppNavBar, fragment);
+        fragmentTransaction.commit();
     }
 
     private void displayReservationList() {

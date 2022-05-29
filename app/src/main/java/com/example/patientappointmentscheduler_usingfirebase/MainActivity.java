@@ -3,12 +3,13 @@ package com.example.patientappointmentscheduler_usingfirebase;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,8 +17,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.patientappointmentscheduler_usingfirebase.fragments.bottom_app_nav_fragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,7 +28,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView txtLoggedInUser, btnHome, btnView, btnReservation, btnSchedule, btnLogout;
+    private TextView txtLoggedInUser;
     private Button btnWebsite, btnEmail, btnPhone, btnFacebook;
 
     private ProgressDialog dialog;
@@ -49,16 +50,19 @@ public class MainActivity extends AppCompatActivity {
             }
         }, 1500); //
 
+        displayBottomNavBar(new bottom_app_nav_fragment());
 
-        clickHome();
-        clickView();
-        clickReservationsButton();
-        clickScheduleButton();
-        clickLogoutButton();
         clickEmailButton();
         clickWebButton();
         clickPhoneButton();
         clickFacebookButton();
+    }
+
+    private void displayBottomNavBar(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayoutMainBottomAppNavBar, fragment);
+        fragmentTransaction.commit();
     }
 
     private void clickFacebookButton() {
@@ -70,73 +74,6 @@ public class MainActivity extends AppCompatActivity {
                 Intent fbSite = new Intent(Intent.ACTION_VIEW);
                 fbSite.setData(Uri.parse(url));
                 startActivity(fbSite);
-            }
-        });
-    }
-
-    private void clickHome() {
-        btnHome = findViewById(R.id.btnHome);
-        btnHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent goToMain = new Intent(MainActivity.this, MainActivity.class);
-                startActivity(goToMain);
-            }
-        });
-    }
-
-    private void clickView() {
-        btnView = findViewById(R.id.btnViewPersonalInfo);
-        btnView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent goToUpdateProfile = new Intent(MainActivity.this, PersonalInformationActivity.class);
-                startActivity(goToUpdateProfile);
-            }
-        });
-    }
-
-    private void clickReservationsButton() {
-        btnReservation = findViewById(R.id.btnReservation);
-        btnReservation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent goToReservation = new Intent(MainActivity.this, PatientReservationActivity.class);
-                startActivity(goToReservation);
-            }
-        });
-    }
-
-    private void clickScheduleButton() {
-        btnSchedule = findViewById(R.id.btnSchedule);
-        btnSchedule.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent goToSchedule = new Intent(MainActivity.this, ScheduleActivity.class);
-                startActivity(goToSchedule);
-            }
-        });
-    }
-
-    private void clickLogoutButton() {
-        btnLogout = findViewById(R.id.btnLogout);
-        btnLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("Alert")
-                        .setMessage("Are you sure you want to exit?")
-                        .setNegativeButton(android.R.string.no, null)
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface arg0, int arg1) {
-                                FirebaseAuth.getInstance().signOut();
-                                Intent loggedOut = new Intent(MainActivity.this, LoginActivity.class);
-                                startActivity(loggedOut);
-                                setResult(RESULT_OK, new Intent().putExtra("EXIT", true));
-                                finish();
-                            }
-                        }).create().show();
             }
         });
     }

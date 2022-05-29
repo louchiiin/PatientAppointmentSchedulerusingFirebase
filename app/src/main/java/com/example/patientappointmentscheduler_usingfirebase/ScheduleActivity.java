@@ -3,6 +3,9 @@ package com.example.patientappointmentscheduler_usingfirebase;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -25,6 +28,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.patientappointmentscheduler_usingfirebase.fragments.bottom_app_nav_fragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.Reservations;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -89,6 +93,14 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
         getDoctor();
         submitAppointment();
         backToMain();
+        displayBottomNavBar(new bottom_app_nav_fragment());
+    }
+
+    private void displayBottomNavBar(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayoutScheduleBottomAppNavBar, fragment);
+        fragmentTransaction.commit();
     }
 
     private void getPatientsName() {

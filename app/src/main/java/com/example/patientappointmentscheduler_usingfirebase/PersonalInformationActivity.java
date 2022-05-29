@@ -2,6 +2,9 @@ package com.example.patientappointmentscheduler_usingfirebase;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -18,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.patientappointmentscheduler_usingfirebase.fragments.bottom_app_nav_fragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.PatientInfo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -59,11 +63,19 @@ public class PersonalInformationActivity extends AppCompatActivity {
         layoutSave = findViewById(R.id.layoutSave);
         layoutUpdate = findViewById(R.id.layoutUpdate);
 
+        displayBottomNavBar(new bottom_app_nav_fragment());
         displayUserValues();
         backToMain();
         clickUpdateButton();
         clickCancelButton();
         clickSave();
+    }
+
+    private void displayBottomNavBar(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayoutPersonalInfoBottomAppNavBar, fragment);
+        fragmentTransaction.commit();
     }
 
     private void displayUserValues() {

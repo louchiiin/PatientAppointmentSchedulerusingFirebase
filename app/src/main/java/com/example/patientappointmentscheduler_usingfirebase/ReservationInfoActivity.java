@@ -1,6 +1,9 @@
 package com.example.patientappointmentscheduler_usingfirebase;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -16,6 +19,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.patientappointmentscheduler_usingfirebase.fragments.bottom_app_nav_fragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -71,6 +75,14 @@ public class ReservationInfoActivity extends AppCompatActivity {
         addToGoogleCalendar();
         cancelAppointment();
         backButton();
+        displayBottomNavBar(new bottom_app_nav_fragment());
+    }
+
+    private void displayBottomNavBar(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayoutReservationInfoBottomAppNavBar, fragment);
+        fragmentTransaction.commit();
     }
 
     private void getIntentValues() {
@@ -149,15 +161,6 @@ public class ReservationInfoActivity extends AppCompatActivity {
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-
-                /*long startMillis = 0;
-                long endMillis = 0;
-                Calendar beginTime = Calendar.getInstance();
-                beginTime.set(2012, 9, 14, 7, 30);
-                startMillis = beginTime.getTimeInMillis();
-                Calendar endTime = Calendar.getInstance();
-                endTime.set(2012, 9, 14, 8, 45);
-                endMillis = endTime.getTimeInMillis();*/
 
                 Intent intent = new Intent(Intent.ACTION_EDIT);
                 intent.setData(CalendarContract.Events.CONTENT_URI);

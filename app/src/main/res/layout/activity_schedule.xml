@@ -56,54 +56,59 @@
     </FrameLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="100dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout">
+        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintVertical_bias="0.0">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/ubuntu_bold"
             android:text="Patient's Name"
             android:textSize="20sp" />
+
         <TextView
             android:id="@+id/tvSchedulePatientsName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/ubuntu_regular"
-            android:text="Logged in user"
-            android:textSize="20sp"
-            android:layout_marginTop="20dp"/>
+            android:text="@string/blank_value"
+            android:textSize="20sp" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/ubuntu_bold"
             android:text="Choose Category"
-            android:textSize="20sp"
-            android:layout_marginTop="20dp"/>
+            android:textSize="20sp" />
 
         <Spinner
             android:id="@+id/spAppointmentCategory"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:fontFamily="@font/ubuntu_regular"
-            android:textSize="18sp"
-            android:padding="10dp"/>
+            android:padding="10dp"
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/tvDoctor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/ubuntu_bold"
             android:text="Choose Attending Physician"
-            android:textSize="20sp"
-            android:layout_marginTop="20dp"/>
+            android:textSize="20sp" />
 
         <Spinner
             android:id="@+id/spDoctors"
@@ -111,41 +116,44 @@
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/ubuntu_regular"
-            android:textSize="18sp"
-            android:padding="10dp"/>
+            android:padding="10dp"
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
             android:fontFamily="@font/ubuntu_bold"
             android:text="Schedule of Visit"
-            android:textSize="20sp"
-            android:layout_marginTop="20dp"/>
+            android:textSize="20sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
             <Button
                 android:id="@+id/btnSelectAppointmentDate"
+                style="?android:spinnerStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:layout_weight="1"
+                android:fontFamily="@font/ubuntu_regular"
                 android:hint="Select a date"
                 android:textColor="@color/black"
-                style="?android:spinnerStyle"
-                android:fontFamily="@font/ubuntu_regular"
-                android:layout_weight="1"/>
+                android:textSize="18sp" />
+
             <Button
                 android:id="@+id/btnSelectAppointmentTime"
+                style="?android:spinnerStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:layout_weight="1"
+                android:fontFamily="@font/ubuntu_regular"
                 android:hint="Select Time"
                 android:textColor="@color/black"
-                style="?android:spinnerStyle"
-                android:fontFamily="@font/ubuntu_regular"
-                android:layout_weight="1"/>
+                android:textSize="18sp" />
 
         </LinearLayout>
 
@@ -159,4 +167,14 @@
             android:text="Submit"
             android:textSize="24dp" />
     </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayoutScheduleBottomAppNavBar"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+        app:layout_constraintVertical_bias="1.0" />
 </androidx.constraintlayout.widget.ConstraintLayout>

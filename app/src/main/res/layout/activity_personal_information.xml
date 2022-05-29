@@ -159,12 +159,13 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="-100dp"
         android:orientation="vertical"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:layout_marginTop="-100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -172,17 +173,17 @@
 
         <Button
             android:id="@+id/btnChangeEmail"
-            android:fontFamily="@font/ubuntu_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Change Email"/>
+            android:fontFamily="@font/ubuntu_regular"
+            android:text="Change Email" />
 
         <Button
             android:id="@+id/btnChangePassword"
-            android:fontFamily="@font/ubuntu_regular"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="change password"/>
+            android:fontFamily="@font/ubuntu_regular"
+            android:text="change password" />
     </LinearLayout>
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
@@ -190,5 +191,16 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintGuide_percent="0.21" />
+
+    <FrameLayout
+        android:id="@+id/frameLayoutPersonalInfoBottomAppNavBar"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
+        app:layout_constraintVertical_bias="1.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

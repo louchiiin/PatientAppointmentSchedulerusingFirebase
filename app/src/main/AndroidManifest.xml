@@ -4,8 +4,7 @@
     package="com.example.patientappointmentscheduler_usingfirebase">
     <!-- for internet -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- calendar -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- calendar -->
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
 
