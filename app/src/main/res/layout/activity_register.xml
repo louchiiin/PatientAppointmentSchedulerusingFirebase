@@ -8,83 +8,32 @@
     tools:context=".RegisterActivity">
 
     <FrameLayout
-        android:id="@+id/frameLayout"
+        android:id="@+id/frameLayoutRegistration"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="@drawable/custom_border_shadow_bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <FrameLayout
-            android:layout_width="70dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="left">
-            <TextView
-                android:id="@+id/tvRegistrationBack"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?selectableItemBackground"
-                android:clickable="true"
-                android:drawableEnd="@drawable/nav_bar_back_2" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="325dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:background="@drawable/custom_border_shadow_left">
-
-            <TextView
-                android:fontFamily="@font/ubuntu_bold"
-                android:textSize="20sp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:gravity="center_vertical"
-                android:text="Registration Form"
-                android:textAlignment="textStart"
-                android:paddingLeft="50dp"
-                android:textAllCaps="true"
-                tools:ignore="RtlCompat" />
-        </FrameLayout>
-    </FrameLayout>
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.8" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.22" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <androidx.core.widget.NestedScrollView
-        android:layout_width="405dp"
-        android:layout_height="652dp"
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout">
+        app:layout_constraintTop_toBottomOf="@+id/frameLayoutRegistration"
+        app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/frameLayout">
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/etRegisterFirstName"

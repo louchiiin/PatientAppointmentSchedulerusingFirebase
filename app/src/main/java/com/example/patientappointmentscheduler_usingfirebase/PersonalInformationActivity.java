@@ -2,6 +2,7 @@ package com.example.patientappointmentscheduler_usingfirebase;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -11,9 +12,13 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,31 +26,34 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.patientappointmentscheduler_usingfirebase.fragments.bottom_app_nav_fragment;
+import com.example.patientappointmentscheduler_usingfirebase.fragments.bottomAppNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.fragments.topNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.PatientInfo;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Logger;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.HashMap;
 
 public class PersonalInformationActivity extends AppCompatActivity {
     private TextView tvUpdateBack;
 
-    private Button btnUpdate, btnSave, btnCancel;
+    private Button btnUpdate, btnSave, btnCancel, btnChangeEmail;
 
     private EditText etUpdateFirstName, etUpdateLastName,
-    etUpdatePhone;
+            etUpdatePhone;
 
     private LinearLayout layoutSave, layoutUpdate;
 
-    FirebaseDatabase firebaseDatabase;
-    DatabaseReference databaseReference;
+    private AlertDialog.Builder changeEmailDialog;
+    LayoutInflater layoutInflater;
+
     PatientInfo patientInfo;
 
     ProgressDialog dialog;
@@ -62,13 +70,140 @@ public class PersonalInformationActivity extends AppCompatActivity {
         //initialize
         layoutSave = findViewById(R.id.layoutSave);
         layoutUpdate = findViewById(R.id.layoutUpdate);
+        btnChangeEmail = findViewById(R.id.btnChangeEmail);
 
-        displayBottomNavBar(new bottom_app_nav_fragment());
+
+
+        displayTopNavBar(new topNavBarFragment());
+        displayBottomNavBar(new bottomAppNavBarFragment());
         displayUserValues();
-        backToMain();
+        clickChangeEmail();
         clickUpdateButton();
         clickCancelButton();
         clickSave();
+    }
+
+    private void clickChangeEmail() {
+        btnChangeEmail.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent changeEmail = new Intent(PersonalInformationActivity.this, ChangeEmailActivity.class);
+                startActivity(changeEmail);
+
+                /*
+                AlertDialog.Builder alertdialog = new AlertDialog.Builder(PersonalInformationActivity.this);
+                alertdialog.setTitle(R.string.change_email_auth);
+
+                Typeface typeface = ResourcesCompat.getFont(PersonalInformationActivity.this, R.font.ubuntu_regular);
+
+                final EditText authEmail = new EditText(PersonalInformationActivity.this);
+                final EditText authPassword = new EditText(PersonalInformationActivity.this);
+
+                //firebase get email
+                String currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+
+                authEmail.setText(currentEmail);
+                authEmail.setHint("Current Email");
+                authEmail.setTypeface(typeface);
+                authEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                authEmail.setTextSize(16);
+                authEmail.setMaxLines(1);
+                authEmail.setBackgroundResource(R.drawable.custom_input);
+                authEmail.setPadding(30,30,30, 30);
+
+                authPassword.setHint("Current Password");
+                authPassword.setTypeface(typeface);
+                authPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                authPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                authPassword.setTextSize(16);
+                authPassword.setMaxLines(1);
+                authPassword.setBackgroundResource(R.drawable.custom_input);
+                authPassword.setPadding(30,30,30, 30);
+
+                //set up in a linear layout
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams.setMargins(20, 20, 20, 20); //set margin
+
+                LinearLayout lp = new LinearLayout(getApplicationContext());
+                lp.setOrientation(LinearLayout.VERTICAL);
+
+                lp.addView(authEmail, layoutParams);
+                lp.addView(authPassword, layoutParams);
+                alertdialog.setView(lp);
+                alertdialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                        String currentEmail = authEmail.getText().toString().trim();
+                        String currentPassword = authPassword.getText().toString().trim();
+
+                        if (currentEmail.isEmpty()) {
+                            Toast.makeText(PersonalInformationActivity.this, "Email is required", Toast.LENGTH_SHORT).show();
+                            authEmail.setError("Required");
+                            return;
+                        } else if (currentPassword.isEmpty()){
+                            Toast.makeText(PersonalInformationActivity.this, "Password is required", Toast.LENGTH_SHORT).show();
+                            authPassword.setError("Required");
+                            authPassword.requestFocus();
+                            return;
+                        } else if (currentPassword.length() < 6){
+                            Toast.makeText(PersonalInformationActivity.this, "Password is too short:\r6 or more characters is needed", Toast.LENGTH_SHORT).show();
+                            authPassword.setError("Password is too short: 6 or more is needed");
+                            authPassword.requestFocus();
+                            return;
+                        } else if (!HelperUtilities.isValidEmail(currentEmail)) {
+                            Toast.makeText(PersonalInformationActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
+                            authEmail.setError("Please enter a valid email");
+                            authEmail.requestFocus();
+                        } else {
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            AuthCredential credential = EmailAuthProvider.getCredential(currentEmail, currentPassword);
+
+                            user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    Toast.makeText(PersonalInformationActivity.this, "dialog should appear", Toast.LENGTH_SHORT).show();
+
+                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                                    user.updateEmail("fdc.louchintest@gmail.com").addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()) {
+                                                Toast.makeText(PersonalInformationActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                                            } else {
+                                                Toast.makeText(PersonalInformationActivity.this, "Email already exists", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                    });
+                                }
+                            });
+                            dialogInterface.dismiss();
+                        }
+                    }
+                });
+
+                alertdialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                    }
+                });
+
+                AlertDialog alert = alertdialog.create();
+                alert.setCanceledOnTouchOutside(false);
+                alert.show();
+*/
+            }
+        });
+    }
+
+
+    private void displayTopNavBar(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.patientInformationTopNav, fragment);
+        fragmentTransaction.commit();
     }
 
     private void displayBottomNavBar(Fragment fragment) {
@@ -117,7 +252,7 @@ public class PersonalInformationActivity extends AppCompatActivity {
                 String lastName = etUpdateLastName.getText().toString();
                 String phone = etUpdatePhone.getText().toString();
 
-                if (firstName.isEmpty()){
+                if (firstName.isEmpty()) {
                     emptyFirstNameDialog().show();
                     etUpdateFirstName.setError("First Name is required");
                     etUpdateFirstName.requestFocus();
@@ -125,16 +260,16 @@ public class PersonalInformationActivity extends AppCompatActivity {
                     emptyLastNameDialog().show();
                     etUpdateFirstName.setError("First Name is required");
                     etUpdateFirstName.requestFocus();
-                } else if (phone.isEmpty()){
+                } else if (phone.isEmpty()) {
                     emptyPhoneDialog().show();
                     etUpdatePhone.setError("Phone is required");
                     etUpdatePhone.requestFocus();
-                } else if (!HelperUtilities.isValidPhone(phone)){
+                } else if (!HelperUtilities.isValidPhone(phone)) {
                     Toast.makeText(PersonalInformationActivity.this, "Please enter a valid phone number \n" +
                             "ex: 09291234567", Toast.LENGTH_SHORT).show();
                     etUpdatePhone.setError("Please enter a valid phone number \nex: 09291234567");
                     etUpdatePhone.requestFocus();
-                } else{
+                } else {
                     //progress dialog bar
                     dialog = new ProgressDialog(PersonalInformationActivity.this);
                     dialog.setTitle("Loading..");
@@ -249,6 +384,7 @@ public class PersonalInformationActivity extends AppCompatActivity {
             }
         });
     }
+
     private void clickUpdateButton() {
         btnUpdate = findViewById(R.id.btnUpdate);
         btnUpdate.setOnClickListener(new View.OnClickListener() {
@@ -266,24 +402,10 @@ public class PersonalInformationActivity extends AppCompatActivity {
         });
     }
 
-    private void backToMain() {
-        tvUpdateBack = findViewById(R.id.tvUpdateBack);
-        tvUpdateBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {;
-                Intent backToMain = new Intent(PersonalInformationActivity.this, MainActivity.class);
-                startActivity(backToMain);
-                finish();
-            }
-        });
-    }
-
     //onBackPressed
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(PersonalInformationActivity.this, MainActivity.class);
-        startActivity(intent);
         finish();
     }
 }

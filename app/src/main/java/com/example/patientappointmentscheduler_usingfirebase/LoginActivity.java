@@ -55,29 +55,12 @@ public class LoginActivity extends AppCompatActivity {
 
         clickedLoginButton();
         clickLinkToRegister();
-        //only for deletion after app is launched
-        /*DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        Query loginQuery = ref.child("PatientInfo").orderByChild("firstName").equalTo("test");
-
-        loginQuery.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
-                    appleSnapshot.getRef().removeValue();
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "onCancelled", databaseError.toException());
-            }
-        });*/
     }
 
     private void clickLinkToRegister() {
         tvLinkToRegister.setOnClickListener(view -> {
             Intent loggedIn = new Intent(LoginActivity.this, RegisterActivity.class);
             startActivity(loggedIn);
-            finish();
         });
     }
 

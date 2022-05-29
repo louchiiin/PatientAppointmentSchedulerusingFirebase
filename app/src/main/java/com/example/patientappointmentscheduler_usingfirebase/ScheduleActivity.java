@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -28,7 +29,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.patientappointmentscheduler_usingfirebase.fragments.bottom_app_nav_fragment;
+import com.example.patientappointmentscheduler_usingfirebase.fragments.bottomAppNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.fragments.topNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.Reservations;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,14 +40,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -92,8 +90,15 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
         getAppointmentCategory();
         getDoctor();
         submitAppointment();
-        backToMain();
-        displayBottomNavBar(new bottom_app_nav_fragment());
+        displayTopNavBar(new topNavBarFragment());
+        displayBottomNavBar(new bottomAppNavBarFragment());
+    }
+
+    private void displayTopNavBar(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.scheduleTopNav, fragment);
+        fragmentTransaction.commit();
     }
 
     private void displayBottomNavBar(Fragment fragment) {
@@ -108,6 +113,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
         DatabaseReference rootReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference uidReference = rootReference.child("PatientInfo").child(currentFirebaseUser);
         ValueEventListener eventListener = new ValueEventListener() {
+            @SuppressLint("SetTextI18n")
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String firstName = snapshot.child("firstName").getValue(String.class);
@@ -204,18 +210,6 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
             //getSpinner values again
             getDoctor();
         }
-    }
-
-    private void backToMain() {
-        tvScheduleBack = findViewById(R.id.tvScheduleBack);
-        tvScheduleBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent backToMain = new Intent(ScheduleActivity.this, MainActivity.class);
-                startActivity(backToMain);
-                finish();
-            }
-        });
     }
 
     private void submitAppointment() {

@@ -8,52 +8,16 @@
     android:background="@drawable/background"
     android:orientation="vertical"
     android:fontFamily="">
+
     <FrameLayout
-        android:id="@+id/frameLayout"
+        android:id="@+id/scheduleTopNav"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:background="@drawable/custom_border_shadow_bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0">
-
-        <FrameLayout
-            android:layout_width="70dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="left">
-
-            <TextView
-                android:id="@+id/tvScheduleBack"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:drawableEnd="@drawable/nav_bar_back_2"
-                android:background="?selectableItemBackground"
-                android:clickable="true"/>
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="325dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:background="@drawable/custom_border_shadow_left">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="right"
-                android:fontFamily="@font/ubuntu_bold"
-                android:gravity="center_vertical"
-                android:paddingLeft="50dp"
-                android:text="SCHEDULE A VISIT"
-                android:textAlignment="textStart"
-                android:textAllCaps="true"
-                android:textSize="20sp"
-                tools:ignore="RtlCompat" />
-        </FrameLayout>
-    </FrameLayout>
+        app:layout_constraintVertical_bias="0.0" />
 
     <LinearLayout
         android:id="@+id/linearLayout5"
@@ -66,7 +30,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
+        app:layout_constraintTop_toBottomOf="@+id/scheduleTopNav"
         app:layout_constraintVertical_bias="0.0">
 
         <TextView
@@ -171,7 +135,7 @@
     <FrameLayout
         android:id="@+id/frameLayoutScheduleBottomAppNavBar"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
+        android:layout_height="75dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

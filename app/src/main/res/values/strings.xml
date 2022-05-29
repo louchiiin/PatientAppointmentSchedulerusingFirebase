@@ -4,7 +4,26 @@
     <string name="btnLogin">Login</string>
     <string name="etEnterPassword">Enter Password</string>
     <string name="etEmailAddress">Enter Email Address</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="blank_value">-</string>
+    <string name="nav_title_personal_info">Update Profile</string>
+    <string name="nav_title_schedule">Schedule an appointment</string>
+    <string name="change_email">Change Email</string>
+    <string name="change_password">change password</string>
+    <string name="update_phone">Update Phone</string>
+    <string name="update_last_name">Update Last Name</string>
+    <string name="update_first_name">Update First Name</string>
+    <string name="patient_info">Patient\'s Info</string>
+    <string name="update">Update</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="owner">©LouchinCejar</string>
+    <string name="change_email_auth">CHANGE EMAIL: TYPE CORRECT CREDENTIALS TO PROCEED</string>
+    <string name="authentication_email">Authentication Email</string>
+    <string name="authentication_password">Authentication Password</string>
+    <string name="authenticate">Authenticate</string>
+    <string name="updated_email">Updated Email</string>
+    <string name="email_disabled">Email: (disabled)</string>
+    <string name="password_authentication">Please enter password for authentication</string>
+    <string name="please_enter_new_email">Please enter new email:</string>
 </resources>

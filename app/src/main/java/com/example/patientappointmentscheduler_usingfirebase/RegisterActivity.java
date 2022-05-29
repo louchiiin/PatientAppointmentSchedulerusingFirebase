@@ -2,17 +2,21 @@ package com.example.patientappointmentscheduler_usingfirebase;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.patientappointmentscheduler_usingfirebase.fragments.bottomAppNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.fragments.topNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.PatientInfo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -42,9 +46,16 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        displayTopNavBar(new topNavBarFragment());
         backToLoginTxt();
         registerUser();
-        backToLogin();
+    }
+
+    private void displayTopNavBar(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayoutRegistration, fragment);
+        fragmentTransaction.commit();
     }
 
     private void registerUser() {
@@ -174,17 +185,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
-    private void backToLogin() {
-        tvRegistrationBack = findViewById(R.id.tvRegistrationBack);
-        tvRegistrationBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentToLogin = new Intent(RegisterActivity.this, LoginActivity.class);
-                startActivity(intentToLogin);
-                finish();
-            }
-        });
-    }
+
     //onBackPressed
     @Override
     public void onBackPressed() {

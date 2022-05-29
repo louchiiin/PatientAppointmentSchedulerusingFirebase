@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.patientappointmentscheduler_usingfirebase.LoginActivity;
@@ -25,10 +24,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link bottom_app_nav_fragment#newInstance} factory method to
+ * Use the {@link bottomAppNavBarFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class bottom_app_nav_fragment extends Fragment {
+public class bottomAppNavBarFragment extends Fragment {
     private View view;
     private TextView btnHome, btnView, btnReservation, btnSchedule, btnLogout;
     // TODO: Rename parameter arguments, choose names that match
@@ -40,7 +39,7 @@ public class bottom_app_nav_fragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public bottom_app_nav_fragment() {
+    public bottomAppNavBarFragment() {
         // Required empty public constructor
     }
 
@@ -50,11 +49,11 @@ public class bottom_app_nav_fragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment bottom_app_nav_fragment.
+     * @return A new instance of fragment bottomAppNavBarFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static bottom_app_nav_fragment newInstance(String param1, String param2) {
-        bottom_app_nav_fragment fragment = new bottom_app_nav_fragment();
+    public static bottomAppNavBarFragment newInstance(String param1, String param2) {
+        bottomAppNavBarFragment fragment = new bottomAppNavBarFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

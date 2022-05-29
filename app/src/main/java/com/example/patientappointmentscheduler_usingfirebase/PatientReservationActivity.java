@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,14 +17,14 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.patientappointmentscheduler_usingfirebase.Adapter.ReservationListAdapter;
-import com.example.patientappointmentscheduler_usingfirebase.fragments.bottom_app_nav_fragment;
+import com.example.patientappointmentscheduler_usingfirebase.fragments.bottomAppNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.fragments.topNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.ReservationList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -57,8 +55,15 @@ public class PatientReservationActivity extends AppCompatActivity {
         }, 1500); //
 
         displayReservationList();
-        backToMain();
-        displayBottomNavBar(new bottom_app_nav_fragment());
+        displayTopNavBar(new topNavBarFragment());
+        displayBottomNavBar(new bottomAppNavBarFragment());
+    }
+
+    private void displayTopNavBar(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.patientReservationTopNav, fragment);
+        fragmentTransaction.commit();
     }
 
     private void displayBottomNavBar(Fragment fragment) {
@@ -111,23 +116,10 @@ public class PatientReservationActivity extends AppCompatActivity {
         reservationListAdapter.submitList(listReservation);*/
     }
 
-    private void backToMain() {
-        tvReservationBack = findViewById(R.id.tvReservationBack);
-        tvReservationBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                /*Intent backToMain = new Intent(PatientReservationActivity.this, MainActivity.class);
-                startActivity(backToMain);*/
-                finish();
-            }
-        });
-    }
-
     //onBackPressed
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent intent = new Intent(PatientReservationActivity.this, MainActivity.class);
-        startActivity(intent);
+        finish();
     }
 }

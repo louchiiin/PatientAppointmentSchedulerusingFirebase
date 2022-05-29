@@ -19,7 +19,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.patientappointmentscheduler_usingfirebase.fragments.bottom_app_nav_fragment;
+import com.example.patientappointmentscheduler_usingfirebase.fragments.bottomAppNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.fragments.topNavBarFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,7 +31,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class ReservationInfoActivity extends AppCompatActivity {
@@ -74,8 +74,15 @@ public class ReservationInfoActivity extends AppCompatActivity {
 
         addToGoogleCalendar();
         cancelAppointment();
-        backButton();
-        displayBottomNavBar(new bottom_app_nav_fragment());
+        displayTopNavBar(new topNavBarFragment());
+        displayBottomNavBar(new bottomAppNavBarFragment());
+    }
+
+    private void displayTopNavBar(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.patientReservationInfoTopNav, fragment);
+        fragmentTransaction.commit();
     }
 
     private void displayBottomNavBar(Fragment fragment) {
@@ -132,6 +139,7 @@ public class ReservationInfoActivity extends AppCompatActivity {
 
     private Dialog addToGoogleCalendarDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(ReservationInfoActivity.this);
+        builder.setCancelable(false);
         builder.setTitle("Confirmation");
         builder.setMessage("Do you want to add this appointment to Google Calendar?");
 
@@ -194,6 +202,7 @@ public class ReservationInfoActivity extends AppCompatActivity {
 
     private Dialog cancelAppointmentDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(ReservationInfoActivity.this);
+        builder.setCancelable(false);
         builder.setTitle("Confirmation");
         builder.setMessage("Are you sure you want to cancel this appointment?");
 
@@ -226,8 +235,6 @@ public class ReservationInfoActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
-        /*AlertDialog alert = builder.create();
-        alert.show();*/
         return builder.create();
     }
 
@@ -246,16 +253,10 @@ public class ReservationInfoActivity extends AppCompatActivity {
         return builder.create();
     }
 
-
-
-
-    private void backButton() {
-        tvReservationInfoBack = findViewById(R.id.tvReservationInfoBack);
-        tvReservationInfoBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+    //onBackPressed
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }
