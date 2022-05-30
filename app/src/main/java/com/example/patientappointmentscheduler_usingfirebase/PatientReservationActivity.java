@@ -46,13 +46,6 @@ public class PatientReservationActivity extends AppCompatActivity {
         dialog.setTitle("Loading..");
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                dialog.dismiss();
-                displayReservationList();
-            }
-        }, 1500); //
 
         displayReservationList();
         displayTopNavBar(new topNavBarFragment("Reservations"));
@@ -87,7 +80,7 @@ public class PatientReservationActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                int index = 0;
+                //int index = 0;
                 List<ReservationList> listReservation = new ArrayList<>();
 
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
@@ -103,6 +96,8 @@ public class PatientReservationActivity extends AppCompatActivity {
                     //index++;
                 }
                 reservationListAdapter.submitList(listReservation);
+
+                dialog.dismiss();
             }
 
             @Override

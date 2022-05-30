@@ -19,6 +19,9 @@
         android:theme="@style/Theme.PatientAppointmentSchedulerusingFirebase"
         tools:targetApi="31">
         <activity
+            android:name=".NewsDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ChangeEmailActivity"
             android:exported="false" />
         <activity

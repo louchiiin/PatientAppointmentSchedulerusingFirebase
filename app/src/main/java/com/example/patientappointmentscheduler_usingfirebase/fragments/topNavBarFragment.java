@@ -17,11 +17,6 @@ import com.example.patientappointmentscheduler_usingfirebase.ScheduleActivity;
 
 import java.util.Objects;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link topNavBarFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class topNavBarFragment extends Fragment {
     private View view;
     private TextView tvBack, tvTopNavTitle;

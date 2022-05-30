@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -18,7 +20,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.patientappointmentscheduler_usingfirebase.Adapter.CustomAdapter;
 import com.example.patientappointmentscheduler_usingfirebase.fragments.bottomAppNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.model.NewsApiResponse;
+import com.example.patientappointmentscheduler_usingfirebase.model.NewsHeadlines;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,36 +31,77 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements SelectListener{
 
     private TextView txtLoggedInUser;
     private Button btnWebsite, btnEmail, btnPhone, btnFacebook;
+    private ProgressDialog dialog, newsDialog;
 
-    private ProgressDialog dialog;
+    RecyclerView recyclerView;
+    CustomAdapter customAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //progress dialog bar
-        dialog = new ProgressDialog(this);
-        dialog.setTitle("Loading..");
-        dialog.setCanceledOnTouchOutside(false);
-        dialog.show();
-        Handler handler = new Handler();
+        loadProfileDialog();
+        /*Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                dialog.dismiss();
                 profileInfo();
+                dialog.dismiss();
             }
-        }, 1500); //
+        }, 1500); //*/
+        loadNewsDialog();
 
+        profileInfo();
         displayBottomNavBar(new bottomAppNavBarFragment());
-
         clickEmailButton();
         clickWebButton();
         clickPhoneButton();
         clickFacebookButton();
+        //health news
+        RequestManager manager = new RequestManager(MainActivity.this);
+        manager.getNewsHeadLines(listener, "health", null);
+    }
+
+    private void loadProfileDialog() {
+        dialog = new ProgressDialog(this);
+        dialog.setTitle("Loading..");
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
+    }
+
+    private void loadNewsDialog() {
+        newsDialog = new ProgressDialog(this);
+        newsDialog.setTitle("Fetching data...");
+        newsDialog.setCanceledOnTouchOutside(false);
+        newsDialog.show();
+    }
+
+    private final OnFetchDataListener<NewsApiResponse> listener = new OnFetchDataListener<NewsApiResponse>() {
+        @Override
+        public void onFetchData(List<NewsHeadlines> list, String message) {
+            showNews(list);
+            newsDialog.dismiss();
+        }
+
+        @Override
+        public void onError(String message) {
+
+        }
+    };
+
+    private void showNews(List<NewsHeadlines> list) {
+        recyclerView = findViewById(R.id.rvMain);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+
+        customAdapter = new CustomAdapter(this, list, this);
+        recyclerView.setAdapter(customAdapter);
     }
 
     private void displayBottomNavBar(Fragment fragment) {
@@ -91,6 +137,8 @@ public class MainActivity extends AppCompatActivity {
                 txtLoggedInUser = findViewById(R.id.txtLoggedInUser);
 
                 txtLoggedInUser.setText(firstName + " " + lastName);
+                //progress dialog is dismissed after loading above
+                dialog.dismiss();
             }
 
             @Override
@@ -142,6 +190,11 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void OnNewsClicked(NewsHeadlines headlines) {
+        startActivity(new Intent(MainActivity.this, NewsDetailActivity.class)
+        .putExtra("data", headlines));
+    }
 
     //onBackPressed
     @Override
@@ -161,4 +214,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).create().show();
     }
+
+
 }

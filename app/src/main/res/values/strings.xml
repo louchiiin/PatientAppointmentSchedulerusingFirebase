@@ -26,4 +26,7 @@
     <string name="email_disabled">Email: (disabled)</string>
     <string name="password_authentication">Please enter password for authentication</string>
     <string name="please_enter_new_email">Please enter new email:</string>
+
+    <!-- health api ph-->
+    <string name="health_news_api">79ff0812c8a64196bc8915db2042adee</string>
 </resources>

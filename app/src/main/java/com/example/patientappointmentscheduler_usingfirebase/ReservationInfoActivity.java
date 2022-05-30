@@ -64,14 +64,8 @@ public class ReservationInfoActivity extends AppCompatActivity {
         dialog.setTitle("Loading..");
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                dialog.dismiss();
-                getIntentValues();
-            }
-        }, 1500);
 
+        getIntentValues();
         addToGoogleCalendar();
         cancelAppointment();
         displayTopNavBar(new topNavBarFragment("Reservations Information"));
@@ -114,6 +108,8 @@ public class ReservationInfoActivity extends AppCompatActivity {
         tvGetScheduleDateTime.setText(getScheduleDateTime);
         tvGetCreatedDate.setText(getCreatedDate);
         tvGetReservationID.setText(getReservationID);
+
+        dialog.dismiss();
     }
 
     private void addToGoogleCalendar() {
