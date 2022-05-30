@@ -366,8 +366,8 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                 }
 
                 ArrayAdapter<String> docAdapter = new ArrayAdapter<String>(ScheduleActivity.this,
-                        android.R.layout.simple_spinner_item, doctors);
-                docAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        R.layout.color_spinner_layout, doctors);
+                docAdapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
                 spDoctors.setAdapter(docAdapter);
             }
 
@@ -384,15 +384,14 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 final List<String> categories = new ArrayList<String>();
-
                 for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     String categoryName = snapshot.child("categoryName").getValue(String.class);
                     categories.add(categoryName);
                 }
 
                 ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(ScheduleActivity.this,
-                        android.R.layout.simple_spinner_item, categories);
-                categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                        R.layout.color_spinner_layout, categories);
+                categoryAdapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
                 spAppointmentCategory.setAdapter(categoryAdapter);
             }
 

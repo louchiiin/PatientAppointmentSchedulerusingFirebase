@@ -64,10 +64,7 @@
             android:id="@+id/spAppointmentCategory"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:fontFamily="@font/ubuntu_regular"
-            android:padding="10dp"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
+            android:padding="10dp"/>
 
         <TextView
             android:id="@+id/tvDoctor"
@@ -84,10 +81,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
-            android:fontFamily="@font/ubuntu_regular"
-            android:padding="10dp"
-            android:textSize="18sp"
-            android:textColor="@color/black"/>
+            android:padding="10dp"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -112,6 +106,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/ubuntu_regular"
                 android:hint="Select a date"
+                android:textColorHint="#737373"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -123,6 +118,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/ubuntu_regular"
                 android:hint="Select Time"
+                android:textColorHint="#737373"
                 android:textColor="@color/black"
                 android:textSize="18sp"/>
 
