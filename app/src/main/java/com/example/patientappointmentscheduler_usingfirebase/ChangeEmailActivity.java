@@ -49,7 +49,7 @@ public class ChangeEmailActivity extends AppCompatActivity {
 
         clickAuthenticateButton();
         clickChangeEmail();
-        displayTopNavBar(new topNavBarFragment());
+        displayTopNavBar(new topNavBarFragment("Change Email"));
         displayBottomNavBar(new bottomAppNavBarFragment());
     }
 

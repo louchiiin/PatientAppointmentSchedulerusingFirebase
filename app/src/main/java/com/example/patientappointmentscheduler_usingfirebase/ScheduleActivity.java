@@ -90,7 +90,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
         getAppointmentCategory();
         getDoctor();
         submitAppointment();
-        displayTopNavBar(new topNavBarFragment());
+        displayTopNavBar(new topNavBarFragment("Schedule an Appointment"));
         displayBottomNavBar(new bottomAppNavBarFragment());
     }
 

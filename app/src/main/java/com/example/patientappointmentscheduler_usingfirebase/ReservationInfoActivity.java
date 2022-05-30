@@ -74,7 +74,7 @@ public class ReservationInfoActivity extends AppCompatActivity {
 
         addToGoogleCalendar();
         cancelAppointment();
-        displayTopNavBar(new topNavBarFragment());
+        displayTopNavBar(new topNavBarFragment("Reservations Information"));
         displayBottomNavBar(new bottomAppNavBarFragment());
     }
 

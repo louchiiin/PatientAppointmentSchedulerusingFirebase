@@ -55,7 +55,7 @@ public class PatientReservationActivity extends AppCompatActivity {
         }, 1500); //
 
         displayReservationList();
-        displayTopNavBar(new topNavBarFragment());
+        displayTopNavBar(new topNavBarFragment("Reservations"));
         displayBottomNavBar(new bottomAppNavBarFragment());
     }
 

@@ -74,7 +74,7 @@ public class PersonalInformationActivity extends AppCompatActivity {
 
 
 
-        displayTopNavBar(new topNavBarFragment());
+        displayTopNavBar(new topNavBarFragment("Personal Information"));
         displayBottomNavBar(new bottomAppNavBarFragment());
         displayUserValues();
         clickChangeEmail();
@@ -89,111 +89,6 @@ public class PersonalInformationActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent changeEmail = new Intent(PersonalInformationActivity.this, ChangeEmailActivity.class);
                 startActivity(changeEmail);
-
-                /*
-                AlertDialog.Builder alertdialog = new AlertDialog.Builder(PersonalInformationActivity.this);
-                alertdialog.setTitle(R.string.change_email_auth);
-
-                Typeface typeface = ResourcesCompat.getFont(PersonalInformationActivity.this, R.font.ubuntu_regular);
-
-                final EditText authEmail = new EditText(PersonalInformationActivity.this);
-                final EditText authPassword = new EditText(PersonalInformationActivity.this);
-
-                //firebase get email
-                String currentEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
-
-                authEmail.setText(currentEmail);
-                authEmail.setHint("Current Email");
-                authEmail.setTypeface(typeface);
-                authEmail.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-                authEmail.setTextSize(16);
-                authEmail.setMaxLines(1);
-                authEmail.setBackgroundResource(R.drawable.custom_input);
-                authEmail.setPadding(30,30,30, 30);
-
-                authPassword.setHint("Current Password");
-                authPassword.setTypeface(typeface);
-                authPassword.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                authPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                authPassword.setTextSize(16);
-                authPassword.setMaxLines(1);
-                authPassword.setBackgroundResource(R.drawable.custom_input);
-                authPassword.setPadding(30,30,30, 30);
-
-                //set up in a linear layout
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-                layoutParams.setMargins(20, 20, 20, 20); //set margin
-
-                LinearLayout lp = new LinearLayout(getApplicationContext());
-                lp.setOrientation(LinearLayout.VERTICAL);
-
-                lp.addView(authEmail, layoutParams);
-                lp.addView(authPassword, layoutParams);
-                alertdialog.setView(lp);
-                alertdialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                        String currentEmail = authEmail.getText().toString().trim();
-                        String currentPassword = authPassword.getText().toString().trim();
-
-                        if (currentEmail.isEmpty()) {
-                            Toast.makeText(PersonalInformationActivity.this, "Email is required", Toast.LENGTH_SHORT).show();
-                            authEmail.setError("Required");
-                            return;
-                        } else if (currentPassword.isEmpty()){
-                            Toast.makeText(PersonalInformationActivity.this, "Password is required", Toast.LENGTH_SHORT).show();
-                            authPassword.setError("Required");
-                            authPassword.requestFocus();
-                            return;
-                        } else if (currentPassword.length() < 6){
-                            Toast.makeText(PersonalInformationActivity.this, "Password is too short:\r6 or more characters is needed", Toast.LENGTH_SHORT).show();
-                            authPassword.setError("Password is too short: 6 or more is needed");
-                            authPassword.requestFocus();
-                            return;
-                        } else if (!HelperUtilities.isValidEmail(currentEmail)) {
-                            Toast.makeText(PersonalInformationActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
-                            authEmail.setError("Please enter a valid email");
-                            authEmail.requestFocus();
-                        } else {
-                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                            AuthCredential credential = EmailAuthProvider.getCredential(currentEmail, currentPassword);
-
-                            user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    Toast.makeText(PersonalInformationActivity.this, "dialog should appear", Toast.LENGTH_SHORT).show();
-
-                                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                                    user.updateEmail("fdc.louchintest@gmail.com").addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Toast.makeText(PersonalInformationActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                Toast.makeText(PersonalInformationActivity.this, "Email already exists", Toast.LENGTH_SHORT).show();
-                                            }
-                                        }
-                                    });
-                                }
-                            });
-                            dialogInterface.dismiss();
-                        }
-                    }
-                });
-
-                alertdialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-                AlertDialog alert = alertdialog.create();
-                alert.setCanceledOnTouchOutside(false);
-                alert.show();
-*/
             }
         });
     }

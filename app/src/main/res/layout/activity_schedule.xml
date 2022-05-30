@@ -38,7 +38,8 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/ubuntu_bold"
             android:text="Patient's Name"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/tvSchedulePatientsName"
@@ -47,7 +48,8 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/ubuntu_regular"
             android:text="@string/blank_value"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -55,7 +57,8 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/ubuntu_bold"
             android:text="Choose Category"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
 
         <Spinner
             android:id="@+id/spAppointmentCategory"
@@ -63,7 +66,8 @@
             android:layout_height="50dp"
             android:fontFamily="@font/ubuntu_regular"
             android:padding="10dp"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:id="@+id/tvDoctor"
@@ -72,7 +76,8 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/ubuntu_bold"
             android:text="Choose Attending Physician"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
 
         <Spinner
             android:id="@+id/spDoctors"
@@ -81,7 +86,8 @@
             android:layout_marginTop="10dp"
             android:fontFamily="@font/ubuntu_regular"
             android:padding="10dp"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textColor="@color/black"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -89,7 +95,8 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/ubuntu_bold"
             android:text="Schedule of Visit"
-            android:textSize="20sp" />
+            android:textSize="20sp"
+            android:textColor="@color/black"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -117,7 +124,7 @@
                 android:fontFamily="@font/ubuntu_regular"
                 android:hint="Select Time"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="18sp"/>
 
         </LinearLayout>
 
@@ -129,7 +136,8 @@
             android:backgroundTint="#056A7C"
             android:fontFamily="@font/ubuntu_bold"
             android:text="Submit"
-            android:textSize="24dp" />
+            android:textSize="24dp"
+            android:textColor="@color/white"/>
     </LinearLayout>
 
     <FrameLayout

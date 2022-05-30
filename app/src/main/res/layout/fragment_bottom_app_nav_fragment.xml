@@ -27,7 +27,7 @@
             android:text="HOME"
             android:paddingTop="20dp"
             app:drawableTopCompat="@drawable/custom_home_icon_for_nav"
-            />
+            android:textColor="@color/black" />
 
         <TextView
             android:clickable="true"
@@ -42,7 +42,8 @@
             android:gravity="center"
             android:text="PROFILE"
             android:paddingTop="20dp"
-            app:drawableTopCompat="@drawable/custom_profile_icon_for_nav" />
+            app:drawableTopCompat="@drawable/custom_profile_icon_for_nav"
+            android:textColor="@color/black" />
 
         <TextView
             android:clickable="true"
@@ -57,7 +58,8 @@
             android:gravity="center"
             android:text="SCHEDULE"
             android:paddingTop="20dp"
-            app:drawableTopCompat="@drawable/custom_schedule_icon_for_nav" />
+            app:drawableTopCompat="@drawable/custom_schedule_icon_for_nav"
+            android:textColor="@color/black"/>
 
         <TextView
             android:clickable="true"
@@ -73,7 +75,8 @@
             android:gravity="center"
             android:text="RESERVATION"
             android:paddingTop="20dp"
-            app:drawableTopCompat="@drawable/custom_calendar_icon_for_nav" />
+            app:drawableTopCompat="@drawable/custom_calendar_icon_for_nav"
+            android:textColor="@color/black"/>
         <TextView
             android:clickable="true"
             android:focusable="true"
@@ -88,7 +91,8 @@
             android:gravity="center"
             android:text="LOGOUT"
             android:paddingTop="20dp"
-            app:drawableTopCompat="@drawable/custom_logout_icon_for_nav" />
+            app:drawableTopCompat="@drawable/custom_logout_icon_for_nav"
+            android:textColor="@color/black"/>
     </LinearLayout>
 
 </RelativeLayout>

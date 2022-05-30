@@ -43,10 +43,12 @@
                 android:background="@drawable/custom_input"
                 android:fontFamily="@font/ubuntu_regular"
                 android:hint="Enter First Name"
+                android:textColorHint="#737373"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:maxLines="1"
-                android:padding="15dp" />
+                android:padding="15dp"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/etRegisterLastName"
@@ -56,10 +58,12 @@
                 android:background="@drawable/custom_input"
                 android:fontFamily="@font/ubuntu_regular"
                 android:hint="Enter Last Name"
+                android:textColorHint="#737373"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:maxLines="1"
-                android:padding="15dp" />
+                android:padding="15dp"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/etRegisterEmail"
@@ -69,10 +73,12 @@
                 android:background="@drawable/custom_input"
                 android:fontFamily="@font/ubuntu_regular"
                 android:hint="Enter Email"
+                android:textColorHint="#737373"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
-                android:padding="15dp" />
+                android:padding="15dp"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/etRegisterPhone"
@@ -82,10 +88,12 @@
                 android:background="@drawable/custom_input"
                 android:fontFamily="@font/ubuntu_regular"
                 android:hint="Enter Phone number"
+                android:textColorHint="#737373"
                 android:imeOptions="actionNext"
                 android:inputType="number"
                 android:maxLines="1"
-                android:padding="15dp" />
+                android:padding="15dp"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/etRegisterPassword"
@@ -95,10 +103,12 @@
                 android:background="@drawable/custom_input"
                 android:fontFamily="@font/ubuntu_regular"
                 android:hint="Enter Password"
+                android:textColorHint="#737373"
                 android:imeOptions="actionNext"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:padding="15dp" />
+                android:padding="15dp"
+                android:textColor="@color/black"/>
 
             <EditText
                 android:id="@+id/etRegisterConfirmPassword"
@@ -108,10 +118,12 @@
                 android:background="@drawable/custom_input"
                 android:fontFamily="@font/ubuntu_regular"
                 android:hint="Confirm Password"
+                android:textColorHint="#737373"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:maxLines="1"
-                android:padding="15dp" />
+                android:padding="15dp"
+                android:textColor="@color/black"/>
 
             <Button
                 android:id="@+id/btnRegister"
@@ -120,7 +132,8 @@
                 android:layout_marginTop="20dp"
                 android:backgroundTint="#056A7C"
                 android:fontFamily="@font/ubuntu_regular"
-                android:text="Register" />
+                android:text="Register"
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/tvAlreadyHaveAnAccount"
@@ -128,7 +141,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:text="Already have an account? Click here!" />
+                android:text="Already have an account? Click here!"
+                android:textColor="@color/black"/>
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
