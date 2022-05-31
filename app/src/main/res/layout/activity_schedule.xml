@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/ubuntu_bold"
-            android:text="Patient's Name"
+            android:text="@string/patient_s_name"
             android:textSize="20sp"
             android:textColor="@color/black"/>
 
@@ -56,7 +56,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/ubuntu_bold"
-            android:text="Choose Category"
+            android:text="@string/choose_category"
             android:textSize="20sp"
             android:textColor="@color/black"/>
 
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/ubuntu_bold"
-            android:text="Choose Attending Physician"
+            android:text="@string/choose_attending_physician"
             android:textSize="20sp"
             android:textColor="@color/black"/>
 
@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/ubuntu_bold"
-            android:text="Schedule of Visit"
+            android:text="@string/schedule_of_visit"
             android:textSize="20sp"
             android:textColor="@color/black"/>
 
@@ -105,9 +105,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/ubuntu_regular"
-                android:hint="Select a date"
+                android:hint="@string/select_a_date"
                 android:textColorHint="#737373"
-                android:textColor="@color/black"
                 android:textSize="18sp" />
 
             <Button
@@ -117,9 +116,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/ubuntu_regular"
-                android:hint="Select Time"
+                android:hint="@string/select_time"
                 android:textColorHint="#737373"
-                android:textColor="@color/black"
                 android:textSize="18sp"/>
 
         </LinearLayout>

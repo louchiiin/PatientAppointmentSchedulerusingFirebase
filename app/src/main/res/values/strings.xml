@@ -29,4 +29,25 @@
 
     <!-- health api ph-->
     <string name="health_news_api">79ff0812c8a64196bc8915db2042adee</string>
+    <string name="category_name">CATEGORY NAME:</string>
+    <string name="doctors_name">DOCTORS NAME:</string>
+    <string name="patients_name">PATIENTS NAME:</string>
+    <string name="schedule_date">SCHEDULE DATE:</string>
+    <string name="created_date">CREATED DATE:</string>
+    <string name="reservation_id">RESERVATION ID:</string>
+    <string name="schedule_of_visit">Schedule of Visit</string>
+    <string name="choose_attending_physician">Choose Attending Physician</string>
+    <string name="choose_category">Choose Category</string>
+    <string name="patient_s_name">Patient\'s Name</string>
+    <string name="select_a_date">Select a date</string>
+    <string name="select_time">Select Time</string>
+    <string name="title_activity_update_reservation">UpdateReservationActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 </resources>

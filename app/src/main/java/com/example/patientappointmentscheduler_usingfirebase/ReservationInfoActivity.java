@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.patientappointmentscheduler_usingfirebase.fragments.bottomAppNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.fragments.topNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.fragments.updateReservationFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -51,7 +52,6 @@ public class ReservationInfoActivity extends AppCompatActivity {
     public static final String CREATED_DATE = "CREATED DATE";
     public static final String RESERVATION_ID = "RESERVATION ID";
     public static final String ERROR = "ERROR";
-
     private static final String CALENDAR_TITLE = "MyClinicPH Appointment";
     /*private static final String CALENDAR_DESCRIPTION = "Good day! \n" + "getPatientsName + ," + "\n\nPlease be here on the clinic before your scheduled appointment.\n\nAppointment Details:\n" +
             "getCategoryName "+ "\n" + "getDoctorsName" + "\n" + "getPatientsName" + "\n" + "getScheduleDateTime" + "\n\nThank you, \nmyClinicPH Team\"";*/
@@ -59,7 +59,7 @@ public class ReservationInfoActivity extends AppCompatActivity {
 
     private TextView tvGetCategoryName, tvGetDoctorsName, tvGetPatientsName, tvGetScheduleDateTime, tvGetCreatedDate, tvGetReservationID;
 
-    private Button btnCancelReservation, btnAddToGoogleCalendar;
+    private Button mCancelReservationButton, mAddToGoogleCalendarButton, mUpdateReservationButton;
 
     private ProgressDialog dialog;
 
@@ -76,12 +76,32 @@ public class ReservationInfoActivity extends AppCompatActivity {
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
 
+        mAddToGoogleCalendarButton = findViewById(R.id.btnAddToGoogleCalendar);
+        mCancelReservationButton = findViewById(R.id.btnCancelReservation);
+        mUpdateReservationButton = findViewById(R.id.btnUpdateReservation);
+
         getIntentValues();
         addToGoogleCalendar();
         cancelAppointment();
+        updateReservationModal();
         displayTopNavBar(new topNavBarFragment("Reservations Information"));
         displayBottomNavBar(new bottomAppNavBarFragment());
+    }
 
+    private void updateReservationModal() {
+        mUpdateReservationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                displayUpdateReservation(new updateReservationFragment());
+            }
+        });
+    }
+
+    private void displayUpdateReservation(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.frameLayoutUpdateReservation, fragment);
+        fragmentTransaction.commit();
     }
 
     private void displayTopNavBar(Fragment fragment) {
@@ -125,8 +145,7 @@ public class ReservationInfoActivity extends AppCompatActivity {
     }
 
     private void addToGoogleCalendar() {
-        btnAddToGoogleCalendar = findViewById(R.id.btnAddToGoogleCalendar);
-        btnAddToGoogleCalendar.setOnClickListener(new View.OnClickListener() {
+        mAddToGoogleCalendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 addToGoogleCalendarDialog().show();
@@ -136,8 +155,7 @@ public class ReservationInfoActivity extends AppCompatActivity {
     }
 
     private void cancelAppointment() {
-        btnCancelReservation = findViewById(R.id.btnCancelReservation);
-        btnCancelReservation.setOnClickListener(new View.OnClickListener() {
+        mCancelReservationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 cancelAppointmentDialog().show();
