@@ -31,7 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private TextView tvAlreadyHaveAnAccount, tvRegistrationBack;
+    private TextView tvAlreadyHaveAnAccount;
     private EditText etFirstName, etLastName, etEmail, etPhone, etPassword, etConfirmPassword;
     private Button btnRegister;
 

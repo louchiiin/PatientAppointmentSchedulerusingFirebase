@@ -1,5 +1,6 @@
 package com.example.patientappointmentscheduler_usingfirebase;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -10,6 +11,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.CalendarContract;
@@ -29,9 +31,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class ReservationInfoActivity extends AppCompatActivity {
     public static final String CATEGORY_NAME = "CATEGORY NAME";
@@ -43,10 +53,11 @@ public class ReservationInfoActivity extends AppCompatActivity {
     public static final String ERROR = "ERROR";
 
     private static final String CALENDAR_TITLE = "MyClinicPH Appointment";
-    private static final String CALENDAR_DESCRIPTION = "Please be there on the clinic before your scheduled appointment.\n\nThank you, \nmyClinicPH Team";
+    /*private static final String CALENDAR_DESCRIPTION = "Good day! \n" + "getPatientsName + ," + "\n\nPlease be here on the clinic before your scheduled appointment.\n\nAppointment Details:\n" +
+            "getCategoryName "+ "\n" + "getDoctorsName" + "\n" + "getPatientsName" + "\n" + "getScheduleDateTime" + "\n\nThank you, \nmyClinicPH Team\"";*/
     private static final String CALENDAR_LOCATION = "BLDG 1234, CEBU CITY";
 
-    private TextView tvReservationInfoBack, tvGetCategoryName, tvGetDoctorsName, tvGetPatientsName, tvGetScheduleDateTime, tvGetCreatedDate, tvGetReservationID;
+    private TextView tvGetCategoryName, tvGetDoctorsName, tvGetPatientsName, tvGetScheduleDateTime, tvGetCreatedDate, tvGetReservationID;
 
     private Button btnCancelReservation, btnAddToGoogleCalendar;
 
@@ -70,6 +81,7 @@ public class ReservationInfoActivity extends AppCompatActivity {
         cancelAppointment();
         displayTopNavBar(new topNavBarFragment("Reservations Information"));
         displayBottomNavBar(new bottomAppNavBarFragment());
+
     }
 
     private void displayTopNavBar(Fragment fragment) {
@@ -140,31 +152,13 @@ public class ReservationInfoActivity extends AppCompatActivity {
         builder.setMessage("Do you want to add this appointment to Google Calendar?");
 
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             public void onClick(DialogInterface dialog, int which) {
                 String getCurrentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
                 String getCategoryName = getIntent().getStringExtra(CATEGORY_NAME);
                 String getDoctorsName = getIntent().getStringExtra(DOCTORS_NAME);
                 String getPatientsName = getIntent().getStringExtra(PATIENTS_NAME);
                 String getScheduleDateTime = getIntent().getStringExtra(SCHEDULE_DATETIME);
-
-                String startTime = "2022-02-1 09:00:00";
-                String endTime = "2022-02-1 12:00:00";
-
-                // Parsing the date and time
-                SimpleDateFormat mSimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date mStartTime = null;
-                Date mEndTime = null;
-
-                try {
-                    mStartTime = mSimpleDateFormat.parse(startTime);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-                try {
-                    mEndTime = mSimpleDateFormat.parse(endTime);
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
 
                 Intent intent = new Intent(Intent.ACTION_EDIT);
                 intent.setData(CalendarContract.Events.CONTENT_URI);
@@ -174,8 +168,37 @@ public class ReservationInfoActivity extends AppCompatActivity {
                                 + getCategoryName + "\n" + getDoctorsName + "\n" + getPatientsName + "\n" + getScheduleDateTime +"\n\nThank you, \nmyClinicPH Team");
                 intent.putExtra(CalendarContract.Events.EVENT_LOCATION, CALENDAR_LOCATION);
                 intent.putExtra(CalendarContract.Events.ALL_DAY, false);
-                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, mStartTime);
-                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, mEndTime);
+
+                //get getScheduleDateTime String to DateFormat
+                DateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm", Locale.getDefault());
+                //format each values from getScheduleDateTime
+                DateFormat outputMonth = new SimpleDateFormat("MM", Locale.getDefault());
+                DateFormat outputDay = new SimpleDateFormat("dd", Locale.getDefault());
+                DateFormat outputYear = new SimpleDateFormat("yyyy", Locale.getDefault());
+                DateFormat outputHour = new SimpleDateFormat("hh", Locale.getDefault());
+                DateFormat outputMinutes = new SimpleDateFormat("mm", Locale.getDefault());
+
+                Date date = null;
+                try {
+                    date = inputFormat.parse(getScheduleDateTime);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                //cast as String for each values from getScheduleDateTime
+                String getMonth = outputMonth.format(date);
+                String getDay = outputDay.format(date);
+                String getYear = outputYear.format(date);
+                String getHour = outputHour.format(date);
+                String getMinutes = outputMinutes.format(date);
+
+                //convert String to int all values from getScheduleDateTime
+                Calendar startTime = Calendar.getInstance();
+                startTime.set(Integer.parseInt(getYear), Integer.parseInt(getMonth)-1, Integer.parseInt(getDay), Integer.parseInt(getHour), Integer.parseInt(getMinutes));
+                Calendar endTime = Calendar.getInstance();
+                endTime.set(Integer.parseInt(getYear), Integer.parseInt(getMonth)-1, Integer.parseInt(getDay), Integer.parseInt(getHour)+1, Integer.parseInt(getMinutes));
+
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime.getTimeInMillis());
+                intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis());
                 intent.putExtra(Intent.EXTRA_EMAIL, getCurrentUserEmail);
 
                 if(intent.resolveActivity(getPackageManager()) != null){

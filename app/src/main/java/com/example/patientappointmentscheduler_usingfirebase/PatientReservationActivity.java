@@ -35,7 +35,6 @@ public class PatientReservationActivity extends AppCompatActivity {
     ReservationListAdapter reservationListAdapter;
     DatabaseReference databaseReference;
 
-    private TextView tvReservationBack;
     private ProgressDialog dialog;
 
     @Override

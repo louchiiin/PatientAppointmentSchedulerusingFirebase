@@ -50,7 +50,7 @@ import java.util.Locale;
 public class ScheduleActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
 
     private Button btnSubmit;
-    private TextView tvScheduleBack, tvDoctor, tvSchedulePatientsName;
+    private TextView tvDoctor, tvSchedulePatientsName;
     private Spinner spAppointmentCategory, spDoctors;
 
     FirebaseDatabase firebaseDatabase;
@@ -124,7 +124,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.w("ERROR", error.getMessage());
+                Log.e("ERROR", error.getMessage());
             }
         }; uidReference.addListenerForSingleValueEvent(eventListener);
     }
@@ -186,7 +186,6 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
-
         int style = AlertDialog.THEME_HOLO_LIGHT;
 
         datePickerDialog = new DatePickerDialog(this, style, dateSetListener, year, month, day);
@@ -241,12 +240,12 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
             //get value of patient from textview
             String patientsName = tvSchedulePatientsName.getText().toString();
 
-            //get set date
+            //get current date
             LocalDateTime getCurrentDateTime = LocalDateTime.now();
             DateTimeFormatter format = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm");
             String currentDate = getCurrentDateTime.format(format);
 
-            //get set date/time
+            //get set date/time of appointment
             String appointmentDate = dateOfAppointment.getText().toString();
             String appointmentTime = timeOfAppointment.getText().toString();
             String dateAndTime = (appointmentDate + " " + appointmentTime);
@@ -268,7 +267,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                     databaseReference.push().setValue(reservations);
                     addSuccessDialog().show();
                 } else {
-                    Toast.makeText(ScheduleActivity.this, "Error has occured", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ScheduleActivity.this, "Error has occurred", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 if (appointmentCategory.isEmpty()) {
@@ -294,7 +293,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                     }, 1500); //
 
                 } else {
-                    Toast.makeText(ScheduleActivity.this, "Error has occured", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ScheduleActivity.this, "Error has occurred", Toast.LENGTH_SHORT).show();
                 }
             }
         } catch (Exception e){

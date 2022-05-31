@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_container"
     app:cardElevation="10dp"
-    android:layout_margin="10dp"
+    android:layout_margin="5dp"
     android:backgroundTint="#EEFEFE"
     android:clickable="true"
     android:focusable="true"
@@ -25,8 +25,7 @@
             <TextView
                 android:fontFamily="@font/ubuntu_bold"
                 android:id="@+id/tvCategoryTitle"
-                android:textSize="22sp"
-                android:textStyle="bold"
+                android:textSize="16sp"
                 android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -34,8 +33,7 @@
             <TextView
                 android:fontFamily="@font/ubuntu_regular"
                 android:id="@+id/tvSource"
-                android:textSize="18sp"
-                android:textStyle="bold"
+                android:textSize="14sp"
                 android:textColor="@color/purple_700"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -45,7 +43,7 @@
         <ImageView
             android:id="@+id/ivImgHeadline"
             android:src="@drawable/not_available"
-            android:scaleType="centerCrop"
+            android:scaleType="fitXY"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"/>

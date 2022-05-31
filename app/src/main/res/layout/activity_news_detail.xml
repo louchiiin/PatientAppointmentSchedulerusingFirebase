@@ -5,11 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".NewsDetailActivity">
+
     <FrameLayout
         android:id="@+id/healthNewsDetailTopNav"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        app:layout_constraintBottom_toBottomOf="@+id/healthNewsDetailBottomAppNavBar"
+        app:layout_constraintBottom_toTopOf="@+id/healthNewsDetailBottomAppNavBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -17,11 +18,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="550dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@+id/healthNewsDetailBottomAppNavBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,54 +30,80 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="10dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_margin="6dp">
+                    android:layout_margin="6dp"
+                    android:orientation="vertical">
+
                     <TextView
+                        android:fontFamily="@font/ubuntu_bold"
                         android:id="@+id/tvNewsDetailsTitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
-                        android:textSize="26sp"
-                        android:textStyle="bold"/>
+                        android:textSize="22sp"/>
+
                     <ImageView
                         android:id="@+id/ivDetailNewsImg"
-                        android:scaleType="fitXY"
-                        android:layout_margin="6dp"
-                        android:src="@drawable/not_available"
                         android:layout_width="match_parent"
-                        android:layout_height="250dp"/>
+                        android:layout_height="200dp"
+                        android:layout_margin="6dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/not_available" />
+
                     <TextView
+                        android:fontFamily="@font/ubuntu_bold"
                         android:id="@+id/tvNewsAuthor"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="26sp"
-                        android:textStyle="bold"
                         android:layout_marginStart="6dp"
-                        android:layout_marginEnd="6dp"/>
+                        android:layout_marginEnd="6dp"
+                        android:textColor="#056A7C"
+                        android:textSize="20sp"/>
+
                     <TextView
+                        android:fontFamily="@font/ubuntu_regular"
                         android:id="@+id/tvNewsTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/black"
-                        android:textSize="26sp"
-                        android:textStyle="bold"
                         android:layout_marginStart="6dp"
-                        android:layout_marginEnd="6dp"/>
+                        android:layout_marginEnd="6dp"
+                        android:textColor="@color/black"
+                        android:textSize="12sp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:fontFamily="@font/ubuntu_regular"
+                android:id="@+id/tvNewsDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:padding="10dp"/>
+
+            <TextView
+                android:fontFamily="@font/ubuntu_regular"
+                android:id="@+id/tvNewsContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:padding="10dp"/>
         </LinearLayout>
     </ScrollView>
+
     <FrameLayout
         android:id="@+id/healthNewsDetailBottomAppNavBar"
         android:layout_width="match_parent"
@@ -85,5 +111,5 @@
         android:layout_alignParentBottom="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

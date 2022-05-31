@@ -3,22 +3,24 @@ package com.example.patientappointmentscheduler_usingfirebase;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.patientappointmentscheduler_usingfirebase.Adapter.CustomAdapter;
 import com.example.patientappointmentscheduler_usingfirebase.fragments.bottomAppNavBarFragment;
@@ -33,21 +35,20 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements SelectListener{
+public class MainActivity extends AppCompatActivity implements SelectListener, View.OnClickListener{
 
     private TextView txtLoggedInUser;
     private Button btnWebsite, btnEmail, btnPhone, btnFacebook;
-    private ProgressDialog dialog, newsDialog;
-
+    private ProgressDialog dialog, newsDialog, categoryDialog;
+    private Button mBusinessButton, mEntertainmentButton, mGeneralButton, mHealthButton, mScienceButton, mSportsButton, mTechnologyButton;
     RecyclerView recyclerView;
     CustomAdapter customAdapter;
-
+    private SearchView searchView;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //progress dialog bar
-        loadProfileDialog();
         /*Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
@@ -55,6 +56,45 @@ public class MainActivity extends AppCompatActivity implements SelectListener{
                 dialog.dismiss();
             }
         }, 1500); //*/
+        
+        searchView = findViewById(R.id.svSearchNews);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                newsDialog.setTitle("Fetching News articles of " + query);
+                newsDialog.show();
+                RequestManager manager = new RequestManager(MainActivity.this);
+                manager.getNewsHeadLines(listener, "general", query);
+                
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+        
+        mBusinessButton = findViewById(R.id.btnBusiness);
+        mEntertainmentButton = findViewById(R.id.btnEntertainment);
+        mGeneralButton = findViewById(R.id.btnGeneral);
+        mHealthButton = findViewById(R.id.btnHealth);
+        mScienceButton = findViewById(R.id.btnScience);
+        mSportsButton = findViewById(R.id.btnSports);
+        mTechnologyButton = findViewById(R.id.btnTechnology);
+
+        mBusinessButton.setOnClickListener(this);
+        mEntertainmentButton.setOnClickListener(this);
+        mGeneralButton.setOnClickListener(this);
+        mHealthButton.setOnClickListener(this);
+        mScienceButton.setOnClickListener(this);
+        mSportsButton.setOnClickListener(this);
+        mTechnologyButton.setOnClickListener(this);
+
+        //progress dialog bar
+        dialog = new ProgressDialog(this);
+        loadProfileDialog();
+        newsDialog = new ProgressDialog(this);
         loadNewsDialog();
 
         profileInfo();
@@ -63,20 +103,32 @@ public class MainActivity extends AppCompatActivity implements SelectListener{
         clickWebButton();
         clickPhoneButton();
         clickFacebookButton();
-        //health news
+        //health news listener
         RequestManager manager = new RequestManager(MainActivity.this);
         manager.getNewsHeadLines(listener, "health", null);
     }
 
+    @Override
+    public void onClick(View v) {
+        Button button = (Button) v;
+        String category = button.getText().toString();
+
+        newsDialog.setTitle("Fetching news articles of " + category);
+        newsDialog.setCanceledOnTouchOutside(false);
+        newsDialog.show();
+
+        RequestManager manager = new RequestManager(MainActivity.this);
+        manager.getNewsHeadLines(listener, category, null);
+    }
+
     private void loadProfileDialog() {
-        dialog = new ProgressDialog(this);
+        //dialog = new ProgressDialog(this);
         dialog.setTitle("Loading..");
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
     }
 
     private void loadNewsDialog() {
-        newsDialog = new ProgressDialog(this);
         newsDialog.setTitle("Fetching data...");
         newsDialog.setCanceledOnTouchOutside(false);
         newsDialog.show();
@@ -85,15 +137,35 @@ public class MainActivity extends AppCompatActivity implements SelectListener{
     private final OnFetchDataListener<NewsApiResponse> listener = new OnFetchDataListener<NewsApiResponse>() {
         @Override
         public void onFetchData(List<NewsHeadlines> list, String message) {
-            showNews(list);
+            if(list.isEmpty()){
+                //Toast.makeText(MainActivity.this, "No data found, please try again!", Toast.LENGTH_SHORT).show();
+                noDataFoundDialog().show();
+            } else {
+                showNews(list);
+            }
+
+            searchView.clearFocus();
             newsDialog.dismiss();
         }
 
         @Override
         public void onError(String message) {
-
+            Toast.makeText(MainActivity.this, "An error occurred", Toast.LENGTH_SHORT).show();
         }
     };
+
+    private Dialog noDataFoundDialog() {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setMessage("No Data Found, please try again!")
+                .setTitle("Info!")
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //do nothing (closes only the dialog)
+                    }
+                });
+        return builder.create();
+    }
 
     private void showNews(List<NewsHeadlines> list) {
         recyclerView = findViewById(R.id.rvMain);
@@ -102,6 +174,12 @@ public class MainActivity extends AppCompatActivity implements SelectListener{
 
         customAdapter = new CustomAdapter(this, list, this);
         recyclerView.setAdapter(customAdapter);
+    }
+
+    @Override
+    public void OnNewsClicked(NewsHeadlines headlines) {
+        startActivity(new Intent(MainActivity.this, NewsDetailActivity.class)
+                .putExtra("data", headlines));
     }
 
     private void displayBottomNavBar(Fragment fragment) {
@@ -190,12 +268,6 @@ public class MainActivity extends AppCompatActivity implements SelectListener{
         });
     }
 
-    @Override
-    public void OnNewsClicked(NewsHeadlines headlines) {
-        startActivity(new Intent(MainActivity.this, NewsDetailActivity.class)
-        .putExtra("data", headlines));
-    }
-
     //onBackPressed
     @Override
     public void onBackPressed() {
@@ -214,6 +286,4 @@ public class MainActivity extends AppCompatActivity implements SelectListener{
                     }
                 }).create().show();
     }
-
-
 }

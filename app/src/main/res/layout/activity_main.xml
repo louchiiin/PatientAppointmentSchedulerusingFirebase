@@ -134,12 +134,13 @@
     <LinearLayout
         android:id="@+id/linearLayout8"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="440dp"
         android:layout_above="@+id/frameLayoutMainBottomAppNavBar"
         android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@+id/frameLayoutMainBottomAppNavBar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -155,10 +156,119 @@
             android:textColor="@color/black"
             android:textSize="20sp" />
 
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="6dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:id="@+id/btnBusiness"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:backgroundTint="#056A7C"
+                    android:padding="5dp"
+                    android:text="Business"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:id="@+id/btnEntertainment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:backgroundTint="#056A7C"
+                    android:padding="5dp"
+                    android:text="Entertainment"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:id="@+id/btnGeneral"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:backgroundTint="#056A7C"
+                    android:padding="5dp"
+                    android:text="General"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:id="@+id/btnHealth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:backgroundTint="#056A7C"
+                    android:padding="5dp"
+                    android:text="Health"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:id="@+id/btnScience"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:backgroundTint="#056A7C"
+                    android:padding="5dp"
+                    android:text="Science"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:id="@+id/btnSports"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:backgroundTint="#056A7C"
+                    android:padding="5dp"
+                    android:text="Sports"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <Button
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:id="@+id/btnTechnology"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:backgroundTint="#056A7C"
+                    android:padding="5dp"
+                    android:text="Technology"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </HorizontalScrollView>
+        <androidx.cardview.widget.CardView
+            android:layout_margin="2dp"
+            app:cardElevation="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/svSearchNews"
+                app:iconifiedByDefault="false"
+                app:defaultQueryHint="Search News..."
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:actionViewClass="android.support.v7.widget.SearchView"/>
+        </androidx.cardview.widget.CardView>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvMain"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="400dp"
             android:layout_marginTop="10dp" />
     </LinearLayout>
 
@@ -176,8 +286,6 @@
         android:layout_alignParentBottom="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
