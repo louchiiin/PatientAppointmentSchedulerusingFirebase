@@ -106,6 +106,7 @@
                 android:layout_weight="1"
                 android:fontFamily="@font/ubuntu_regular"
                 android:hint="@string/select_a_date"
+                android:textColor="@color/black"
                 android:textColorHint="#737373"
                 android:textSize="18sp" />
 
@@ -118,7 +119,8 @@
                 android:fontFamily="@font/ubuntu_regular"
                 android:hint="@string/select_time"
                 android:textColorHint="#737373"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
 

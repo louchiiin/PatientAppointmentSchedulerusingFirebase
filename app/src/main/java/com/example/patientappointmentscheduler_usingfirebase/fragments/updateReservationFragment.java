@@ -38,11 +38,11 @@ public class updateReservationFragment extends Fragment {
 
         spAppointmentCategory = view.findViewById(R.id.spUpdateCategory);
         mCloseButton = view.findViewById(R.id.btnCloseFragment);
-        Fragment fragment = this;
+        Fragment me=this;
         mCloseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().popBackStackImmediate();
+                getFragmentManager().beginTransaction().remove(updateReservationFragment.this).commit();
             }
         });
         getUpdateAppointmentCategory();
