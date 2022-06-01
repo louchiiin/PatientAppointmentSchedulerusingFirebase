@@ -1,6 +1,8 @@
 package com.example.patientappointmentscheduler_usingfirebase.fragments;
 
 
+import static android.widget.Toast.makeText;
+
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -18,12 +20,14 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 
 import androidx.fragment.app.Fragment;
 
 import com.example.patientappointmentscheduler_usingfirebase.Interfaces.CloseModal;
 import com.example.patientappointmentscheduler_usingfirebase.R;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -39,14 +44,18 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
 
     public static final String CATEGORY_NAME = "CATEGORY NAME";
     public static final String DOCTORS_NAME = "DOCTORS NAME";
-    private String categoryName;
-    private String doctorsName;
+    private static final String APPOINTMENT_DATE = "APPOINTMENT DATE";
+    private static final String APPOINTMENT_TIME = "APPOINTMENT TIME";
+    public static final String RESERVATION_ID = "RESERVATION ID";
+
+    private String categoryName, doctorsName , scheduleDate, scheduleTime, reservationID;
+
     private TextView tvUpdateDoctorsName;
 
     private View view;
     private Spinner spAppointmentCategory, spDoctors;
     private ImageView mCloseButton;
-    private Button mUpdateCancelButton;
+    private Button mUpdateCancelButton, mUpdateReservationButton;
 
     //date picker for visit
     private DatePickerDialog datePickerDialog;
@@ -58,6 +67,9 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
 
     //interface
     private CloseModal closeModal;
+
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
 
     //fragment constructor
     public updateReservationFragment(CloseModal closeModal){
@@ -84,23 +96,73 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
 
         //date picker
         dateOfAppointment = view.findViewById(R.id.btnUpdateAppointmentDate);
-        dateOfAppointment.setText(getTodayDate());
         selectDate();
+        initDatePicker();
         //time picker
         timeOfAppointment = view.findViewById(R.id.btnUpdateAppointmentTime);
         selectTime();
-        initDatePicker();
 
         mCloseButton = view.findViewById(R.id.ivCloseButton);
         mUpdateCancelButton = view.findViewById(R.id.btnUpdateCancel);
+        mUpdateReservationButton = view.findViewById(R.id.btnUpdateSave);
 
         getBundles();
         getUpdateAppointmentCategory();
         getUpdateDoctor();
         closeFragment();
         cancelFragment();
-
+        submitUpdateReservation();
         return view;
+    }
+
+    private void submitUpdateReservation() {
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference().child("Reservations");
+
+        mUpdateReservationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                updateReservation();
+            }
+        });
+    }
+
+    private void updateReservation() {
+
+        String newCategory = spAppointmentCategory.getSelectedItem().toString();
+        String newDoctor = spDoctors.getSelectedItem().toString();
+        String newDate = dateOfAppointment.getText().toString();
+        String newTime = timeOfAppointment.getText().toString();
+        String newDateTime = (newDate + " " + newTime);
+
+        HashMap hashMap = new HashMap();
+        hashMap.put("appointmentCategory", newCategory);
+        hashMap.put("doctorsName", newDoctor);
+        hashMap.put("appointmentDateTime", newDateTime);
+
+        databaseReference.child(reservationID).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
+            @Override
+            public void onSuccess(Object o) {
+                //TODO add dialog bar
+                Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
+                getFragmentManager().beginTransaction().remove(updateReservationFragment.this).commit();
+            }
+        });
+
+    }
+
+    private void getBundles() {
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            categoryName = bundle.getString(CATEGORY_NAME);
+            doctorsName = bundle.getString(DOCTORS_NAME);
+            scheduleDate = bundle.getString(APPOINTMENT_DATE);
+            scheduleTime = bundle.getString(APPOINTMENT_TIME);
+            reservationID = bundle.getString(RESERVATION_ID);
+
+            dateOfAppointment.setText(scheduleDate);
+            timeOfAppointment.setText(scheduleTime);
+        }
     }
 
     private void selectTime() {
@@ -117,8 +179,8 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
                         timeOfAppointment.setText(String.format(Locale.getDefault(), "%02d:%02d",hour, minute));
                     }
                 };
-
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), onTimeSetListener, hour, minute, true);
+                timePickerDialog.setTitle("Select a time");
                 timePickerDialog.show();
             }
         });
@@ -128,19 +190,10 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
         dateOfAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                datePickerDialog.setTitle("Select a date");
                 datePickerDialog.show();
             }
         });
-    }
-
-    private String getTodayDate()
-    {
-        Calendar cal = Calendar.getInstance();
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        month = month + 1;
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        return makeDateString(day, month, year);
     }
 
     private String makeDateString(int day, int month, int year){
@@ -178,15 +231,6 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
             }
         });
     }
-
-    private void getBundles() {
-        Bundle bundle = this.getArguments();
-        if (bundle != null) {
-            categoryName = bundle.getString(CATEGORY_NAME);
-            doctorsName = bundle.getString(DOCTORS_NAME);
-        }
-    }
-
 
     private void closeFragment() {
         mCloseButton.setOnClickListener(new View.OnClickListener() {

@@ -143,6 +143,7 @@ public class PersonalInformationActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //TODO update to hashmap update check ReservationInfoActivity.class
                 String firstName = etUpdateFirstName.getText().toString();
                 String lastName = etUpdateLastName.getText().toString();
                 String phone = etUpdatePhone.getText().toString();

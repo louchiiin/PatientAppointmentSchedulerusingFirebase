@@ -145,6 +145,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                 };
 
                 TimePickerDialog timePickerDialog = new TimePickerDialog(ScheduleActivity.this, onTimeSetListener, hour, minute, true);
+                timePickerDialog.setTitle("Select a time");
                 timePickerDialog.show();
             }
         });
@@ -154,6 +155,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
         dateOfAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                datePickerDialog.setTitle("Select a date");
                 datePickerDialog.show();
             }
         });

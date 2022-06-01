@@ -51,6 +51,8 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
     /*private static final String CALENDAR_DESCRIPTION = "Good day! \n" + "getPatientsName + ," + "\n\nPlease be here on the clinic before your scheduled appointment.\n\nAppointment Details:\n" +
             "getCategoryName "+ "\n" + "getDoctorsName" + "\n" + "getPatientsName" + "\n" + "getScheduleDateTime" + "\n\nThank you, \nmyClinicPH Team\"";*/
     private static final String CALENDAR_LOCATION = "BLDG 1234, CEBU CITY";
+    private static final String APPOINTMENT_DATE = "APPOINTMENT DATE";
+    private static final String APPOINTMENT_TIME = "APPOINTMENT TIME";
 
     private TextView tvGetCategoryName, tvGetDoctorsName, tvGetPatientsName, tvGetScheduleDateTime, tvGetCreatedDate, tvGetReservationID;
 
@@ -107,10 +109,30 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
 
                 String getCategoryName = getIntent().getStringExtra(CATEGORY_NAME);
                 String getDoctorsName = getIntent().getStringExtra(DOCTORS_NAME);
+                String getScheduleDateTime = getIntent().getStringExtra(SCHEDULE_DATETIME);
+                String getReservationID = getIntent().getStringExtra(RESERVATION_ID);
+                //get getScheduleDateTime String to DateFormat
+                DateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm", Locale.getDefault());
+                //format each values from getScheduleDateTime
+                DateFormat outputDate = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
+                DateFormat outputTime = new SimpleDateFormat("hh:mm", Locale.getDefault());
+
+                Date date = null;
+                try {
+                    date = inputFormat.parse(getScheduleDateTime);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                //cast as String for each values from getScheduleDateTime
+                String getDate = outputDate.format(date);
+                String getTime = outputTime.format(date);
 
                 Bundle bundle = new Bundle();
                 bundle.putString(CATEGORY_NAME, getCategoryName);
                 bundle.putString(DOCTORS_NAME, getDoctorsName);
+                bundle.putString(APPOINTMENT_DATE, getDate);
+                bundle.putString(APPOINTMENT_TIME, getTime);
+                bundle.putString(RESERVATION_ID, getReservationID);
                 updateReservationFragment passBundle = new updateReservationFragment(tempActivity);
                 passBundle.setArguments(bundle);
                 displayUpdateReservation(passBundle);

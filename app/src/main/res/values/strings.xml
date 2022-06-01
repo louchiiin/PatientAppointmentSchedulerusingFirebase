@@ -30,7 +30,7 @@
     <!-- health api ph-->
     <string name="health_news_api">79ff0812c8a64196bc8915db2042adee</string>
     <string name="category_name">CATEGORY NAME:</string>
-    <string name="doctors_name">DOCTORS NAME:</string>
+    <string name="doctors_name">PHYSICIANS NAME:</string>
     <string name="patients_name">PATIENTS NAME:</string>
     <string name="schedule_date">SCHEDULE DATE:</string>
     <string name="created_date">CREATED DATE:</string>
