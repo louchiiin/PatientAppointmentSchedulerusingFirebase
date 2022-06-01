@@ -3,8 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:text="text"
-    android:fontFamily="@font/ubuntu_regular"
+    android:fontFamily="@font/ubuntu_bold"
     android:textColor="#056A7C"
-    android:textSize="20sp">
+    android:textSize="18sp">
 
 </CheckedTextView>

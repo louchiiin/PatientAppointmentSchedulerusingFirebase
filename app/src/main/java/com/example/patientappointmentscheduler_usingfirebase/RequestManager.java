@@ -3,6 +3,7 @@ package com.example.patientappointmentscheduler_usingfirebase;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.example.patientappointmentscheduler_usingfirebase.Interfaces.OnFetchDataListener;
 import com.example.patientappointmentscheduler_usingfirebase.model.NewsApiResponse;
 
 import retrofit2.Call;

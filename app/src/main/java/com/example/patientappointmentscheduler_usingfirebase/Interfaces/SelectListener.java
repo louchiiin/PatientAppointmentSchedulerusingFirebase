@@ -1,4 +1,4 @@
-package com.example.patientappointmentscheduler_usingfirebase;
+package com.example.patientappointmentscheduler_usingfirebase.Interfaces;
 
 import com.example.patientappointmentscheduler_usingfirebase.model.NewsHeadlines;
 

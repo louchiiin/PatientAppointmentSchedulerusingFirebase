@@ -169,6 +169,10 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
         return makeDateString(day, month, year);
     }
 
+    private String makeDateString(int day, int month, int year){
+        return month + "-" + day + "-" + year;
+    }
+
     private void initDatePicker()
     {
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener()
@@ -192,9 +196,6 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
         datePickerDialog.getDatePicker().setMinDate(System.currentTimeMillis() - 1000);
     }
 
-    private String makeDateString(int day, int month, int year){
-        return month + "-" + day + "-" + year;
-    }
 
     private void hideDoctorIfLabTest() {
         String getCategory = spAppointmentCategory.getSelectedItem().toString();

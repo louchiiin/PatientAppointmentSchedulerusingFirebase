@@ -13,7 +13,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.CalendarContract;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +20,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.patientappointmentscheduler_usingfirebase.Interfaces.CloseModal;
 import com.example.patientappointmentscheduler_usingfirebase.fragments.bottomAppNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.fragments.topNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.fragments.updateReservationFragment;
@@ -35,16 +35,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class ReservationInfoActivity extends AppCompatActivity {
+public class ReservationInfoActivity extends AppCompatActivity implements CloseModal {
     public static final String CATEGORY_NAME = "CATEGORY NAME";
     public static final String DOCTORS_NAME = "DOCTORS NAME";
     public static final String PATIENTS_NAME = "PATIENTS NAME";
@@ -61,7 +56,7 @@ public class ReservationInfoActivity extends AppCompatActivity {
 
     private Button mCancelReservationButton, mAddToGoogleCalendarButton, mUpdateReservationButton;
 
-    private ProgressDialog dialog;
+    private ProgressDialog dialog, updateDialog;
 
     DatabaseReference databaseReference;
 
@@ -88,11 +83,38 @@ public class ReservationInfoActivity extends AppCompatActivity {
         displayBottomNavBar(new bottomAppNavBarFragment());
     }
 
+    @Override
+    public void close() {
+        mAddToGoogleCalendarButton.setEnabled(true);
+        mCancelReservationButton.setEnabled(true);
+        mUpdateReservationButton.setEnabled(true);
+    }
+
     private void updateReservationModal() {
+        CloseModal tempActivity = this;
         mUpdateReservationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                displayUpdateReservation(new updateReservationFragment());
+                updateDialog = new ProgressDialog(ReservationInfoActivity.this);
+                updateDialog.setTitle("Loading...");
+                updateDialog.show();
+                updateDialog.setCanceledOnTouchOutside(false);
+                updateDialog.setCancelable(false);
+
+                mAddToGoogleCalendarButton.setEnabled(false);
+                mCancelReservationButton.setEnabled(false);
+                mUpdateReservationButton.setEnabled(false);
+
+                String getCategoryName = getIntent().getStringExtra(CATEGORY_NAME);
+                String getDoctorsName = getIntent().getStringExtra(DOCTORS_NAME);
+
+                Bundle bundle = new Bundle();
+                bundle.putString(CATEGORY_NAME, getCategoryName);
+                bundle.putString(DOCTORS_NAME, getDoctorsName);
+                updateReservationFragment passBundle = new updateReservationFragment(tempActivity);
+                passBundle.setArguments(bundle);
+                displayUpdateReservation(passBundle);
+                updateDialog.dismiss();
             }
         });
     }
@@ -290,10 +312,18 @@ public class ReservationInfoActivity extends AppCompatActivity {
         return builder.create();
     }
 
-    //onBackPressed
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        finish();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        Fragment fragment = fragmentManager.findFragmentById(R.id.frameLayoutUpdateReservation);
+        if(fragment!=null){
+            fragmentTransaction.remove(fragment);
+            fragmentTransaction.commit();
+        }else{
+            super.onBackPressed();
+            finish();
+        }
     }
+
 }

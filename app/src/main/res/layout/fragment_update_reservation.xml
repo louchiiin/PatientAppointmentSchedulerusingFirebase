@@ -1,67 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.updateReservationFragment">
 
+
     <View
+        android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black_translucent"/>
+        android:background="@color/black_translucent" />
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#E7E7EC"
+        android:backgroundTint="@color/white"
+        android:layout_marginTop="120dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
         app:cardCornerRadius="10dp"
-        app:cardElevation="20dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp">
+        app:cardElevation="20dp">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="15dp">
-                <TextView
-                    android:fontFamily="@font/ubuntu_bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:text="@string/category_name"/>
-                <Spinner
-                    android:id="@+id/spUpdateCategory"
-                    android:fontFamily="@font/ubuntu_bold"
-                    android:padding="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"/>
-                <TextView
-                    android:fontFamily="@font/ubuntu_bold"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textSize="15sp"
-                    android:text="@string/doctors_name"/>
-                <Spinner
-                    android:id="@+id/spUpdateDoctorsName"
-                    android:fontFamily="@font/ubuntu_bold"
-                    android:padding="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"/>
+            android:paddingTop="10dp"
+            android:paddingEnd="15dp"
+            android:paddingStart="15dp"
+            android:paddingBottom="40dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ubuntu_bold"
+                android:text="@string/update_reservation"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="22sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ubuntu_bold"
+                android:text="@string/category_name"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:layout_marginTop="20dp"/>
+
+            <Spinner
+                android:id="@+id/spUpdateCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ubuntu_bold"
+                android:padding="10dp"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/tvUpdateDoctorsName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ubuntu_bold"
+                android:text="@string/doctors_name"
+                android:textSize="18sp"
+                android:textColor="@color/black" />
+
+            <Spinner
+                android:id="@+id/spUpdateDoctorsName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/ubuntu_bold"
+                android:padding="10dp"
+                android:textColor="@color/black"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <TextView
-                    android:fontFamily="@font/ubuntu_bold"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:textSize="15sp"
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:text="@string/schedule_of_visit"
                     android:textAllCaps="true"
-                    android:text="@string/schedule_of_visit"/>
+                    android:textSize="18sp"
+                    android:textColor="@color/black"/>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -76,7 +104,8 @@
                     android:fontFamily="@font/ubuntu_regular"
                     android:hint="@string/select_a_date"
                     android:textColorHint="#737373"
-                    android:textSize="18sp" />
+                    android:textSize="16sp"
+                    android:textColor="@color/black" />
 
                 <Button
                     android:id="@+id/btnUpdateAppointmentTime"
@@ -86,18 +115,48 @@
                     android:layout_weight="1"
                     android:fontFamily="@font/ubuntu_regular"
                     android:hint="@string/select_time"
-                    android:textColorHint="#737373"
                     android:textColor="@color/black"
-                    android:textSize="18sp"/>
-
+                    android:textColorHint="#737373"
+                    android:textSize="16sp" />
             </LinearLayout>
-
-            <Button
-                android:id="@+id/btnCloseFragment"
-                android:layout_width="match_parent"
+            <LinearLayout
                 android:layout_height="wrap_content"
-                android:text="Close"/>
+                android:layout_width="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp">
+                <Button
+                    android:id="@+id/btnUpdateCancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/cancel"
+                    android:layout_margin="5dp"
+                    android:backgroundTint="#056A7C"/>
+                <Button
+                    android:id="@+id/btnUpdateSave"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/save"
+                    android:layout_margin="5dp"
+                    android:backgroundTint="#056A7C"/>
+            </LinearLayout>
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
-</FrameLayout>
+    <ImageView
+        android:id="@+id/ivCloseButton"
+        android:layout_width="58dp"
+        android:layout_height="55dp"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="right"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="5dp"
+        android:background="?selectableItemBackground"
+        android:clickable="true"
+        android:elevation="22dp"
+        android:focusable="true"
+        android:src="@drawable/close_button" />
+
+</RelativeLayout>

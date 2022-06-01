@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.patientappointmentscheduler_usingfirebase.R;
-import com.example.patientappointmentscheduler_usingfirebase.SelectListener;
+import com.example.patientappointmentscheduler_usingfirebase.Interfaces.SelectListener;
 import com.example.patientappointmentscheduler_usingfirebase.model.NewsHeadlines;
 import com.squareup.picasso.Picasso;
 

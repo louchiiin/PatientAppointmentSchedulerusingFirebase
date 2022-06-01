@@ -23,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.patientappointmentscheduler_usingfirebase.Adapter.CustomAdapter;
+import com.example.patientappointmentscheduler_usingfirebase.Interfaces.OnFetchDataListener;
+import com.example.patientappointmentscheduler_usingfirebase.Interfaces.SelectListener;
 import com.example.patientappointmentscheduler_usingfirebase.fragments.bottomAppNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.NewsApiResponse;
 import com.example.patientappointmentscheduler_usingfirebase.model.NewsHeadlines;
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
 
     private TextView txtLoggedInUser;
     private Button btnWebsite, btnEmail, btnPhone, btnFacebook;
-    private ProgressDialog dialog, newsDialog, categoryDialog;
+    private ProgressDialog dialog, newsDialog;
     private Button mBusinessButton, mEntertainmentButton, mGeneralButton, mHealthButton, mScienceButton, mSportsButton, mTechnologyButton;
     RecyclerView recyclerView;
     CustomAdapter customAdapter;
@@ -49,32 +51,9 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        /*Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            public void run() {
-                profileInfo();
-                dialog.dismiss();
-            }
-        }, 1500); //*/
         
         searchView = findViewById(R.id.svSearchNews);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                newsDialog.setTitle("Fetching News articles of " + query);
-                newsDialog.show();
-                RequestManager manager = new RequestManager(MainActivity.this);
-                manager.getNewsHeadLines(listener, "general", query);
-                
-                return true;
-            }
 
-            @Override
-            public boolean onQueryTextChange(String s) {
-                return false;
-            }
-        });
-        
         mBusinessButton = findViewById(R.id.btnBusiness);
         mEntertainmentButton = findViewById(R.id.btnEntertainment);
         mGeneralButton = findViewById(R.id.btnGeneral);
@@ -97,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         newsDialog = new ProgressDialog(this);
         loadNewsDialog();
 
+        searchNews();
         profileInfo();
         displayBottomNavBar(new bottomAppNavBarFragment());
         clickEmailButton();
@@ -108,6 +88,26 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         manager.getNewsHeadLines(listener, "health", null);
     }
 
+    private void searchNews() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                newsDialog.setTitle("Fetching News articles of " + query);
+                newsDialog.setCanceledOnTouchOutside(false);
+                newsDialog.setCancelable(false);
+                newsDialog.show();
+                RequestManager manager = new RequestManager(MainActivity.this);
+                manager.getNewsHeadLines(listener, "general", query);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+    }
+
     @Override
     public void onClick(View v) {
         Button button = (Button) v;
@@ -115,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
 
         newsDialog.setTitle("Fetching news articles of " + category);
         newsDialog.setCanceledOnTouchOutside(false);
+        newsDialog.setCancelable(false);
         newsDialog.show();
 
         RequestManager manager = new RequestManager(MainActivity.this);
@@ -125,12 +126,14 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         //dialog = new ProgressDialog(this);
         dialog.setTitle("Loading..");
         dialog.setCanceledOnTouchOutside(false);
+        dialog.setCancelable(false);
         dialog.show();
     }
 
     private void loadNewsDialog() {
         newsDialog.setTitle("Fetching data...");
         newsDialog.setCanceledOnTouchOutside(false);
+        newsDialog.setCancelable(false);
         newsDialog.show();
     }
 
@@ -158,7 +161,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         builder.setMessage("No Data Found, please try again!")
                 .setTitle("Info!")
-                .setCancelable(false)
+                .setCancelable(true)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //do nothing (closes only the dialog)

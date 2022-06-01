@@ -75,7 +75,7 @@ public class bottomAppNavBarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_bottom_app_nav_fragment, container, false);
+        view = inflater.inflate(R.layout.fragment_bottom_app_nav, container, false);
 
         clickHome();
         clickView();
