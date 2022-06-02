@@ -140,6 +140,11 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                     {
                         hour = selectedHour;
                         minute = selectedMinute;
+                        /*if (hour > 12){
+                            timeOfAppointment.setText(String.format(Locale.getDefault(), "%02d:%02d PM",hour-12, minute));
+                        } else {
+                            timeOfAppointment.setText(String.format(Locale.getDefault(), "%02d:%02d AM",hour, minute));
+                        }*/
                         timeOfAppointment.setText(String.format(Locale.getDefault(), "%02d:%02d",hour, minute));
                     }
                 };
@@ -172,7 +177,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
     }
 
     private String makeDateString(int day, int month, int year){
-        return month + "-" + day + "-" + year;
+        return (String.format(Locale.getDefault(),"%02d-%02d-%02d",month, day, year));
     }
 
     private void initDatePicker()

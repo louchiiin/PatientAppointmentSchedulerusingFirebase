@@ -6,9 +6,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
@@ -40,6 +45,7 @@ import java.util.Date;
 import java.util.Locale;
 
 public class ReservationInfoActivity extends AppCompatActivity implements CloseModal {
+
     public static final String CATEGORY_NAME = "CATEGORY NAME";
     public static final String DOCTORS_NAME = "DOCTORS NAME";
     public static final String PATIENTS_NAME = "PATIENTS NAME";
@@ -54,13 +60,18 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
     private static final String APPOINTMENT_DATE = "APPOINTMENT DATE";
     private static final String APPOINTMENT_TIME = "APPOINTMENT TIME";
 
-    private TextView tvGetCategoryName, tvGetDoctorsName, tvGetPatientsName, tvGetScheduleDateTime, tvGetCreatedDate, tvGetReservationID;
+    private TextView tvGetCategoryName, tvGetDoctorsName, tvGetPatientsName, tvGetScheduleDateTime, tvGetCreatedDate, tvGetReservationID, mPushNotificationButton;
 
     private Button mCancelReservationButton, mAddToGoogleCalendarButton, mUpdateReservationButton;
 
     private ProgressDialog dialog, updateDialog;
 
-    DatabaseReference databaseReference;
+    private DatabaseReference databaseReference;
+
+    //for notification
+    private Calendar calendar;
+    private AlarmManager alarmManager;
+    private PendingIntent pendingIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,13 +87,115 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
         mAddToGoogleCalendarButton = findViewById(R.id.btnAddToGoogleCalendar);
         mCancelReservationButton = findViewById(R.id.btnCancelReservation);
         mUpdateReservationButton = findViewById(R.id.btnUpdateReservation);
+        mPushNotificationButton = findViewById(R.id.tvPushNotification);
 
         getIntentValues();
         addToGoogleCalendar();
         cancelAppointment();
         updateReservationModal();
-        displayTopNavBar(new topNavBarFragment("Reservations Information"));
+        addPushNotification();
+        displayTopNavBar(new topNavBarFragment("Appointment Information"));
         displayBottomNavBar(new bottomAppNavBarFragment());
+    }
+
+    private void addPushNotification() {
+        mPushNotificationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addPushNotificationDialog().show();
+            }
+        });
+    }
+
+    private Dialog addPushNotificationDialog() {
+
+        String getScheduleDateTime = getIntent().getStringExtra(SCHEDULE_DATETIME);
+
+        //get getScheduleDateTime String to DateFormat
+        DateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm", Locale.getDefault());
+        //format each values from getScheduleDateTime
+        DateFormat outputMonth = new SimpleDateFormat("MM", Locale.getDefault());
+        DateFormat outputDay = new SimpleDateFormat("dd", Locale.getDefault());
+        DateFormat outputYear = new SimpleDateFormat("yyyy", Locale.getDefault());
+        DateFormat outputHour = new SimpleDateFormat("HH", Locale.getDefault());
+        DateFormat outputMinutes = new SimpleDateFormat("mm", Locale.getDefault());
+
+        Date date = null;
+        try {
+            date = inputFormat.parse(getScheduleDateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //cast as String for each values from getScheduleDateTime
+        String getMonth = outputMonth.format(date);
+        String getDay = outputDay.format(date);
+        String getYear = outputYear.format(date);
+        String getHour = outputHour.format(date);
+        String getMinutes = outputMinutes.format(date);
+
+        //get Calendar instance
+        calendar = Calendar.getInstance();
+        /*calendar.set(Calendar.YEAR, Integer.parseInt(getYear));
+        calendar.set(Calendar.MONTH, Integer.parseInt(getMonth));
+        calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(getDay));
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(getHour));
+        calendar.set(Calendar.MINUTE, Integer.parseInt(getMinutes));
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);*/
+        /*calendar.set(Calendar.HOUR_OF_DAY, 17);
+        calendar.set(Calendar.MINUTE, 40);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);*/
+
+        patientReservationNotificationChannel();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ReservationInfoActivity.this);
+        builder.setCancelable(false);
+        builder.setTitle("Notification");
+        builder.setMessage("Set push notification for this appointment?");
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+
+                Intent intent = new Intent (ReservationInfoActivity.this, AlarmReceiver.class);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                    pendingIntent = PendingIntent.getBroadcast
+                            (ReservationInfoActivity.this, 0, intent, PendingIntent.FLAG_MUTABLE);
+                }
+                else
+                {
+                    pendingIntent = PendingIntent.getBroadcast
+                            (ReservationInfoActivity.this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                }
+
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                Toast.makeText(ReservationInfoActivity.this, "Notification set "+calendar, Toast.LENGTH_SHORT).show();
+                Log.v("CHECK", String.valueOf(calendar));
+
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        return builder.create();
+    }
+
+    private void patientReservationNotificationChannel() {
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S){
+            CharSequence name = "Louchin Channel";
+            String description = "Channel For Alarm Manager";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("notificationID", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
     }
 
     @Override
@@ -112,10 +225,10 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
                 String getScheduleDateTime = getIntent().getStringExtra(SCHEDULE_DATETIME);
                 String getReservationID = getIntent().getStringExtra(RESERVATION_ID);
                 //get getScheduleDateTime String to DateFormat
-                DateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm", Locale.getDefault());
+                DateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm", Locale.getDefault());
                 //format each values from getScheduleDateTime
                 DateFormat outputDate = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
-                DateFormat outputTime = new SimpleDateFormat("hh:mm", Locale.getDefault());
+                DateFormat outputTime = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
                 Date date = null;
                 try {
@@ -232,12 +345,12 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
                 intent.putExtra(CalendarContract.Events.ALL_DAY, false);
 
                 //get getScheduleDateTime String to DateFormat
-                DateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm", Locale.getDefault());
+                DateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm", Locale.getDefault());
                 //format each values from getScheduleDateTime
                 DateFormat outputMonth = new SimpleDateFormat("MM", Locale.getDefault());
                 DateFormat outputDay = new SimpleDateFormat("dd", Locale.getDefault());
                 DateFormat outputYear = new SimpleDateFormat("yyyy", Locale.getDefault());
-                DateFormat outputHour = new SimpleDateFormat("hh", Locale.getDefault());
+                DateFormat outputHour = new SimpleDateFormat("HH", Locale.getDefault());
                 DateFormat outputMinutes = new SimpleDateFormat("mm", Locale.getDefault());
 
                 Date date = null;

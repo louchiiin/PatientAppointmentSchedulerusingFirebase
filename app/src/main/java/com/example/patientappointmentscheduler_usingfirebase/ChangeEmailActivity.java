@@ -103,10 +103,14 @@ public class ChangeEmailActivity extends AppCompatActivity {
                     user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            Toast.makeText(ChangeEmailActivity.this, "User authenticated", Toast.LENGTH_SHORT).show();
-                            changeEmailLayout.setVisibility(View.VISIBLE);
-                            mAuthPassword.setEnabled(false);
-                            mAuthenticateBtn.setEnabled(false);
+                            if (task.isSuccessful()){
+                                Toast.makeText(ChangeEmailActivity.this, "User authenticated", Toast.LENGTH_SHORT).show();
+                                changeEmailLayout.setVisibility(View.VISIBLE);
+                                mAuthPassword.setEnabled(false);
+                                mAuthenticateBtn.setEnabled(false);
+                            }else{
+                                Toast.makeText(ChangeEmailActivity.this, "Password is incorrect", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     });
                 }

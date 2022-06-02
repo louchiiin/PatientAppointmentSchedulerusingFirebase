@@ -22,7 +22,8 @@ public class topNavBarFragment extends Fragment {
     private TextView tvBack, tvTopNavTitle;
     private String navBarTitle;
 
-
+    public topNavBarFragment(){
+    }
     public topNavBarFragment(String navTitle) {
         // Required empty public constructor
         this.navBarTitle = navTitle;

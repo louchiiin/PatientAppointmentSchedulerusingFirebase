@@ -16,27 +16,38 @@
             android:background="?selectableItemBackground"
             android:clickable="true"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="70dp"
-                android:background="@drawable/custom_account_icon"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="0.25"/>
 
             <LinearLayout
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 android:orientation="vertical"
                 android:layout_margin="10dp"
                 android:padding="5dp">
+                <LinearLayout
+                    android:layout_marginTop="5dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:fontFamily= "@font/ubuntu_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="RESERVATION ID: "
+                        android:textColor="@color/black"/>
+                    <TextView
+                        android:fontFamily= "@font/ubuntu_regular"
+                        android:id="@+id/tvReservationID"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/blank_value"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+
                 <TextView
                     android:fontFamily= "@font/ubuntu_bold"
                     android:id="@+id/tvCategoryName"
@@ -45,8 +56,23 @@
                     android:text="@string/blank_value"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:textColor="@color/black"/>
-
+                    android:textColor="#056A7C"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp">
+                    <TextView
+                        android:fontFamily= "@font/ubuntu_bold"
+                        android:id="@+id/tvPatientsName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/blank_value"
+                        android:textStyle="bold"
+                        android:textSize="16sp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -71,25 +97,9 @@
 
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="5dp">
-                    <TextView
-                        android:fontFamily= "@font/ubuntu_bold"
-                        android:id="@+id/tvPatientsName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/blank_value"
-                        android:textStyle="bold"
-                        android:textSize="16sp"
-                        android:textAllCaps="true"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
-                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_marginTop="5dp">
                     <TextView
                         android:fontFamily= "@font/ubuntu_bold"
@@ -103,13 +113,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/blank_value"
-                        android:layout_marginStart="10dp"
                         android:textColor="@color/black"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
+                    android:orientation="vertical"
                     android:layout_marginTop="5dp">
                     <TextView
                         android:fontFamily= "@font/ubuntu_bold"
@@ -123,28 +132,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/blank_value"
-                        android:layout_marginStart="10dp"
                         android:textColor="@color/black"/>
                 </LinearLayout>
-                <LinearLayout
-                    android:layout_marginTop="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:fontFamily= "@font/ubuntu_bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="RESERVATION ID: "
-                        android:textColor="@color/black"/>
-                    <TextView
-                        android:fontFamily= "@font/ubuntu_regular"
-                        android:id="@+id/tvReservationID"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/blank_value"
-                        android:textColor="@color/black"/>
-                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

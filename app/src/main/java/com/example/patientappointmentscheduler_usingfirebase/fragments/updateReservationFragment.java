@@ -1,14 +1,17 @@
 package com.example.patientappointmentscheduler_usingfirebase.fragments;
 
 
-import static android.widget.Toast.makeText;
-
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +29,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.example.patientappointmentscheduler_usingfirebase.Interfaces.CloseModal;
+import com.example.patientappointmentscheduler_usingfirebase.PatientReservationActivity;
 import com.example.patientappointmentscheduler_usingfirebase.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -128,28 +132,64 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
     }
 
     private void updateReservation() {
-
-        String newCategory = spAppointmentCategory.getSelectedItem().toString();
-        String newDoctor = spDoctors.getSelectedItem().toString();
-        String newDate = dateOfAppointment.getText().toString();
-        String newTime = timeOfAppointment.getText().toString();
-        String newDateTime = (newDate + " " + newTime);
-
-        HashMap hashMap = new HashMap();
-        hashMap.put("appointmentCategory", newCategory);
-        hashMap.put("doctorsName", newDoctor);
-        hashMap.put("appointmentDateTime", newDateTime);
-
-        databaseReference.child(reservationID).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
-            @Override
-            public void onSuccess(Object o) {
-                //TODO add dialog bar
-                Toast.makeText(getActivity(), "Success", Toast.LENGTH_SHORT).show();
-                getFragmentManager().beginTransaction().remove(updateReservationFragment.this).commit();
+        try{
+            String newCategory = spAppointmentCategory.getSelectedItem().toString();
+            String newDoctor = "N/A";
+            if(spDoctors.getVisibility() == View.VISIBLE){
+                newDoctor = spDoctors.getSelectedItem().toString();
             }
-        });
+            String newDate = dateOfAppointment.getText().toString();
+            String newTime = timeOfAppointment.getText().toString();
+            String newDateTime = (newDate + " " + newTime);
 
+            if (newCategory.equals("PRIMARY CARE CONSULTATION") || newCategory.equals("ANNUAL CHECK UP / APE")) {
+
+                HashMap hashMap = new HashMap();
+                hashMap.put("appointmentCategory", newCategory);
+                hashMap.put("doctorsName", newDoctor);
+                hashMap.put("appointmentDateTime", newDateTime);
+
+                databaseReference.child(reservationID).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        updateSuccessDialog().show();
+                    }
+                });
+            } else{
+                HashMap hashMap = new HashMap();
+                //String noDoctor = "N/A";
+                hashMap.put("appointmentCategory", newCategory);
+                hashMap.put("doctorsName", newDoctor);
+                hashMap.put("appointmentDateTime", newDateTime);
+
+                databaseReference.child(reservationID).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        updateSuccessDialog().show();
+                    }
+                });
+            }
+        }catch (Exception e) {
+            Toast.makeText(getActivity(), "Error" + e, Toast.LENGTH_SHORT).show();
+            Log.v("UpdateError", String.valueOf(e));
+        }
     }
+
+    private Dialog updateSuccessDialog() {
+        android.app.AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("Successfully Updated Appointment!")
+                .setTitle("Success!")
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        getFragmentManager().beginTransaction().remove(updateReservationFragment.this).commit();
+                        startActivity(new Intent(getActivity(),PatientReservationActivity.class));
+                        getActivity().finish();
+                    }
+                });
+        return builder.create();
+    }
+
 
     private void getBundles() {
         Bundle bundle = this.getArguments();
@@ -176,10 +216,15 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
                     {
                         hour = selectedHour;
                         minute = selectedMinute;
+                        /*if (hour > 12){
+                            timeOfAppointment.setText(String.format(Locale.getDefault(), "%02d:%02d PM",hour-12, minute));
+                        } else {
+                            timeOfAppointment.setText(String.format(Locale.getDefault(), "%02d:%02d AM",hour, minute));
+                        }*/
                         timeOfAppointment.setText(String.format(Locale.getDefault(), "%02d:%02d",hour, minute));
                     }
                 };
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), onTimeSetListener, hour, minute, true);
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), onTimeSetListener, hour, minute, false);
                 timePickerDialog.setTitle("Select a time");
                 timePickerDialog.show();
             }
@@ -197,7 +242,7 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
     }
 
     private String makeDateString(int day, int month, int year){
-        return month + "-" + day + "-" + year;
+        return (String.format(Locale.getDefault(),"%02d-%02d-%02d",month, day, year));
     }
 
     private void initDatePicker()
