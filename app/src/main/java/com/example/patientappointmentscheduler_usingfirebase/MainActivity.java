@@ -25,9 +25,10 @@ import android.widget.Toast;
 import com.example.patientappointmentscheduler_usingfirebase.Adapter.CustomAdapter;
 import com.example.patientappointmentscheduler_usingfirebase.Interfaces.OnFetchDataListener;
 import com.example.patientappointmentscheduler_usingfirebase.Interfaces.SelectListener;
-import com.example.patientappointmentscheduler_usingfirebase.fragments.bottomAppNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.bottomAppNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.NewsApiResponse;
 import com.example.patientappointmentscheduler_usingfirebase.model.NewsHeadlines;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
         searchView = findViewById(R.id.svSearchNews);
 
         mBusinessButton = findViewById(R.id.btnBusiness);

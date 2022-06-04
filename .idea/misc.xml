@@ -45,11 +45,11 @@
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/drawable/web_custom_icon.xml" value="0.22" />
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/activity_alarm.xml" value="0.35260416666666666" />
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/activity_change_email.xml" value="0.36666666666666664" />
-        <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/activity_main.xml" value="0.2818026240730177" />
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/activity_news_detail.xml" value="0.22" />
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/activity_patient_reservation.xml" value="0.33" />
-        <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/activity_personal_information.xml" value="0.25" />
+        <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/activity_personal_information.xml" value="0.18" />
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/activity_register.xml" value="0.25" />
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/activity_reservation_info.xml" value="0.33" />
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/activity_schedule.xml" value="0.33" />
@@ -60,6 +60,7 @@
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/app_nav_bar.xml" value="0.5" />
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/color_spinner_layout.xml" value="0.25" />
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/content_destination.xml" value="0.36666666666666664" />
+        <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/content_update_reservation.xml" value="0.36666666666666664" />
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/edit_email_layout.xml" value="0.22" />
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/fragment_bottom_app_nav_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/fragment_fragment1.xml" value="0.36666666666666664" />

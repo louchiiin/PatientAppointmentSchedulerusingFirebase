@@ -29,8 +29,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.patientappointmentscheduler_usingfirebase.fragments.bottomAppNavBarFragment;
-import com.example.patientappointmentscheduler_usingfirebase.fragments.topNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.bottomAppNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.topNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.Reservations;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;

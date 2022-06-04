@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -26,9 +27,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.patientappointmentscheduler_usingfirebase.Interfaces.CloseModal;
-import com.example.patientappointmentscheduler_usingfirebase.fragments.bottomAppNavBarFragment;
-import com.example.patientappointmentscheduler_usingfirebase.fragments.topNavBarFragment;
-import com.example.patientappointmentscheduler_usingfirebase.fragments.updateReservationFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.bottomAppNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.topNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.updateReservationFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -117,7 +118,7 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
         DateFormat outputMonth = new SimpleDateFormat("MM", Locale.getDefault());
         DateFormat outputDay = new SimpleDateFormat("dd", Locale.getDefault());
         DateFormat outputYear = new SimpleDateFormat("yyyy", Locale.getDefault());
-        DateFormat outputHour = new SimpleDateFormat("HH", Locale.getDefault());
+        DateFormat outputHour = new SimpleDateFormat("H", Locale.getDefault()); //to not display leading zeroes
         DateFormat outputMinutes = new SimpleDateFormat("mm", Locale.getDefault());
 
         Date date = null;
@@ -135,15 +136,15 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
 
         //get Calendar instance
         calendar = Calendar.getInstance();
-        /*calendar.set(Calendar.YEAR, Integer.parseInt(getYear));
-        calendar.set(Calendar.MONTH, Integer.parseInt(getMonth));
+        calendar.set(Calendar.YEAR, Integer.parseInt(getYear));
+        calendar.set(Calendar.MONTH, Integer.parseInt(getMonth)-1);
         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(getDay));
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(getHour));
         calendar.set(Calendar.MINUTE, Integer.parseInt(getMinutes));
         calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);*/
-        /*calendar.set(Calendar.HOUR_OF_DAY, 17);
-        calendar.set(Calendar.MINUTE, 40);
+        calendar.set(Calendar.MILLISECOND, 0);
+        /*calendar.set(Calendar.HOUR_OF_DAY, 8);
+        calendar.set(Calendar.MINUTE, 32);
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);*/
 
@@ -155,6 +156,7 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
         builder.setMessage("Set push notification for this appointment?");
 
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @SuppressLint("UnspecifiedImmutableFlag")
             public void onClick(DialogInterface dialog, int which) {
                 alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 

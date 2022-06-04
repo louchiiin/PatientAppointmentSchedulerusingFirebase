@@ -15,8 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.patientappointmentscheduler_usingfirebase.fragments.bottomAppNavBarFragment;
-import com.example.patientappointmentscheduler_usingfirebase.fragments.topNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.topNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.PatientInfo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

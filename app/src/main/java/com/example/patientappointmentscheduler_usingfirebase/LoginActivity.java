@@ -13,7 +13,9 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -28,6 +30,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -38,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
     private EditText inputEmail, inputPassword;
     private TextView tvLinkToRegister;
     private Button btnLogin;
-
     private ProgressDialog dialog;
 
     @Override
@@ -52,7 +54,6 @@ public class LoginActivity extends AppCompatActivity {
         inputPassword = findViewById(R.id.etUserPassword);
         tvLinkToRegister = findViewById(R.id.tvRegistrationLink);
         btnLogin = findViewById(R.id.btnLogin);
-
         clickedLoginButton();
         clickLinkToRegister();
     }
@@ -91,12 +92,25 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 //progress dialog bar
-                                Log.d(TAG, "signInWithCredential:success");
-                                Intent loggedIn = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(loggedIn);
-                                finish();
+                                Log.v(TAG, "signInWithCredential:success");
+                                ProgressDialog dialog = new ProgressDialog(LoginActivity.this);
+                                dialog.setTitle("Loading..");
+                                dialog.setCanceledOnTouchOutside(false);
+                                dialog.setCancelable(false);
+                                dialog.show();
+                                Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    public void run() {
+                                        dialog.dismiss();
+                                        Intent loggedIn = new Intent(LoginActivity.this, MainActivity.class);
+                                        startActivity(loggedIn);
+                                        finish();
+                                    }
+                                }, 2000); // 3000 milliseconds delay
+
+
                             } else {
-                                Log.w(TAG, "signInWithCredential:failure", task.getException());
+                                Log.v(TAG, "signInWithCredential:failure", task.getException());
                                 Toast.makeText(LoginActivity.this, "Invalid credentials, please try again",
                                         Toast.LENGTH_SHORT).show();
                                 inputEmail.setError("Invalid credentials, please try again");

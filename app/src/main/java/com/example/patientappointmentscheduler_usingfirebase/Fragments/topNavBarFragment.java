@@ -1,4 +1,4 @@
-package com.example.patientappointmentscheduler_usingfirebase.fragments;
+package com.example.patientappointmentscheduler_usingfirebase.Fragments;
 
 import android.os.Bundle;
 
@@ -8,14 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.patientappointmentscheduler_usingfirebase.MainActivity;
-import com.example.patientappointmentscheduler_usingfirebase.PersonalInformationActivity;
 import com.example.patientappointmentscheduler_usingfirebase.R;
-import com.example.patientappointmentscheduler_usingfirebase.ScheduleActivity;
-
-import java.util.Objects;
 
 public class topNavBarFragment extends Fragment {
     private View view;

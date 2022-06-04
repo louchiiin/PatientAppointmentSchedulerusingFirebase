@@ -1,13 +1,13 @@
-package com.example.patientappointmentscheduler_usingfirebase.fragments;
+package com.example.patientappointmentscheduler_usingfirebase.Fragments;
 
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 
 
@@ -26,6 +26,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.example.patientappointmentscheduler_usingfirebase.Interfaces.CloseModal;
@@ -38,8 +39,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -69,12 +76,13 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
     private Button timeOfAppointment;
     private int hour, minute;
 
+
     //interface
     private CloseModal closeModal;
 
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
-
+    private Calendar calendar;
     //fragment constructor
     public updateReservationFragment(CloseModal closeModal){
         this.closeModal = closeModal;
@@ -223,6 +231,7 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
                         }*/
                         timeOfAppointment.setText(String.format(Locale.getDefault(), "%02d:%02d",hour, minute));
                     }
+
                 };
                 TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), onTimeSetListener, hour, minute, false);
                 timePickerDialog.setTitle("Select a time");

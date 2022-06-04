@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.patientappointmentscheduler_usingfirebase.fragments.bottomAppNavBarFragment;
-import com.example.patientappointmentscheduler_usingfirebase.fragments.topNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.bottomAppNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.topNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.NewsHeadlines;
 import com.squareup.picasso.Picasso;
 

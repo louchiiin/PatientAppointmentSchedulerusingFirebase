@@ -1,4 +1,4 @@
-package com.example.patientappointmentscheduler_usingfirebase.fragments;
+package com.example.patientappointmentscheduler_usingfirebase.Fragments;
 
 import static android.app.Activity.RESULT_OK;
 
