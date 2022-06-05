@@ -233,7 +233,7 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
                     }
 
                 };
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), onTimeSetListener, hour, minute, false);
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), onTimeSetListener, hour, minute, true);
                 timePickerDialog.setTitle("Select a time");
                 timePickerDialog.show();
             }

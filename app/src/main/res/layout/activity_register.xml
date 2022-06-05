@@ -10,45 +10,43 @@
     <FrameLayout
         android:id="@+id/frameLayoutRegistration"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/topRegisterGuideLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nestedScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ScrollView
+        android:id="@+id/registerScrollView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="false"
+        app:layout_constraintBottom_toTopOf="@+id/botRegisterGuideLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayoutRegistration"
+        app:layout_constraintTop_toTopOf="@+id/topRegisterGuideLine"
         app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             android:orientation="vertical">
 
             <EditText
                 android:id="@+id/etRegisterFirstName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
                 android:background="@drawable/custom_input"
                 android:fontFamily="@font/ubuntu_regular"
                 android:hint="Enter First Name"
-                android:textColorHint="#737373"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:maxLines="1"
                 android:padding="15dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textColorHint="#737373" />
 
             <EditText
                 android:id="@+id/etRegisterLastName"
@@ -58,12 +56,12 @@
                 android:background="@drawable/custom_input"
                 android:fontFamily="@font/ubuntu_regular"
                 android:hint="Enter Last Name"
-                android:textColorHint="#737373"
                 android:imeOptions="actionNext"
                 android:inputType="text"
                 android:maxLines="1"
                 android:padding="15dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textColorHint="#737373" />
 
             <EditText
                 android:id="@+id/etRegisterEmail"
@@ -73,12 +71,12 @@
                 android:background="@drawable/custom_input"
                 android:fontFamily="@font/ubuntu_regular"
                 android:hint="Enter Email"
-                android:textColorHint="#737373"
                 android:imeOptions="actionNext"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:padding="15dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textColorHint="#737373" />
 
             <EditText
                 android:id="@+id/etRegisterPhone"
@@ -88,12 +86,12 @@
                 android:background="@drawable/custom_input"
                 android:fontFamily="@font/ubuntu_regular"
                 android:hint="Enter Phone number"
-                android:textColorHint="#737373"
                 android:imeOptions="actionNext"
                 android:inputType="number"
                 android:maxLines="1"
                 android:padding="15dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textColorHint="#737373" />
 
             <EditText
                 android:id="@+id/etRegisterPassword"
@@ -103,12 +101,12 @@
                 android:background="@drawable/custom_input"
                 android:fontFamily="@font/ubuntu_regular"
                 android:hint="Enter Password"
-                android:textColorHint="#737373"
                 android:imeOptions="actionNext"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:padding="15dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textColorHint="#737373" />
 
             <EditText
                 android:id="@+id/etRegisterConfirmPassword"
@@ -118,12 +116,12 @@
                 android:background="@drawable/custom_input"
                 android:fontFamily="@font/ubuntu_regular"
                 android:hint="Confirm Password"
-                android:textColorHint="#737373"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:padding="15dp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textColorHint="#737373" />
 
             <Button
                 android:id="@+id/btnRegister"
@@ -133,7 +131,7 @@
                 android:backgroundTint="#056A7C"
                 android:fontFamily="@font/ubuntu_regular"
                 android:text="Register"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/tvAlreadyHaveAnAccount"
@@ -142,8 +140,22 @@
                 android:layout_marginTop="10dp"
                 android:gravity="center"
                 android:text="Already have an account? Click here!"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black" />
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+    </ScrollView>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/topRegisterGuideLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.075" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/botRegisterGuideLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

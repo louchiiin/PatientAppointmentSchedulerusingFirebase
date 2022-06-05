@@ -30,11 +30,12 @@ public class AlarmReceiver extends BroadcastReceiver {
 
             NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
             notificationManagerCompat.notify(123, builder.build());
+            Log.v("AlarmReceiver:", "Android12");
         }
         else
         {
             PendingIntent pendingIntent = PendingIntent.getActivity
-                    (context, 0, notificationClicked, PendingIntent.FLAG_ONE_SHOT);
+                    (context, 0, notificationClicked, 0);
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "notificationID")
                     .setSmallIcon(R.drawable.bell_icon)
                     .setContentTitle("MyClinic PH")
@@ -46,6 +47,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
             NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(context);
             notificationManagerCompat.notify(123, builder.build());
+            Log.v("AlarmReceiver:", "NonAndroid12");
         }
 
         /*PendingIntent pendingIntent = PendingIntent.getActivity

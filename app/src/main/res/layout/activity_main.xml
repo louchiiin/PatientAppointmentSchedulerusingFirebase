@@ -10,35 +10,35 @@
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="0dp"
         android:background="@drawable/custom_border_shadow_bottom"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/topMainGuidLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0">
+
         <TextView
-            android:fontFamily= "@font/ubuntu_bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
             android:layout_gravity="center_vertical"
-            android:textSize="30sp"
+            android:fontFamily="@font/ubuntu_bold"
+            android:gravity="center_horizontal"
             android:text="MyClinicPH"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="30sp" />
     </FrameLayout>
 
     <ScrollView
         android:id="@+id/mainScrollView"
-        android:layout_width="match_parent"
-        android:layout_height="560dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintBottom_toBottomOf="@+id/frameLayoutMainBottomAppNavBar"
+        app:layout_constraintBottom_toTopOf="@+id/botMainGuideLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/frameLayout"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toTopOf="@+id/topMainGuidLine">
 
         <TableLayout
             android:layout_width="wrap_content"
@@ -150,7 +150,7 @@
             <LinearLayout
                 android:id="@+id/linearLayout8"
                 android:layout_width="match_parent"
-                android:layout_height="440dp"
+                android:layout_height="wrap_content"
                 android:layout_above="@+id/frameLayoutMainBottomAppNavBar"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="10dp"
@@ -283,26 +283,34 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvMain"
                     android:layout_width="match_parent"
-                    android:layout_height="400dp"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="10dp" />
             </LinearLayout>
         </TableLayout>
     </ScrollView>
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline7"
+        android:id="@+id/topMainGuidLine"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.66" />
+        app:layout_constraintGuide_percent="0.075" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/botMainGuideLine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
 
     <FrameLayout
         android:id="@+id/frameLayoutMainBottomAppNavBar"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="0dp"
         android:layout_alignParentBottom="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/botMainGuideLine" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

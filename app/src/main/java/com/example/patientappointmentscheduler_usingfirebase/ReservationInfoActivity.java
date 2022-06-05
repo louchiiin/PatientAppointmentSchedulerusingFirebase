@@ -164,11 +164,14 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
                     pendingIntent = PendingIntent.getBroadcast
                             (ReservationInfoActivity.this, 0, intent, PendingIntent.FLAG_MUTABLE);
+                    Log.v("NOTIF", "SetSuccessNotification");
                 }
                 else
                 {
                     pendingIntent = PendingIntent.getBroadcast
-                            (ReservationInfoActivity.this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+                            (ReservationInfoActivity.this, 0, intent, 0);
+
+                    Log.v("NOTIF", "SetSuccessNotificationNonAndroid12");
                 }
 
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
@@ -187,8 +190,18 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
         return builder.create();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void patientReservationNotificationChannel() {
         if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S){
+            CharSequence name = "Louchin Channel";
+            String description = "Channel For Alarm Manager";
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            NotificationChannel channel = new NotificationChannel("notificationID", name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        } else {
             CharSequence name = "Louchin Channel";
             String description = "Channel For Alarm Manager";
             int importance = NotificationManager.IMPORTANCE_HIGH;
