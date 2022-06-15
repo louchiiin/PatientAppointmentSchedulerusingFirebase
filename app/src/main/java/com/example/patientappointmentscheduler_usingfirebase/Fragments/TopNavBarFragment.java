@@ -22,7 +22,6 @@ public class TopNavBarFragment extends Fragment {
     }
 
     public TopNavBarFragment(String navTitle, Activity activity) {
-        // Required empty public constructor
         this.navBarTitle = navTitle;
         this.mActivity = activity;
     }

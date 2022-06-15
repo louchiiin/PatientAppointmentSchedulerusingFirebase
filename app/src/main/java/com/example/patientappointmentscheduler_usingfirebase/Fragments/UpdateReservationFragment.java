@@ -70,6 +70,9 @@ public class UpdateReservationFragment extends Fragment implements AdapterView.O
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private Calendar calendar;
+
+    public UpdateReservationFragment() {
+    }
     //fragment constructor
     public UpdateReservationFragment(CloseModal closeModal){
         this.closeModal = closeModal;

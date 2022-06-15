@@ -27,8 +27,11 @@ public class BottomAppNavBarFragment extends Fragment {
     private View view;
     private TextView btnHome, btnView, btnReservation, btnSchedule, btnLogout;
     private Activity mActivity;
-    public BottomAppNavBarFragment(Activity activity) {
 
+    public  BottomAppNavBarFragment() {
+    }
+
+    public BottomAppNavBarFragment(Activity activity) {
         this.mActivity = activity;
     }
 

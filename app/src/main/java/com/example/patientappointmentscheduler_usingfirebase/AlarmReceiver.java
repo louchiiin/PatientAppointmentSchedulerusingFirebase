@@ -17,8 +17,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     private FirebaseAuth mAuth;
 
-    public AlarmReceiver(FirebaseAuth mAuth) {
-        this.mAuth = mAuth;
+    public AlarmReceiver() {
     }
 
     @Override
