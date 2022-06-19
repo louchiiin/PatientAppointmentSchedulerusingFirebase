@@ -72,6 +72,13 @@
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/reser_email.xml" value="0.25" />
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/reservation_list_item.xml" value="0.4" />
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/spinner_dropdown_layout.xml" value="0.4282238442822384" />
+        <entry key="app/src/main/res/drawable/custom_border_shadow_bottom.xml" value="0.1465" />
+        <entry key="app/src/main/res/drawable/custom_border_shadow_left.xml" value="0.1465" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.30480072463768115" />
+        <entry key="app/src/main/res/layout/activity_patient_reservation.xml" value="0.17692307692307693" />
+        <entry key="app/src/main/res/layout/activity_schedule.xml" value="0.30480072463768115" />
+        <entry key="app/src/main/res/layout/fragment_top_nav_bar.xml" value="0.30480072463768115" />
+        <entry key="app/src/main/res/layout/reservation_list_item.xml" value="0.19610507246376813" />
       </map>
     </option>
   </component>
