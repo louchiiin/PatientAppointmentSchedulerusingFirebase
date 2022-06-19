@@ -1,5 +1,6 @@
 package com.example.patientappointmentscheduler_usingfirebase.Adapter;
 
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,29 +9,50 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.patientappointmentscheduler_usingfirebase.R;
 import com.example.patientappointmentscheduler_usingfirebase.ReservationInfoActivity;
 import com.example.patientappointmentscheduler_usingfirebase.model.ReservationList;
 
-public class ReservationListAdapter extends ListAdapter<ReservationList, ReservationListAdapter.ViewHolder> {
+import java.util.ArrayList;
 
-    public ReservationListAdapter() {
-        super(new ReservationDiffCallback());
+public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.ViewHolder> {
+
+    private Context mContext;
+    public View mView;
+    private ArrayList<ReservationList> mReservationList;
+
+    public ReservationAdapter(Context context, ArrayList<ReservationList> list) {
+        this.mContext = context;
+        this.mReservationList = list;
     }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        return
-                new ViewHolder(inflater.inflate(R.layout.reservation_list_item, parent , false));
+    public ReservationAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        mView = LayoutInflater.from(mContext).inflate(R.layout.reservation_list_item, parent, false);
+        return new ViewHolder(mView);
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder  {
+    @Override
+    public void onBindViewHolder(@NonNull ReservationAdapter.ViewHolder holder, int position) {
+        ReservationList reservationList = mReservationList.get(position);
+
+        holder.tvCategoryName.setText(reservationList.getAppointmentCategory());
+        holder.tvDoctorsName.setText(reservationList.getDoctorsName());
+        holder.tvPatientsName.setText(reservationList.getPatientsName());
+        holder.tvReservationScheduleDateTime.setText(reservationList.getAppointmentDateTime());
+        holder.tvCreatedDate.setText(reservationList.getCurrentDate());
+        holder.tvReservationID.setText(reservationList.getReservationID());
+    }
+
+    @Override
+    public int getItemCount() {
+        return mReservationList.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvCategoryName, tvDoctorsName, tvPatientsName, tvReservationScheduleDateTime, tvCreatedDate, tvReservationID;
         LinearLayout lvReservationItem;
 
@@ -44,7 +66,7 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
             tvReservationID = itemView.findViewById(R.id.tvReservationID);
 
             lvReservationItem = itemView.findViewById(R.id.lvReservationItem);
-            //on on click each item
+
             lvReservationItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -66,41 +88,6 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
                     view.getContext().startActivity(intent);
                 }
             });
-        }
-        public void bindTo(ReservationList reservationList){
-            tvCategoryName.setText(reservationList.getAppointmentCategory());
-            tvDoctorsName.setText(reservationList.getDoctorsName());
-            tvPatientsName.setText(reservationList.getPatientsName());
-            tvReservationScheduleDateTime.setText(reservationList.getAppointmentDateTime());
-            tvCreatedDate.setText(reservationList.getCurrentDate());
-            tvReservationID.setText(reservationList.getReservationID());
-        }
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bindTo(getItem(position));
-    }
-
-
-    public static class ReservationDiffCallback extends DiffUtil.ItemCallback<ReservationList>{
-        @Override
-        public boolean areItemsTheSame(@NonNull ReservationList oldItem, @NonNull ReservationList newItem) {
-            return
-                oldItem.getReservationID().equals(newItem.getReservationID());
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull ReservationList oldItem, @NonNull ReservationList newItem) {
-            return
-                oldItem.getReservationID().equals(newItem.getReservationID()) &&
-                oldItem.getLoggedInUid().equals(newItem.getLoggedInUid()) &&
-                oldItem.getAppointmentCategory().equals(newItem.getAppointmentCategory()) &&
-                oldItem.getPatientsName().equals(newItem.getPatientsName()) &&
-                oldItem.getDoctorsName().equals(newItem.getDoctorsName()) &&
-                oldItem.getAppointmentDateTime().equals(newItem.getAppointmentDateTime()) &&
-                oldItem.getCurrentDate().equals(newItem.getCurrentDate()) &&
-                oldItem.getStatus().equals(newItem.getStatus());
         }
     }
 }

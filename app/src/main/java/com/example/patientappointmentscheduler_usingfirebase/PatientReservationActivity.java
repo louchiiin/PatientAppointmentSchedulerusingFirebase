@@ -10,8 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.patientappointmentscheduler_usingfirebase.Adapter.ReservationAdapter;
 import com.example.patientappointmentscheduler_usingfirebase.Adapter.ReservationListAdapter;
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.bottomAppNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.topNavBarFragment;
@@ -28,9 +30,10 @@ import java.util.List;
 
 public class PatientReservationActivity extends AppCompatActivity {
     RecyclerView rvReservations;
-    ReservationListAdapter reservationListAdapter;
+    //ReservationListAdapter reservationListAdapter;
+    ReservationAdapter reservationAdapter;
     DatabaseReference databaseReference;
-
+    ArrayList<ReservationList> list;
     private ProgressDialog dialog;
 
     @Override
@@ -64,19 +67,25 @@ public class PatientReservationActivity extends AppCompatActivity {
     private void displayReservationList() {
         //initialize
         rvReservations = findViewById(R.id.rvReservations);
-        reservationListAdapter = new ReservationListAdapter();
-        rvReservations.setAdapter(reservationListAdapter);
+        /*reservationListAdapter = new ReservationListAdapter();
+        rvReservations.setAdapter(reservationListAdapter);*/
 
-        String currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         databaseReference = FirebaseDatabase.getInstance().getReference("Reservations");
 
+        rvReservations.setHasFixedSize(true);
+        rvReservations.setLayoutManager(new LinearLayoutManager(this));
+
+        list = new ArrayList<>();
+        reservationAdapter = new ReservationAdapter(this, list);
+        rvReservations.setAdapter(reservationAdapter);
+
+        String currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         databaseReference.orderByChild("loggedInUid").equalTo(currentFirebaseUser)
                 .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 //int index = 0;
-                List<ReservationList> listReservation = new ArrayList<>();
+                //List<ReservationList> listReservation = new ArrayList<>(
 
                 for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                     Log.d("User key", dataSnapshot.getKey());
@@ -87,18 +96,20 @@ public class PatientReservationActivity extends AppCompatActivity {
                     ReservationList reservationList = dataSnapshot.getValue(ReservationList.class);
                     reservationList.setReservationID(uniqueKey);
                     //reservationList.setReservationID(String.valueOf(index));
-                    listReservation.add(reservationList);
+                    list.add(reservationList);
                     //index++;
                 }
-                reservationListAdapter.submitList(listReservation);
-
+                //reservationListAdapter.submitList(listReservation);
+                reservationAdapter.notifyDataSetChanged();
                 dialog.dismiss();
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
+
         });
         //mock data for testing
         /*listReservation.add(new ReservationList("121", "123", "APE",
