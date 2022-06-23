@@ -88,7 +88,7 @@ public class HelperUtilities {
     }
 
     public static boolean isShortPassword(String password) {
-        if (password.length() > 5) {
+        if (password.length() < 5) {
             return false;
         }
         return true;

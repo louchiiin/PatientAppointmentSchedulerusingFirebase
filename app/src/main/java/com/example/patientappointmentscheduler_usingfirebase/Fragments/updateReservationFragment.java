@@ -28,6 +28,7 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.example.patientappointmentscheduler_usingfirebase.Interfaces.CloseModal;
 import com.example.patientappointmentscheduler_usingfirebase.PatientReservationActivity;
@@ -150,33 +151,16 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
             String newTime = timeOfAppointment.getText().toString();
             String newDateTime = (newDate + " " + newTime);
 
-            if (newCategory.equals("PRIMARY CARE CONSULTATION") || newCategory.equals("ANNUAL CHECK UP / APE")) {
-
-                HashMap hashMap = new HashMap();
-                hashMap.put("appointmentCategory", newCategory);
-                hashMap.put("doctorsName", newDoctor);
-                hashMap.put("appointmentDateTime", newDateTime);
-
-                databaseReference.child(reservationID).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
-                    @Override
-                    public void onSuccess(Object o) {
-                        updateSuccessDialog().show();
-                    }
-                });
-            } else{
-                HashMap hashMap = new HashMap();
-                //String noDoctor = "N/A";
-                hashMap.put("appointmentCategory", newCategory);
-                hashMap.put("doctorsName", newDoctor);
-                hashMap.put("appointmentDateTime", newDateTime);
-
-                databaseReference.child(reservationID).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
-                    @Override
-                    public void onSuccess(Object o) {
-                        updateSuccessDialog().show();
-                    }
-                });
-            }
+            HashMap hashMap = new HashMap();
+            hashMap.put("appointmentCategory", newCategory);
+            hashMap.put("doctorsName", newDoctor);
+            hashMap.put("appointmentDateTime", newDateTime);
+            databaseReference.child(reservationID).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
+                @Override
+                public void onSuccess(Object o) {
+                    updateSuccessDialog().show();
+                }
+            });
         }catch (Exception e) {
             Toast.makeText(getActivity(), "Error" + e, Toast.LENGTH_SHORT).show();
             Log.v("UpdateError", String.valueOf(e));
@@ -190,7 +174,7 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        getFragmentManager().beginTransaction().remove(updateReservationFragment.this).commit();
+                        getParentFragmentManager().beginTransaction().remove(updateReservationFragment.this).commit();
                         startActivity(new Intent(getActivity(),PatientReservationActivity.class));
                         getActivity().finish();
                     }

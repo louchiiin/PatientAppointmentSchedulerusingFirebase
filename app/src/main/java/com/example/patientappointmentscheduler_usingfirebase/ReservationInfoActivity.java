@@ -55,8 +55,6 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
     public static final String RESERVATION_ID = "RESERVATION ID";
     public static final String ERROR = "ERROR";
     private static final String CALENDAR_TITLE = "MyClinicPH Appointment";
-    /*private static final String CALENDAR_DESCRIPTION = "Good day! \n" + "getPatientsName + ," + "\n\nPlease be here on the clinic before your scheduled appointment.\n\nAppointment Details:\n" +
-            "getCategoryName "+ "\n" + "getDoctorsName" + "\n" + "getPatientsName" + "\n" + "getScheduleDateTime" + "\n\nThank you, \nmyClinicPH Team\"";*/
     private static final String CALENDAR_LOCATION = "BLDG 1234, CEBU CITY";
     private static final String APPOINTMENT_DATE = "APPOINTMENT DATE";
     private static final String APPOINTMENT_TIME = "APPOINTMENT TIME";
@@ -81,7 +79,7 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
 
         //dialog before displaying values
         dialog = new ProgressDialog(this);
-        dialog.setTitle("Loading..");
+        dialog.setTitle(R.string.loading_dialog);
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
 
@@ -226,7 +224,7 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
             @Override
             public void onClick(View view) {
                 updateDialog = new ProgressDialog(ReservationInfoActivity.this);
-                updateDialog.setTitle("Loading...");
+                updateDialog.setTitle(R.string.loading_dialog);
                 updateDialog.show();
                 updateDialog.setCanceledOnTouchOutside(false);
                 updateDialog.setCancelable(false);

@@ -103,14 +103,25 @@
             android:layout_marginTop="10dp"
             android:maxLines="1"
             android:padding="10dp"
+            android:imeOptions="actionNext"/>
+        <EditText
+            android:id="@+id/change_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custom_input"
+            android:hint="@string/updated_password"
+            android:inputType="textPassword"
+            android:layout_marginTop="10dp"
+            android:maxLines="1"
+            android:padding="10dp"
             android:imeOptions="actionDone"/>
         <Button
-            android:id="@+id/btnChangeEmailAddress"
+            android:id="@+id/change_email_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="#056A7C"
-            android:text="@string/change_email"
-            android:layout_marginTop="20dp"/>
+            android:text="@string/confirmation"
+            android:layout_marginTop="15dp"/>
     </LinearLayout>
     <FrameLayout
         android:id="@+id/frameLayoutChangeEmailBottomAppNavBar"

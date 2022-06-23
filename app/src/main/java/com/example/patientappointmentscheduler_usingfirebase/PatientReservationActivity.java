@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.patientappointmentscheduler_usingfirebase.Adapter.ReservationAdapter;
-import com.example.patientappointmentscheduler_usingfirebase.Adapter.ReservationListAdapter;
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.bottomAppNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.topNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.ReservationList;
@@ -30,11 +29,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class PatientReservationActivity extends AppCompatActivity {
     RecyclerView rvReservations;
-    //ReservationListAdapter reservationListAdapter;
     ReservationAdapter reservationAdapter;
     DatabaseReference databaseReference;
     ArrayList<ReservationList> list;
@@ -48,7 +45,7 @@ public class PatientReservationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_reservation);
         dialog = new ProgressDialog(this);
-        dialog.setTitle("Loading..");
+        dialog.setTitle(R.string.loading_dialog);
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
 

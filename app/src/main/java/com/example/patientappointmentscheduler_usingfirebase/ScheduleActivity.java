@@ -289,13 +289,12 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                     databaseReference.push().setValue(reservations);
                     //dialog before displaying values
                     dialog = new ProgressDialog(this);
-                    dialog.setTitle("Loading..");
+                    dialog.setTitle(R.string.loading_dialog);
                     dialog.setCanceledOnTouchOutside(false);
                     dialog.show();
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         public void run() {
-                            dialog.dismiss();
                             addSuccessDialog().show();
                         }
                     }, 1500); //

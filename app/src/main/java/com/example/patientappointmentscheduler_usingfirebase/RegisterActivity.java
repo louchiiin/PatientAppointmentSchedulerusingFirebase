@@ -78,42 +78,36 @@ public class RegisterActivity extends AppCompatActivity {
             String email = etEmail.getText().toString();
             String password = etPassword.getText().toString();
             String confirmPassword = etConfirmPassword.getText().toString();
-            //add in firestore db
+            //add in realtime db
             String firstName = etFirstName.getText().toString();
             String lastName = etLastName.getText().toString();
             String phone = etPhone.getText().toString();
 
             if (!password.equals(confirmPassword)) {
-                Toast.makeText(RegisterActivity.this, "Password does not match, please try again",
-                        Toast.LENGTH_SHORT).show();
                 etPassword.setError("Password does not match");
                 etConfirmPassword.setError("Password does not match");
                 etPassword.requestFocus();
             } else if (email.isEmpty()) {
-                Toast.makeText(RegisterActivity.this, "Email is required", Toast.LENGTH_SHORT).show();
-                etEmail.setError("Required");
+                etEmail.setError("Email is required");
                 etEmail.requestFocus();
-            } else if (password.isEmpty()){
-                Toast.makeText(RegisterActivity.this, "Password is required", Toast.LENGTH_SHORT).show();
-                etPassword.setError("Required");
+            } else if (password.isEmpty()) {
+                etPassword.setError("Password is required");
                 etPassword.requestFocus();
-            } else if (password.length() < 6){
-                Toast.makeText(RegisterActivity.this, "Password is too short:\r6 or more characters is needed", Toast.LENGTH_SHORT).show();
+            } else if (password.length() < 6) {
                 etPassword.setError("Password is too short: 6 or more is needed");
                 etPassword.requestFocus();
-            } else if (confirmPassword.isEmpty()){
-                Toast.makeText(RegisterActivity.this, "Confirm password is required", Toast.LENGTH_SHORT).show();
+            } else if (confirmPassword.isEmpty()) {
                 etConfirmPassword.setError("Required");
                 etConfirmPassword.requestFocus();
-            } else if (!HelperUtilities.isValidEmail(etEmail.getText().toString())){
-                Toast.makeText(RegisterActivity.this, "Please enter a valid email", Toast.LENGTH_SHORT).show();
+            } else if (!HelperUtilities.isValidEmail(email)) {
                 etEmail.setError("Please enter a valid email");
                 etEmail.requestFocus();
-            } else if (!HelperUtilities.isValidPhone(etPhone.getText().toString())){
-                Toast.makeText(RegisterActivity.this, "Please enter a valid phone number \n" +
-                        "ex: 09291234567", Toast.LENGTH_SHORT).show();
+            } else if (!HelperUtilities.isValidPhone(password)) {
                 etPhone.setError("Please enter a valid phone number \rex: 09291234567");
                 etPhone.requestFocus();
+            } else if (HelperUtilities.isShortPassword(password)){
+                etPassword.setError("Password should be more than 5 characters");
+                etPassword.requestFocus();
             } else {
                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                 firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -126,16 +120,10 @@ public class RegisterActivity extends AppCompatActivity {
                                         String getUid = getRegisteredUser.getUid();
                                         //progress dialog bar
                                         dialog = new ProgressDialog(RegisterActivity.this);
-                                        dialog.setTitle("Loading..");
+                                        dialog.setTitle(R.string.loading_dialog);
                                         dialog.setCanceledOnTouchOutside(false);
                                         dialog.show();
-                                        Handler handler = new Handler();
-                                        handler.postDelayed(new Runnable() {
-                                            public void run() {
-                                                dialog.dismiss();
-                                                addPatientInfo(getUid, firstName, lastName, phone);
-                                            }
-                                        }, 1500);
+                                        addPatientInfo(getUid, firstName, lastName, phone);
                                     } else {
                                         Toast.makeText(RegisterActivity.this,
                                                 "Email already exists", Toast.LENGTH_SHORT).show();
@@ -161,6 +149,7 @@ public class RegisterActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dialog.dismiss();
                 databaseReference.child(patientInfo.getUid()).setValue(patientInfo);
                 Toast.makeText(RegisterActivity.this,
                         "Successful Registration!", Toast.LENGTH_SHORT).show();

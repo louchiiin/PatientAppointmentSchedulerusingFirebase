@@ -12,19 +12,16 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.bottomAppNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.topNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.PatientInfo;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -32,8 +29,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+
 public class PersonalInformationActivity extends AppCompatActivity {
-    private TextView tvUpdateBack;
 
     private Button btnUpdate, btnSave, btnCancel, btnChangeEmail;
 
@@ -41,8 +39,6 @@ public class PersonalInformationActivity extends AppCompatActivity {
             etUpdatePhone;
 
     private LinearLayout layoutSave, layoutUpdate;
-
-    LayoutInflater layoutInflater;
 
     PatientInfo patientInfo;
 
@@ -62,10 +58,13 @@ public class PersonalInformationActivity extends AppCompatActivity {
         layoutUpdate = findViewById(R.id.layoutUpdate);
         btnChangeEmail = findViewById(R.id.btnChangeEmail);
 
-
-
         displayTopNavBar(new topNavBarFragment("Personal Information"));
         displayBottomNavBar(new bottomAppNavBarFragment());
+
+        dialog = new ProgressDialog(PersonalInformationActivity.this);
+        dialog.setTitle(R.string.loading_dialog);
+        dialog.setCanceledOnTouchOutside(false);
+        dialog.show();
         displayUserValues();
         clickChangeEmail();
         clickUpdateButton();
@@ -106,6 +105,7 @@ public class PersonalInformationActivity extends AppCompatActivity {
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dialog.dismiss();
                 String firstName = snapshot.child("firstName").getValue(String.class);
                 String lastName = snapshot.child("lastName").getValue(String.class);
                 String phone = snapshot.child("phone").getValue(String.class);
@@ -123,7 +123,6 @@ public class PersonalInformationActivity extends AppCompatActivity {
     }
 
     private void clickSave() {
-
         //realtime database
         String currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
         //model
@@ -133,7 +132,7 @@ public class PersonalInformationActivity extends AppCompatActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO update to hashmap update check ReservationInfoActivity.class
+                //TODO update to hashmap update
                 String firstName = etUpdateFirstName.getText().toString();
                 String lastName = etUpdateLastName.getText().toString();
                 String phone = etUpdatePhone.getText().toString();
@@ -151,31 +150,23 @@ public class PersonalInformationActivity extends AppCompatActivity {
                     etUpdatePhone.setError("Phone is required");
                     etUpdatePhone.requestFocus();
                 } else if (!HelperUtilities.isValidPhone(phone)) {
-                    Toast.makeText(PersonalInformationActivity.this, "Please enter a valid phone number \n" +
-                            "ex: 09291234567", Toast.LENGTH_SHORT).show();
                     etUpdatePhone.setError("Please enter a valid phone number \nex: 09291234567");
                     etUpdatePhone.requestFocus();
                 } else {
                     //progress dialog bar
-                    dialog = new ProgressDialog(PersonalInformationActivity.this);
-                    dialog.setTitle("Loading..");
+                    dialog.setTitle(R.string.loading_dialog);
                     dialog.setCanceledOnTouchOutside(false);
                     dialog.show();
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            dialog.dismiss();
-                            etUpdateFirstName.setEnabled(false);
-                            etUpdateLastName.setEnabled(false);
-                            etUpdatePhone.setEnabled(false);
-                            //layout gone/visible
-                            layoutUpdate.setVisibility(View.VISIBLE);
-                            layoutSave.setVisibility(View.GONE);
 
-                            //TODO: check why update 2nd time app will crash
-                            updatePatientInfo(currentFirebaseUser, firstName, lastName, phone);
-                        }
-                    }, 1500);
+                    etUpdateFirstName.setEnabled(false);
+                    etUpdateLastName.setEnabled(false);
+                    etUpdatePhone.setEnabled(false);
+                    //layout gone/visible
+                    layoutUpdate.setVisibility(View.VISIBLE);
+                    layoutSave.setVisibility(View.GONE);
+
+                    updatePatientInfo(currentFirebaseUser, firstName, lastName, phone);
+
                 }
             }
         });
@@ -234,23 +225,16 @@ public class PersonalInformationActivity extends AppCompatActivity {
     private void updatePatientInfo(String currentFirebaseUser, String firstName, String lastName, String phone) {
         DatabaseReference rootReference = FirebaseDatabase.getInstance().getReference();
         DatabaseReference uidReference = rootReference.child("PatientInfo");
-        patientInfo.setUid(currentFirebaseUser);
-        patientInfo.setFirstName(firstName);
-        patientInfo.setLastName(lastName);
-        patientInfo.setPhone(phone);
 
-        uidReference.addValueEventListener(new ValueEventListener() {
+        HashMap hashMap = new HashMap();
+        hashMap.put("firstName", firstName);
+        hashMap.put("lastName", lastName);
+        hashMap.put("phone", phone);
+        uidReference.child(currentFirebaseUser).updateChildren(hashMap).addOnSuccessListener(new OnSuccessListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                uidReference.child(patientInfo.getUid()).setValue(patientInfo);
-                Toast.makeText(PersonalInformationActivity.this, "Successfully Updated", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(PersonalInformationActivity.this, PersonalInformationActivity.class));
-                finish();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                throw error.toException();
+            public void onSuccess(Object o) {
+                dialog.dismiss();
+                addUpdateSuccessDialog().show();
             }
         });
     }
@@ -260,7 +244,6 @@ public class PersonalInformationActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(getApplicationContext(), "Fields are disabled", Toast.LENGTH_SHORT).show();
                 etUpdateFirstName.setEnabled(false);
                 etUpdateLastName.setEnabled(false);
                 etUpdatePhone.setEnabled(false);
@@ -276,7 +259,6 @@ public class PersonalInformationActivity extends AppCompatActivity {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Toast.makeText(getApplicationContext(), "Fields are now editable", Toast.LENGTH_SHORT).show();
                 // set edit text to enabled
                 etUpdateFirstName.setEnabled(true);
                 etUpdateLastName.setEnabled(true);

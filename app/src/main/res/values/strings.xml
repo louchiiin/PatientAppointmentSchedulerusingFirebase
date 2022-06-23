@@ -8,8 +8,8 @@
     <string name="blank_value">-</string>
     <string name="nav_title_personal_info">Update Profile</string>
     <string name="nav_title_schedule">Schedule an appointment</string>
-    <string name="change_email">Change Email</string>
-    <string name="change_password">change password</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="change_email_password">Change Email/Password</string>
     <string name="update_phone">Update Phone</string>
     <string name="update_last_name">Update Last Name</string>
     <string name="update_first_name">Update First Name</string>
@@ -23,12 +23,14 @@
     <string name="authentication_password">Authentication Password</string>
     <string name="authenticate">Authenticate</string>
     <string name="updated_email">Updated Email</string>
+    <string name="updated_password">Updated Password</string>
     <string name="email_disabled">Email: (disabled)</string>
     <string name="password_authentication">Please enter password for authentication</string>
     <string name="please_enter_new_email">Please enter new email:</string>
-
+    <string name="loading_dialog">Loading...</string>
     <!-- health api ph-->
     <string name="health_news_api">79ff0812c8a64196bc8915db2042adee</string>
+
     <string name="category_name">CATEGORY NAME:</string>
     <string name="doctors_name">PHYSICIANS NAME:</string>
     <string name="patients_name">PATIENTS NAME:</string>

@@ -6,7 +6,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Intent;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -25,10 +28,10 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class ChangeEmailActivity extends AppCompatActivity {
 
-    private EditText mAuthEmail, mAuthPassword, mChangeEmail;
-    private Button mAuthenticateBtn, mChangeEmailBtn;
-
+    private EditText mAuthEmail, mAuthPassword, mChangeEmail, mChangePassword;
+    private Button mAuthenticateBtn, mChangeEmailPassword;
     private LinearLayout changeEmailLayout;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,45 +41,75 @@ public class ChangeEmailActivity extends AppCompatActivity {
         mAuthEmail = findViewById(R.id.etAuthEmail);
         mAuthPassword = findViewById(R.id.etAuthPassword);
         mChangeEmail = findViewById(R.id.etChangeEmail);
+        mChangePassword = findViewById(R.id.change_password);
 
         mAuthenticateBtn = findViewById(R.id.btnAuthenticate);
-        mChangeEmailBtn = findViewById(R.id.btnChangeEmailAddress);
+        mChangeEmailPassword = findViewById(R.id.change_email_pass);
 
         changeEmailLayout = findViewById(R.id.changeEmailLayout);
 
+        dialog = new ProgressDialog(ChangeEmailActivity.this);
         String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         mAuthEmail.setText(currentUserEmail);
 
         clickAuthenticateButton();
-        clickChangeEmail();
+        clickChangeEmailPass();
         displayTopNavBar(new topNavBarFragment("Change Email"));
         displayBottomNavBar(new bottomAppNavBarFragment());
     }
 
-    private void clickChangeEmail() {
-        mChangeEmailBtn.setOnClickListener(new View.OnClickListener() {
+    private void clickChangeEmailPass() {
+        mChangeEmailPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO validations before success
                 String changeEmail = mChangeEmail.getText().toString().trim();
+                String changePassword = mChangePassword.getText().toString().trim();
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                user.updateEmail(changeEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(ChangeEmailActivity.this, "Success", Toast.LENGTH_SHORT).show();
-                            mChangeEmail.setText("");
-                            mAuthPassword.setText("");
-                            mAuthPassword.setEnabled(true);
-                            mAuthenticateBtn.setEnabled(true);
-                            changeEmailLayout.setVisibility(View.GONE);
-                            startActivity(new Intent(ChangeEmailActivity.this, ChangeEmailActivity.class));
-                            finish();
-                        } else {
-                            Toast.makeText(ChangeEmailActivity.this, "Email already exists", Toast.LENGTH_SHORT).show();
+                if (changeEmail.isEmpty() || changePassword.isEmpty()) {
+                    mChangeEmail.setError("Email is required");
+                    mChangePassword.setError("Password is required");
+                    mChangeEmail.requestFocus();
+                    mChangePassword.requestFocus();
+                } else if (!HelperUtilities.isValidEmail(changeEmail)){
+                    mChangeEmail.setError("Please enter a valid email");
+                    mChangeEmail.requestFocus();
+                } else if (!HelperUtilities.isShortPassword(changePassword)) {
+                    mChangePassword.setError("Password should be more than 5 characters");
+                    mChangePassword.requestFocus();
+                } else {
+                    dialog.setTitle(R.string.loading_dialog);
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.show();
+                    user.updateEmail(changeEmail).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                String newUpdatedEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+                                mAuthEmail.setText(newUpdatedEmail);
+                                user.updatePassword(changePassword).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if (task.isSuccessful()) {
+                                            dialog.dismiss();
+                                            changeSuccessDialog().show();
+                                            mChangeEmail.setText("");
+                                            mAuthPassword.setText("");
+                                            mChangePassword.setText("");
+                                            mAuthPassword.setEnabled(true);
+                                            mAuthenticateBtn.setEnabled(true);
+                                            changeEmailLayout.setVisibility(View.GONE);
+                                        } else {
+                                            dialog.dismiss();
+                                        }
+                                    }
+                                });
+                            } else {
+                                dialog.dismiss();
+                                Toast.makeText(ChangeEmailActivity.this, "Email already exists", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                    }
-                });
+                    });
+                }
             }
         });
     }
@@ -89,26 +122,29 @@ public class ChangeEmailActivity extends AppCompatActivity {
                 String password = mAuthPassword.getText().toString().trim();
                 //TODO add validation if password is incorrect
                 if (password.isEmpty()) {
-                    Toast.makeText(ChangeEmailActivity.this, "Password is required", Toast.LENGTH_SHORT).show();
                     mAuthPassword.setError("Password is required");
                     mAuthPassword.requestFocus();
                 } else if (password.length() < 6) {
-                    Toast.makeText(ChangeEmailActivity.this, "Password is too short:\r6 or more characters is needed", Toast.LENGTH_SHORT).show();
                     mAuthPassword.setError("Password is too short: 6 or more is needed");
                     mAuthPassword.requestFocus();
                 } else {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                     AuthCredential credential = EmailAuthProvider.getCredential(email, password);
-
+                    dialog.setTitle(R.string.loading_dialog);
+                    dialog.setCanceledOnTouchOutside(false);
+                    dialog.show();
+                    assert user != null;
                     user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){
-                                Toast.makeText(ChangeEmailActivity.this, "User authenticated", Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
                                 changeEmailLayout.setVisibility(View.VISIBLE);
                                 mAuthPassword.setEnabled(false);
                                 mAuthenticateBtn.setEnabled(false);
+                                mChangeEmail.setText(email);
                             }else{
+                                dialog.dismiss();
                                 Toast.makeText(ChangeEmailActivity.this, "Password is incorrect", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -116,6 +152,19 @@ public class ChangeEmailActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private Dialog changeSuccessDialog() {
+        android.app.AlertDialog.Builder builder = new AlertDialog.Builder(ChangeEmailActivity.this);
+        builder.setMessage("Update Successfully")
+                .setTitle("Success")
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+
+                    }
+                });
+        return builder.create();
     }
 
     private void displayTopNavBar(Fragment fragment) {

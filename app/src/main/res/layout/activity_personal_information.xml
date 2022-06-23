@@ -63,7 +63,7 @@
                     android:background="@drawable/custom_input"
                     android:enabled="false"
                     android:fontFamily="@font/ubuntu_regular"
-                    android:hint="@string/update_first_name"
+                    android:hint="@string/blank_value"
                     android:imeOptions="actionNext"
                     android:maxLines="1"
                     android:padding="10dp"
@@ -78,7 +78,7 @@
                     android:background="@drawable/custom_input"
                     android:enabled="false"
                     android:fontFamily="@font/ubuntu_regular"
-                    android:hint="@string/update_last_name"
+                    android:hint="@string/blank_value"
                     android:imeOptions="actionNext"
                     android:maxLines="1"
                     android:padding="10dp"
@@ -93,7 +93,7 @@
                     android:background="@drawable/custom_input"
                     android:enabled="false"
                     android:fontFamily="@font/ubuntu_regular"
-                    android:hint="@string/update_phone"
+                    android:hint="@string/blank_value"
                     android:imeOptions="actionDone"
                     android:maxLines="1"
                     android:padding="10dp"
@@ -165,16 +165,7 @@
                     android:layout_height="wrap_content"
                     android:backgroundTint="#056A7C"
                     android:fontFamily="@font/ubuntu_regular"
-                    android:text="@string/change_email"
-                    android:textColor="@color/white" />
-
-                <Button
-                    android:id="@+id/btnChangePassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#056A7C"
-                    android:fontFamily="@font/ubuntu_regular"
-                    android:text="@string/change_password"
+                    android:text="@string/change_email_password"
                     android:textColor="@color/white" />
             </LinearLayout>
         </TableLayout>

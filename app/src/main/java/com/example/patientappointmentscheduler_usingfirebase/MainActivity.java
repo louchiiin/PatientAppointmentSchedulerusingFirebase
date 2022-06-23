@@ -28,7 +28,6 @@ import com.example.patientappointmentscheduler_usingfirebase.Interfaces.SelectLi
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.bottomAppNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.NewsApiResponse;
 import com.example.patientappointmentscheduler_usingfirebase.model.NewsHeadlines;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -125,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
 
     private void loadProfileDialog() {
         //dialog = new ProgressDialog(this);
-        dialog.setTitle("Loading..");
+        dialog.setTitle(R.string.loading_dialog);
         dialog.setCanceledOnTouchOutside(false);
         dialog.setCancelable(false);
         dialog.show();
@@ -142,7 +141,6 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         @Override
         public void onFetchData(List<NewsHeadlines> list, String message) {
             if(list.isEmpty()){
-                //Toast.makeText(MainActivity.this, "No data found, please try again!", Toast.LENGTH_SHORT).show();
                 noDataFoundDialog().show();
             } else {
                 showNews(list);

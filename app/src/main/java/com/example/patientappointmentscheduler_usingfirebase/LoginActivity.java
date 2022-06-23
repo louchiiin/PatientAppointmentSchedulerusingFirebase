@@ -13,9 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,13 +22,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -54,6 +45,7 @@ public class LoginActivity extends AppCompatActivity {
         inputPassword = findViewById(R.id.etUserPassword);
         tvLinkToRegister = findViewById(R.id.tvRegistrationLink);
         btnLogin = findViewById(R.id.btnLogin);
+        dialog = new ProgressDialog(LoginActivity.this);
         clickedLoginButton();
         clickLinkToRegister();
     }
@@ -86,15 +78,13 @@ public class LoginActivity extends AppCompatActivity {
                 inputPassword.requestFocus();
                 return;
             }
-            /*FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();*/
             mAuth.signInWithEmailAndPassword(getEmail, getPassword).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 //progress dialog bar
                                 Log.v(TAG, "signInWithCredential:success");
-                                ProgressDialog dialog = new ProgressDialog(LoginActivity.this);
-                                dialog.setTitle("Loading..");
+                                dialog.setTitle(R.string.loading_dialog);
                                 dialog.setCanceledOnTouchOutside(false);
                                 dialog.setCancelable(false);
                                 dialog.show();
@@ -107,8 +97,6 @@ public class LoginActivity extends AppCompatActivity {
                                         finish();
                                     }
                                 }, 2000); // 3000 milliseconds delay
-
-
                             } else {
                                 Log.v(TAG, "signInWithCredential:failure", task.getException());
                                 Toast.makeText(LoginActivity.this, "Invalid credentials, please try again",
@@ -145,15 +133,15 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(LoginActivity.this)
-                .setTitle("Alert")
-                .setMessage("Are you sure you want to exit?")
-                .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+        .setTitle("Alert")
+        .setMessage("Are you sure you want to exit?")
+        .setNegativeButton(android.R.string.no, null)
+        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        setResult(RESULT_OK, new Intent().putExtra("EXIT", true));
-                        finish();
-                    }
-                }).create().show();
+            public void onClick(DialogInterface arg0, int arg1) {
+                setResult(RESULT_OK, new Intent().putExtra("EXIT", true));
+                finish();
+            }
+        }).create().show();
     }
 }
