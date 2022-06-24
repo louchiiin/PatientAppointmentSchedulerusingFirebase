@@ -17,7 +17,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,8 +28,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.example.patientappointmentscheduler_usingfirebase.Fragments.bottomAppNavBarFragment;
-import com.example.patientappointmentscheduler_usingfirebase.Fragments.topNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.BottomAppNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.TopNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.Reservations;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -83,15 +82,23 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
         dateOfAppointment.setText(getTodayDate());
         selectDate();
         //time picker
-        timeOfAppointment = findViewById(R.id.btnSelectAppointmentTime);
+        timeOfAppointment = findViewById(R.id.select_appointment_time);
         selectTime();
         //get logged in user and cast into a textview
         getPatientsName();
         getAppointmentCategory();
         getDoctor();
+        dialog = new ProgressDialog(this);
         submitAppointment();
-        displayTopNavBar(new topNavBarFragment("Schedule an Appointment"));
-        displayBottomNavBar(new bottomAppNavBarFragment());
+        displayTopNavBar(new TopNavBarFragment("Schedule an Appointment"));
+        displayBottomNavBar(new BottomAppNavBarFragment());
+    }
+
+    private void displayTimePickerDialog(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.time_picker_frame, fragment);
+        fragmentTransaction.commit();
     }
 
     private void displayTopNavBar(Fragment fragment) {
@@ -133,6 +140,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
         timeOfAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //displayTimePickerDialog(new TimePickerDialogFragment());
                 TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener()
                 {
                     @Override
@@ -140,20 +148,15 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                     {
                         hour = selectedHour;
                         minute = selectedMinute;
-                        /*if (hour > 12){
-                            timeOfAppointment.setText(String.format(Locale.getDefault(), "%02d:%02d PM",hour-12, minute));
-                        } else {
-                            timeOfAppointment.setText(String.format(Locale.getDefault(), "%02d:%02d AM",hour, minute));
-                        }*/
                         timeOfAppointment.setText(String.format(Locale.getDefault(), "%02d:%02d",hour, minute));
                     }
                 };
-
-                TimePickerDialog timePickerDialog = new TimePickerDialog(ScheduleActivity.this, onTimeSetListener, hour, minute, true);
+                TimePickerDialog timePickerDialog = new TimePickerDialog(ScheduleActivity.this, TimePickerDialog.THEME_HOLO_LIGHT, onTimeSetListener, hour, minute, true);
                 timePickerDialog.setTitle("Select a time");
                 timePickerDialog.show();
             }
         });
+
     }
 
     private void selectDate() {
@@ -288,17 +291,10 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                             patientsName, dateAndTime, currentDate, status);
                     databaseReference.push().setValue(reservations);
                     //dialog before displaying values
-                    dialog = new ProgressDialog(this);
                     dialog.setTitle(R.string.loading_dialog);
                     dialog.setCanceledOnTouchOutside(false);
                     dialog.show();
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            addSuccessDialog().show();
-                        }
-                    }, 1500); //
-
+                    addSuccessDialog().show();
                 } else {
                     Toast.makeText(ScheduleActivity.this, "Error has occurred", Toast.LENGTH_SHORT).show();
                 }
@@ -350,7 +346,8 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                 .setTitle("Success")
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
+                    public void onClick(DialogInterface successDialog, int id) {
+                        dialog.dismiss();
                         Intent intent = new Intent(ScheduleActivity.this, PatientReservationActivity.class);
                         startActivity(intent);
                         /*finish();*/

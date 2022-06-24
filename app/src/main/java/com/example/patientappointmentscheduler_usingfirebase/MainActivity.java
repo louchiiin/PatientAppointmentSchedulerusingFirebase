@@ -25,7 +25,7 @@ import android.widget.Toast;
 import com.example.patientappointmentscheduler_usingfirebase.Adapter.CustomAdapter;
 import com.example.patientappointmentscheduler_usingfirebase.Interfaces.OnFetchDataListener;
 import com.example.patientappointmentscheduler_usingfirebase.Interfaces.SelectListener;
-import com.example.patientappointmentscheduler_usingfirebase.Fragments.bottomAppNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.BottomAppNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.NewsApiResponse;
 import com.example.patientappointmentscheduler_usingfirebase.model.NewsHeadlines;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,21 +54,21 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
 
         searchView = findViewById(R.id.svSearchNews);
 
-        mBusinessButton = findViewById(R.id.btnBusiness);
+        /*mBusinessButton = findViewById(R.id.btnBusiness);
         mEntertainmentButton = findViewById(R.id.btnEntertainment);
-        mGeneralButton = findViewById(R.id.btnGeneral);
+        mGeneralButton = findViewById(R.id.btnGeneral);*/
         mHealthButton = findViewById(R.id.btnHealth);
-        mScienceButton = findViewById(R.id.btnScience);
+        /*mScienceButton = findViewById(R.id.btnScience);
         mSportsButton = findViewById(R.id.btnSports);
-        mTechnologyButton = findViewById(R.id.btnTechnology);
+        mTechnologyButton = findViewById(R.id.btnTechnology);*/
 
-        mBusinessButton.setOnClickListener(this);
+        /*mBusinessButton.setOnClickListener(this);
         mEntertainmentButton.setOnClickListener(this);
-        mGeneralButton.setOnClickListener(this);
+        mGeneralButton.setOnClickListener(this);*/
         mHealthButton.setOnClickListener(this);
-        mScienceButton.setOnClickListener(this);
+        /*mScienceButton.setOnClickListener(this);
         mSportsButton.setOnClickListener(this);
-        mTechnologyButton.setOnClickListener(this);
+        mTechnologyButton.setOnClickListener(this);*/
 
         //progress dialog bar
         dialog = new ProgressDialog(this);
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
 
         searchNews();
         profileInfo();
-        displayBottomNavBar(new bottomAppNavBarFragment());
+        displayBottomNavBar(new BottomAppNavBarFragment());
         clickEmailButton();
         clickWebButton();
         clickPhoneButton();

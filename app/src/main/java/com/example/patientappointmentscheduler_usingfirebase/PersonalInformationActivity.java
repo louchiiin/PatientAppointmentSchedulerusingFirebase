@@ -18,8 +18,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
-import com.example.patientappointmentscheduler_usingfirebase.Fragments.bottomAppNavBarFragment;
-import com.example.patientappointmentscheduler_usingfirebase.Fragments.topNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.BottomAppNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.TopNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.PatientInfo;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -58,8 +58,8 @@ public class PersonalInformationActivity extends AppCompatActivity {
         layoutUpdate = findViewById(R.id.layoutUpdate);
         btnChangeEmail = findViewById(R.id.btnChangeEmail);
 
-        displayTopNavBar(new topNavBarFragment("Personal Information"));
-        displayBottomNavBar(new bottomAppNavBarFragment());
+        displayTopNavBar(new TopNavBarFragment("Personal Information"));
+        displayBottomNavBar(new BottomAppNavBarFragment());
 
         dialog = new ProgressDialog(PersonalInformationActivity.this);
         dialog.setTitle(R.string.loading_dialog);

@@ -9,13 +9,12 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.patientappointmentscheduler_usingfirebase.Fragments.topNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.TopNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.PatientInfo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -45,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        displayTopNavBar(new topNavBarFragment("Registration"));
+        displayTopNavBar(new TopNavBarFragment("Registration"));
         backToLoginTxt();
         registerUser();
     }

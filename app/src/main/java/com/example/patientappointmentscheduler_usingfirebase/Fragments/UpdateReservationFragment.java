@@ -6,8 +6,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 
 
@@ -25,13 +23,9 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import com.example.patientappointmentscheduler_usingfirebase.Interfaces.CloseModal;
-import com.example.patientappointmentscheduler_usingfirebase.PatientReservationActivity;
 import com.example.patientappointmentscheduler_usingfirebase.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -40,19 +34,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class updateReservationFragment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class UpdateReservationFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     public static final String CATEGORY_NAME = "CATEGORY NAME";
     public static final String DOCTORS_NAME = "DOCTORS NAME";
@@ -76,8 +64,6 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
     //time picker
     private Button timeOfAppointment;
     private int hour, minute;
-
-
     //interface
     private CloseModal closeModal;
 
@@ -85,7 +71,7 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
     private DatabaseReference databaseReference;
     private Calendar calendar;
     //fragment constructor
-    public updateReservationFragment(CloseModal closeModal){
+    public UpdateReservationFragment(CloseModal closeModal){
         this.closeModal = closeModal;
     }
 
@@ -113,13 +99,12 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
         initDatePicker();
         //time picker
         timeOfAppointment = view.findViewById(R.id.btnUpdateAppointmentTime);
-        selectTime();
-
         mCloseButton = view.findViewById(R.id.ivCloseButton);
         mUpdateCancelButton = view.findViewById(R.id.btnUpdateCancel);
         mUpdateReservationButton = view.findViewById(R.id.btnUpdateSave);
 
         getBundles();
+        selectTime();
         getUpdateAppointmentCategory();
         getUpdateDoctor();
         closeFragment();
@@ -174,8 +159,6 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        getParentFragmentManager().beginTransaction().remove(updateReservationFragment.this).commit();
-                        startActivity(new Intent(getActivity(),PatientReservationActivity.class));
                         getActivity().finish();
                     }
                 });
@@ -208,16 +191,13 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
                     {
                         hour = selectedHour;
                         minute = selectedMinute;
-                        /*if (hour > 12){
-                            timeOfAppointment.setText(String.format(Locale.getDefault(), "%02d:%02d PM",hour-12, minute));
-                        } else {
-                            timeOfAppointment.setText(String.format(Locale.getDefault(), "%02d:%02d AM",hour, minute));
-                        }*/
                         timeOfAppointment.setText(String.format(Locale.getDefault(), "%02d:%02d",hour, minute));
                     }
 
                 };
-                TimePickerDialog timePickerDialog = new TimePickerDialog(getActivity(), onTimeSetListener, hour, minute, true);
+                String[] timeSplit = scheduleTime.split(":");
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(getContext(), TimePickerDialog.THEME_HOLO_LIGHT, onTimeSetListener, Integer.parseInt(timeSplit[0]), Integer.parseInt(timeSplit[1]), true);
                 timePickerDialog.setTitle("Select a time");
                 timePickerDialog.show();
             }
@@ -265,7 +245,7 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
         mUpdateCancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getFragmentManager().beginTransaction().remove(updateReservationFragment.this).commit();
+                getParentFragmentManager().beginTransaction().remove(UpdateReservationFragment.this).commit();
             }
         });
     }
@@ -274,7 +254,7 @@ public class updateReservationFragment extends Fragment implements AdapterView.O
         mCloseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().remove(updateReservationFragment.this).commit();
+                getParentFragmentManager().beginTransaction().remove(UpdateReservationFragment.this).commit();
             }
         });
     }

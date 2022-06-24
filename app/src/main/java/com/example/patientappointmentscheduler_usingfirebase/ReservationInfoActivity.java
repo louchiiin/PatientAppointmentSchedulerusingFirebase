@@ -27,9 +27,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.patientappointmentscheduler_usingfirebase.Interfaces.CloseModal;
-import com.example.patientappointmentscheduler_usingfirebase.Fragments.bottomAppNavBarFragment;
-import com.example.patientappointmentscheduler_usingfirebase.Fragments.topNavBarFragment;
-import com.example.patientappointmentscheduler_usingfirebase.Fragments.updateReservationFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.BottomAppNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.TopNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.UpdateReservationFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -60,6 +60,8 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
     private static final String APPOINTMENT_TIME = "APPOINTMENT TIME";
 
     private TextView tvGetCategoryName, tvGetDoctorsName, tvGetPatientsName, tvGetScheduleDateTime, tvGetCreatedDate, tvGetReservationID, mPushNotificationButton;
+
+    private String getCategoryName, getDoctorsName, getPatientsName, getScheduleDateTime, getCreatedDate, getReservationID;
 
     private Button mCancelReservationButton, mAddToGoogleCalendarButton, mUpdateReservationButton;
 
@@ -92,21 +94,21 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
         addToGoogleCalendar();
         cancelAppointment();
         updateReservationModal();
-        addPushNotification();
-        displayTopNavBar(new topNavBarFragment("Appointment Information"));
-        displayBottomNavBar(new bottomAppNavBarFragment());
+        addPushNotification(getCategoryName);
+        displayTopNavBar(new TopNavBarFragment("Appointment Information"));
+        displayBottomNavBar(new BottomAppNavBarFragment());
     }
 
-    private void addPushNotification() {
+    private void addPushNotification(String categoryName) {
         mPushNotificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addPushNotificationDialog().show();
+                addPushNotificationDialog(categoryName).show();
             }
         });
     }
 
-    private Dialog addPushNotificationDialog() {
+    private Dialog addPushNotificationDialog(String category) {
 
         String getScheduleDateTime = getIntent().getStringExtra(SCHEDULE_DATETIME);
 
@@ -141,10 +143,6 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
         calendar.set(Calendar.MINUTE, Integer.parseInt(getMinutes));
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
-        /*calendar.set(Calendar.HOUR_OF_DAY, 8);
-        calendar.set(Calendar.MINUTE, 32);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);*/
 
         patientReservationNotificationChannel();
 
@@ -159,21 +157,24 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
                 alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
                 Intent intent = new Intent (ReservationInfoActivity.this, AlarmReceiver.class);
+                intent.putExtra("CATEGORY", category);
+                //different request code each time
+                //TODO loop request code
+                final int requestCode = (int) System.currentTimeMillis();
+
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-                    pendingIntent = PendingIntent.getBroadcast
-                            (ReservationInfoActivity.this, 0, intent, PendingIntent.FLAG_MUTABLE);
-                    Log.v("NOTIF", "SetSuccessNotification");
+                    pendingIntent = PendingIntent.getBroadcast(ReservationInfoActivity.this, requestCode, intent, PendingIntent.FLAG_IMMUTABLE);
+                    Log.v("NOTIF", "SetSuccessNotification" + " request Code" + requestCode);
                 }
                 else
                 {
-                    pendingIntent = PendingIntent.getBroadcast
-                            (ReservationInfoActivity.this, 0, intent, 0);
+                    pendingIntent = PendingIntent.getBroadcast(ReservationInfoActivity.this, requestCode, intent, 0);
 
-                    Log.v("NOTIF", "SetSuccessNotificationNonAndroid12");
+                    Log.v("NOTIF", "SetSuccessNotificationNonAndroid12" + " request Code" + requestCode);
                 }
 
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                Toast.makeText(ReservationInfoActivity.this, "Notification set "+calendar, Toast.LENGTH_SHORT).show();
+                Toast.makeText(ReservationInfoActivity.this, "Notification set successfully!", Toast.LENGTH_SHORT).show();
                 Log.v("CHECK", String.valueOf(calendar));
 
                 dialog.dismiss();
@@ -188,9 +189,8 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
         return builder.create();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     private void patientReservationNotificationChannel() {
-        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Louchin Channel";
             String description = "Channel For Alarm Manager";
             int importance = NotificationManager.IMPORTANCE_HIGH;
@@ -198,15 +198,7 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
             channel.setDescription(description);
 
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        } else {
-            CharSequence name = "Louchin Channel";
-            String description = "Channel For Alarm Manager";
-            int importance = NotificationManager.IMPORTANCE_HIGH;
-            NotificationChannel channel = new NotificationChannel("notificationID", name, importance);
-            channel.setDescription(description);
 
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
     }
@@ -233,10 +225,10 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
                 mCancelReservationButton.setEnabled(false);
                 mUpdateReservationButton.setEnabled(false);
 
-                String getCategoryName = getIntent().getStringExtra(CATEGORY_NAME);
-                String getDoctorsName = getIntent().getStringExtra(DOCTORS_NAME);
-                String getScheduleDateTime = getIntent().getStringExtra(SCHEDULE_DATETIME);
-                String getReservationID = getIntent().getStringExtra(RESERVATION_ID);
+                getCategoryName = getIntent().getStringExtra(CATEGORY_NAME);
+                getDoctorsName = getIntent().getStringExtra(DOCTORS_NAME);
+                getScheduleDateTime = getIntent().getStringExtra(SCHEDULE_DATETIME);
+                getReservationID = getIntent().getStringExtra(RESERVATION_ID);
                 //get getScheduleDateTime String to DateFormat
                 DateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm", Locale.getDefault());
                 //format each values from getScheduleDateTime
@@ -259,7 +251,7 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
                 bundle.putString(APPOINTMENT_DATE, getDate);
                 bundle.putString(APPOINTMENT_TIME, getTime);
                 bundle.putString(RESERVATION_ID, getReservationID);
-                updateReservationFragment passBundle = new updateReservationFragment(tempActivity);
+                UpdateReservationFragment passBundle = new UpdateReservationFragment(tempActivity);
                 passBundle.setArguments(bundle);
                 displayUpdateReservation(passBundle);
                 updateDialog.dismiss();
@@ -297,12 +289,12 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
         tvGetCreatedDate = findViewById(R.id.tvGetCreatedDate);
         tvGetReservationID = findViewById(R.id.tvGetReservationID);
         //to string
-        String getCategoryName = getIntent().getStringExtra(CATEGORY_NAME);
-        String getDoctorsName = getIntent().getStringExtra(DOCTORS_NAME);
-        String getPatientsName = getIntent().getStringExtra(PATIENTS_NAME);
-        String getScheduleDateTime = getIntent().getStringExtra(SCHEDULE_DATETIME);
-        String getCreatedDate = getIntent().getStringExtra(CREATED_DATE);
-        String getReservationID = getIntent().getStringExtra(RESERVATION_ID);
+        getCategoryName = getIntent().getStringExtra(CATEGORY_NAME);
+        getDoctorsName = getIntent().getStringExtra(DOCTORS_NAME);
+        getPatientsName = getIntent().getStringExtra(PATIENTS_NAME);
+        getScheduleDateTime = getIntent().getStringExtra(SCHEDULE_DATETIME);
+        getCreatedDate = getIntent().getStringExtra(CREATED_DATE);
+        getReservationID = getIntent().getStringExtra(RESERVATION_ID);
 
         tvGetCategoryName.setText(getCategoryName);
         tvGetDoctorsName.setText(getDoctorsName);
@@ -424,8 +416,8 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         for (DataSnapshot removeFromDB: dataSnapshot.getChildren()) {
-                            removeReservationDialog().show();
                             removeFromDB.getRef().removeValue();
+                            removeReservationDialog().show();
                         }
                     }
                     @Override
@@ -452,8 +444,8 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        Intent intent = new Intent(ReservationInfoActivity.this, PatientReservationActivity.class);
-                        startActivity(intent);
+                        /*Intent intent = new Intent(ReservationInfoActivity.this, PatientReservationActivity.class);
+                        startActivity(intent);*/
                         finish();
                     }
                 });

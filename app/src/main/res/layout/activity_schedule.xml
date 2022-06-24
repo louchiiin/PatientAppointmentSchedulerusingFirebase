@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="20dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -78,6 +78,7 @@
                 android:padding="10dp" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tvDoctor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -88,6 +89,7 @@
                 android:textSize="20sp" />
 
             <Spinner
+                android:visibility="gone"
                 android:id="@+id/spDoctors"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -122,7 +124,7 @@
                     android:textSize="18sp" />
 
                 <Button
-                    android:id="@+id/btnSelectAppointmentTime"
+                    android:id="@+id/select_appointment_time"
                     style="?android:spinnerStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -134,12 +136,11 @@
                     android:textSize="18sp" />
 
             </LinearLayout>
-
             <Button
                 android:id="@+id/btnSubmitAppointment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:backgroundTint="#056A7C"
                 android:fontFamily="@font/ubuntu_bold"
                 android:text="Submit"
@@ -147,6 +148,16 @@
                 android:textSize="24dp" />
         </LinearLayout>
     </ScrollView>
+
+    <FrameLayout
+        android:id="@+id/time_picker_frame"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/scheduleScrollView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/scheduleScrollView"
+        app:layout_constraintTop_toBottomOf="@+id/scheduleTopNav"/>
+
     <FrameLayout
         android:id="@+id/frameLayoutScheduleBottomAppNavBar"
         android:layout_width="match_parent"

@@ -30,7 +30,7 @@
             android:textSize="30sp" />
     </FrameLayout>
 
-    <ScrollView
+    <LinearLayout
         android:id="@+id/mainScrollView"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -38,7 +38,8 @@
         app:layout_constraintBottom_toTopOf="@+id/botMainGuideLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/topMainGuidLine">
+        app:layout_constraintTop_toTopOf="@+id/topMainGuidLine"
+        android:orientation="vertical">
 
         <TableLayout
             android:layout_width="wrap_content"
@@ -179,6 +180,7 @@
                         android:orientation="horizontal">
 
                         <Button
+                            android:visibility="gone"
                             android:id="@+id/btnBusiness"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -191,6 +193,7 @@
                             android:textSize="12sp" />
 
                         <Button
+                            android:visibility="gone"
                             android:id="@+id/btnEntertainment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -203,6 +206,7 @@
                             android:textSize="12sp" />
 
                         <Button
+                            android:visibility="gone"
                             android:id="@+id/btnGeneral"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -227,6 +231,7 @@
                             android:textSize="12sp" />
 
                         <Button
+                            android:visibility="gone"
                             android:id="@+id/btnScience"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -239,6 +244,7 @@
                             android:textSize="12sp" />
 
                         <Button
+                            android:visibility="gone"
                             android:id="@+id/btnSports"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -251,6 +257,7 @@
                             android:textSize="12sp" />
 
                         <Button
+                            android:visibility="gone"
                             android:id="@+id/btnTechnology"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -287,7 +294,7 @@
                     android:layout_marginTop="10dp" />
             </LinearLayout>
         </TableLayout>
-    </ScrollView>
+    </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/topMainGuidLine"

@@ -24,10 +24,10 @@ import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link bottomAppNavBarFragment#newInstance} factory method to
+ * Use the {@link BottomAppNavBarFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class bottomAppNavBarFragment extends Fragment {
+public class BottomAppNavBarFragment extends Fragment {
     private View view;
     private TextView btnHome, btnView, btnReservation, btnSchedule, btnLogout;
     // TODO: Rename parameter arguments, choose names that match
@@ -39,7 +39,7 @@ public class bottomAppNavBarFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public bottomAppNavBarFragment() {
+    public BottomAppNavBarFragment() {
         // Required empty public constructor
     }
 
@@ -52,8 +52,8 @@ public class bottomAppNavBarFragment extends Fragment {
      * @return A new instance of fragment bottomAppNavBarFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static bottomAppNavBarFragment newInstance(String param1, String param2) {
-        bottomAppNavBarFragment fragment = new bottomAppNavBarFragment();
+    public static BottomAppNavBarFragment newInstance(String param1, String param2) {
+        BottomAppNavBarFragment fragment = new BottomAppNavBarFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

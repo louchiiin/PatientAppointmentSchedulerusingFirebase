@@ -17,8 +17,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.patientappointmentscheduler_usingfirebase.Fragments.bottomAppNavBarFragment;
-import com.example.patientappointmentscheduler_usingfirebase.Fragments.topNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.BottomAppNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.TopNavBarFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -54,8 +54,8 @@ public class ChangeEmailActivity extends AppCompatActivity {
 
         clickAuthenticateButton();
         clickChangeEmailPass();
-        displayTopNavBar(new topNavBarFragment("Change Email"));
-        displayBottomNavBar(new bottomAppNavBarFragment());
+        displayTopNavBar(new TopNavBarFragment("Change Email"));
+        displayBottomNavBar(new BottomAppNavBarFragment());
     }
 
     private void clickChangeEmailPass() {

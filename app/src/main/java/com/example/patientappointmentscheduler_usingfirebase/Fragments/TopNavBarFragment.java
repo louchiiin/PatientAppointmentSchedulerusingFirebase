@@ -11,14 +11,14 @@ import android.widget.TextView;
 
 import com.example.patientappointmentscheduler_usingfirebase.R;
 
-public class topNavBarFragment extends Fragment {
+public class TopNavBarFragment extends Fragment {
     private View view;
     private TextView tvBack, tvTopNavTitle;
     private String navBarTitle;
 
-    public topNavBarFragment(){
+    public TopNavBarFragment(){
     }
-    public topNavBarFragment(String navTitle) {
+    public TopNavBarFragment(String navTitle) {
         // Required empty public constructor
         this.navBarTitle = navTitle;
     }

@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.patientappointmentscheduler_usingfirebase.Fragments.bottomAppNavBarFragment;
-import com.example.patientappointmentscheduler_usingfirebase.Fragments.topNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.BottomAppNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.Fragments.TopNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.model.NewsHeadlines;
 import com.squareup.picasso.Picasso;
 
@@ -39,8 +39,8 @@ public class NewsDetailActivity extends AppCompatActivity {
         tvNewsContent.setText(headlines.getContent());
         Picasso.get().load(headlines.getUrlToImage()).into(ivDetailNewsImg);
 
-        displayTopNavBar(new topNavBarFragment("News Detail"));
-        displayBottomNavBar(new bottomAppNavBarFragment());
+        displayTopNavBar(new TopNavBarFragment("News Detail"));
+        displayBottomNavBar(new BottomAppNavBarFragment());
     }
 
     private void displayTopNavBar(Fragment fragment) {

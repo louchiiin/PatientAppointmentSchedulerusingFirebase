@@ -4,22 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Fragments.updateReservationFragment">
+    tools:context=".Fragments.UpdateReservationFragment">
 
     <View
-        android:clickable="true"
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black_translucent" />
+        android:background="@color/black_translucent"
+        android:clickable="true" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
         android:layout_marginTop="120dp"
-        android:layout_marginStart="25dp"
-        android:layout_marginEnd="25dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="20dp">
 
@@ -58,6 +58,7 @@
                 android:textColor="@color/black"/>
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tvUpdateDoctorsName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -67,6 +68,7 @@
                 android:textColor="@color/black" />
 
             <Spinner
+                android:visibility="gone"
                 android:id="@+id/spUpdateDoctorsName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -146,12 +148,12 @@
 
     <ImageView
         android:id="@+id/ivCloseButton"
-        android:layout_width="58dp"
+        android:layout_width="45dp"
         android:layout_height="55dp"
         android:layout_alignParentEnd="true"
         android:layout_gravity="right"
         android:layout_marginTop="100dp"
-        android:layout_marginEnd="5dp"
+        android:layout_marginEnd="1dp"
         android:background="?selectableItemBackground"
         android:clickable="true"
         android:elevation="22dp"

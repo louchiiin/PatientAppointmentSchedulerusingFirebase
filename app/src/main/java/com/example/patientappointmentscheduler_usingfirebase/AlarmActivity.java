@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.patientappointmentscheduler_usingfirebase.databinding.ActivityAlarmBinding;
@@ -27,7 +26,7 @@ public class AlarmActivity extends AppCompatActivity {
     private Calendar calendar;
     private AlarmManager alarmManager;
     private PendingIntent pendingIntent;
-    private TimePicker timePicker123;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
