@@ -188,31 +188,34 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
                 //TODO request code
                 final int requestCode = (int) System.currentTimeMillis();
 
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S && (finalReservationTime.compareTo(finalCurrentDateFormatted) > 0) ) {
-                    pendingIntent = PendingIntent.getBroadcast(ReservationInfoActivity.this, requestCode, intent, PendingIntent.FLAG_MUTABLE);
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),"Notification Set Successfully!",Snackbar.LENGTH_SHORT);
-                    snackbar.setTextColor(ContextCompat.getColor(ReservationInfoActivity.this,R.color.white));
-                    snackbar.setBackgroundTint(ContextCompat.getColor(ReservationInfoActivity.this,R.color.lime_green));
-                    snackbar.show();
-                    Log.v("NOTIF", "SetSuccessNotification" + " request Code " + requestCode + " " + finalCurrentDateFormatted + " " + finalReservationTime);
-                } else {
-                    assert finalCurrentDateFormatted != null;
-                    if (finalCurrentDateFormatted.compareTo(finalReservationTime) == 0 || finalCurrentDateFormatted.compareTo(finalReservationTime) > 0) {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                    if (finalReservationTime.compareTo(finalCurrentDateFormatted) > 0) {
+                        pendingIntent = PendingIntent.getBroadcast(ReservationInfoActivity.this, requestCode, intent, PendingIntent.FLAG_IMMUTABLE);
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Notification Set Successfully!", Snackbar.LENGTH_SHORT);
+                        snackbar.setTextColor(ContextCompat.getColor(ReservationInfoActivity.this, R.color.white));
+                        snackbar.setBackgroundTint(ContextCompat.getColor(ReservationInfoActivity.this, R.color.lime_green));
+                        snackbar.show();
+                        Log.v("NOTIF", "SetSuccessNotification" + " request Code " + requestCode + " " + finalCurrentDateFormatted + " " + finalReservationTime);
+                    } else if (finalCurrentDateFormatted.compareTo(finalReservationTime) == 0 || finalCurrentDateFormatted.compareTo(finalReservationTime) > 0) {
                         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Unable to set current/past date and time", Snackbar.LENGTH_LONG);
-                        snackbar.setTextColor(ContextCompat.getColor(ReservationInfoActivity.this,R.color.white));
-                        snackbar.setBackgroundTint(ContextCompat.getColor(ReservationInfoActivity.this,R.color.crimson_red));
+                        snackbar.setTextColor(ContextCompat.getColor(ReservationInfoActivity.this, R.color.white));
+                        snackbar.setBackgroundTint(ContextCompat.getColor(ReservationInfoActivity.this, R.color.crimson_red));
                         snackbar.show();
                         Log.v("NOTIF", "Could not set alarm on past dates");
                     } else {
+                        Log.v("NOTIF", "WTF");
+                    }
+                }else {
                         pendingIntent = PendingIntent.getBroadcast(ReservationInfoActivity.this, requestCode, intent, 0);
                         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),"Notification Set Successfully!",Snackbar.LENGTH_SHORT);
                         snackbar.setTextColor(ContextCompat.getColor(ReservationInfoActivity.this,R.color.white));
                         snackbar.setBackgroundTint(ContextCompat.getColor(ReservationInfoActivity.this,R.color.lime_green));
+                        snackbar.show();
                         Log.v("NOTIF", "SetSuccessNotificationNonAndroid12" + " request Code " + " " + requestCode + finalCurrentDateFormatted + " " + finalReservationTime);
                     }
-                }
+
                 dialog.dismiss();
             }
         });
