@@ -18,6 +18,7 @@ import com.example.patientappointmentscheduler_usingfirebase.Fragments.TopNavBar
 import com.example.patientappointmentscheduler_usingfirebase.model.PatientInfo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -44,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        displayTopNavBar(new TopNavBarFragment("Registration"));
+        displayTopNavBar(new TopNavBarFragment("Registration", this));
         backToLoginTxt();
         registerUser();
     }
@@ -101,10 +102,10 @@ public class RegisterActivity extends AppCompatActivity {
             } else if (!HelperUtilities.isValidEmail(email)) {
                 etEmail.setError("Please enter a valid email");
                 etEmail.requestFocus();
-            } else if (!HelperUtilities.isValidPhone(password)) {
-                etPhone.setError("Please enter a valid phone number \rex: 09291234567");
+            } else if (!HelperUtilities.isValidPhone(phone)) {
+                etPhone.setError("Please enter a valid phone number \rex: 09291234567 ");
                 etPhone.requestFocus();
-            } else if (HelperUtilities.isShortPassword(password)){
+            } else if (!HelperUtilities.isShortPassword(password)){
                 etPassword.setError("Password should be more than 5 characters");
                 etPassword.requestFocus();
             } else {
@@ -150,8 +151,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dialog.dismiss();
                 databaseReference.child(patientInfo.getUid()).setValue(patientInfo);
-                Toast.makeText(RegisterActivity.this,
-                        "Successful Registration!", Toast.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(android.R.id.content),"Successful Registration",Snackbar.LENGTH_SHORT).show();
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                 finish();
             }

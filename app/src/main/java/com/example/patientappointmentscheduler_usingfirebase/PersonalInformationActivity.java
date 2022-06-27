@@ -14,6 +14,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -49,6 +50,7 @@ public class PersonalInformationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_information);
+        animateLoading();
 
         etUpdateFirstName = findViewById(R.id.etUpdateFirstName);
         etUpdateLastName = findViewById(R.id.etUpdateLastName);
@@ -58,8 +60,8 @@ public class PersonalInformationActivity extends AppCompatActivity {
         layoutUpdate = findViewById(R.id.layoutUpdate);
         btnChangeEmail = findViewById(R.id.btnChangeEmail);
 
-        displayTopNavBar(new TopNavBarFragment("Personal Information"));
-        displayBottomNavBar(new BottomAppNavBarFragment());
+        displayTopNavBar(new TopNavBarFragment("Personal Information", this));
+        displayBottomNavBar(new BottomAppNavBarFragment(this));
 
         dialog = new ProgressDialog(PersonalInformationActivity.this);
         dialog.setTitle(R.string.loading_dialog);
@@ -70,6 +72,10 @@ public class PersonalInformationActivity extends AppCompatActivity {
         clickUpdateButton();
         clickCancelButton();
         clickSave();
+    }
+
+    private void animateLoading() {
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void clickChangeEmail() {
@@ -244,6 +250,7 @@ public class PersonalInformationActivity extends AppCompatActivity {
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                displayUserValues();
                 etUpdateFirstName.setEnabled(false);
                 etUpdateLastName.setEnabled(false);
                 etUpdatePhone.setEnabled(false);
@@ -260,8 +267,14 @@ public class PersonalInformationActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // set edit text to enabled
+                etUpdateFirstName.setSingleLine(true);
+                etUpdateFirstName.setImeOptions(EditorInfo.IME_ACTION_NEXT);
                 etUpdateFirstName.setEnabled(true);
+                etUpdateLastName.setImeOptions(EditorInfo.IME_ACTION_NEXT);
+                etUpdateLastName.setSingleLine(true);
                 etUpdateLastName.setEnabled(true);
+                etUpdatePhone.setImeOptions(EditorInfo.IME_ACTION_DONE);
+                etUpdatePhone.setSingleLine(true);
                 etUpdatePhone.setEnabled(true);
                 //layout gone/visible
                 layoutUpdate.setVisibility(View.GONE);
@@ -274,6 +287,7 @@ public class PersonalInformationActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
         finish();
     }
 }

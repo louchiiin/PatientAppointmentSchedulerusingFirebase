@@ -70,6 +70,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_schedule);
+        animateLoading();
 
         tvDoctor = findViewById(R.id.tvDoctor);
         spDoctors = findViewById(R.id.spDoctors);
@@ -90,15 +91,12 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
         getDoctor();
         dialog = new ProgressDialog(this);
         submitAppointment();
-        displayTopNavBar(new TopNavBarFragment("Schedule an Appointment"));
-        displayBottomNavBar(new BottomAppNavBarFragment());
+        displayTopNavBar(new TopNavBarFragment("Schedule an Appointment", this));
+        displayBottomNavBar(new BottomAppNavBarFragment(this));
     }
 
-    private void displayTimePickerDialog(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.time_picker_frame, fragment);
-        fragmentTransaction.commit();
+    private void animateLoading() {
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void displayTopNavBar(Fragment fragment) {

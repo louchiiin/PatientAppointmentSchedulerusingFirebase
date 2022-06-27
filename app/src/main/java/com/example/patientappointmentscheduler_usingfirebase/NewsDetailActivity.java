@@ -39,8 +39,8 @@ public class NewsDetailActivity extends AppCompatActivity {
         tvNewsContent.setText(headlines.getContent());
         Picasso.get().load(headlines.getUrlToImage()).into(ivDetailNewsImg);
 
-        displayTopNavBar(new TopNavBarFragment("News Detail"));
-        displayBottomNavBar(new BottomAppNavBarFragment());
+        displayTopNavBar(new TopNavBarFragment("News Detail", this));
+        displayBottomNavBar(new BottomAppNavBarFragment(this));
     }
 
     private void displayTopNavBar(Fragment fragment) {

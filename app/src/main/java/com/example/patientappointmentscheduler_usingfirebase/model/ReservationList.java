@@ -1,6 +1,7 @@
 package com.example.patientappointmentscheduler_usingfirebase.model;
 
-public class ReservationList {
+
+public class ReservationList implements Comparable<ReservationList> {
     String reservationID;
     String loggedInUid;
     String appointmentCategory;
@@ -86,5 +87,10 @@ public class ReservationList {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public int compareTo(ReservationList o) {
+        return appointmentDateTime.compareTo(o.appointmentDateTime);
     }
 }

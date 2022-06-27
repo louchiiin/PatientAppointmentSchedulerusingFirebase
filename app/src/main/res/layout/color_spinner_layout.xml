@@ -5,6 +5,6 @@
     android:text="text"
     android:fontFamily="@font/ubuntu_bold"
     android:textColor="#056A7C"
-    android:textSize="18sp">
+    android:textSize="16sp">
 
 </CheckedTextView>

@@ -2,6 +2,7 @@ package com.example.patientappointmentscheduler_usingfirebase;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -17,6 +18,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.CalendarContract;
@@ -24,12 +26,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.patientappointmentscheduler_usingfirebase.Interfaces.CloseModal;
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.BottomAppNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.TopNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.UpdateReservationFragment;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -78,13 +80,12 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reservation_info);
-
+        animateLoading();
         //dialog before displaying values
         dialog = new ProgressDialog(this);
         dialog.setTitle(R.string.loading_dialog);
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
-
         mAddToGoogleCalendarButton = findViewById(R.id.btnAddToGoogleCalendar);
         mCancelReservationButton = findViewById(R.id.btnCancelReservation);
         mUpdateReservationButton = findViewById(R.id.btnUpdateReservation);
@@ -95,12 +96,17 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
         cancelAppointment();
         updateReservationModal();
         addPushNotification(getCategoryName);
-        displayTopNavBar(new TopNavBarFragment("Appointment Information"));
-        displayBottomNavBar(new BottomAppNavBarFragment());
+        displayTopNavBar(new TopNavBarFragment("Appointment Information", this));
+        displayBottomNavBar(new BottomAppNavBarFragment(this));
+    }
+
+    private void animateLoading() {
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void addPushNotification(String categoryName) {
         mPushNotificationButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 addPushNotificationDialog(categoryName).show();
@@ -141,8 +147,25 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(getDay));
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(getHour));
         calendar.set(Calendar.MINUTE, Integer.parseInt(getMinutes));
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+        /*calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);*/
+        String formattedTime = String.format(Locale.getDefault(), "%02d:%02d", Integer.parseInt(getHour), Integer.parseInt(getMinutes));
+        String checkTimeSet = getMonth + "-" + getDay + "-" + getYear + " " + formattedTime;
+
+        DateFormat alarmFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm", Locale.getDefault());
+        Date currentDateTime = new Date();
+        String newDate = alarmFormat.format(currentDateTime);
+
+        Date currentDateFormatted = null;
+        Date reservationTime = null;
+        try {
+            currentDateFormatted = alarmFormat.parse(newDate);
+            reservationTime = alarmFormat.parse(checkTimeSet);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        Log.v("NOTIF", "Alarm Set " + reservationTime + " " + currentDateFormatted);
 
         patientReservationNotificationChannel();
 
@@ -150,6 +173,9 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
         builder.setCancelable(false);
         builder.setTitle("Notification");
         builder.setMessage("Set push notification for this appointment?");
+
+        Date finalCurrentDateFormatted = currentDateFormatted;
+        Date finalReservationTime = reservationTime;
 
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @SuppressLint("UnspecifiedImmutableFlag")
@@ -159,24 +185,29 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
                 Intent intent = new Intent (ReservationInfoActivity.this, AlarmReceiver.class);
                 intent.putExtra("CATEGORY", category);
                 //different request code each time
-                //TODO loop request code
+                //TODO request code
                 final int requestCode = (int) System.currentTimeMillis();
 
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S && (finalReservationTime.compareTo(finalCurrentDateFormatted) > 0) ) {
                     pendingIntent = PendingIntent.getBroadcast(ReservationInfoActivity.this, requestCode, intent, PendingIntent.FLAG_IMMUTABLE);
-                    Log.v("NOTIF", "SetSuccessNotification" + " request Code" + requestCode);
+                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                    Snackbar.make(findViewById(android.R.id.content),"Notification Set Successfully!",Snackbar.LENGTH_SHORT).show();
+                    Log.v("NOTIF", "SetSuccessNotification" + " request Code " + requestCode + " " + finalCurrentDateFormatted + " " + finalReservationTime);
+                } else {
+                    assert finalCurrentDateFormatted != null;
+                    if (finalCurrentDateFormatted.compareTo(finalReservationTime) == 0 || finalCurrentDateFormatted.compareTo(finalReservationTime) > 0) {
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Unable to set current/past date and time", Snackbar.LENGTH_LONG);
+                        snackbar.setTextColor(ContextCompat.getColor(ReservationInfoActivity.this,R.color.white));
+                        snackbar.setBackgroundTint(ContextCompat.getColor(ReservationInfoActivity.this,R.color.crimson_red));
+                        snackbar.show();
+                        Log.v("NOTIF", "Could not set alarm on past dates");
+                    } else {
+                        pendingIntent = PendingIntent.getBroadcast(ReservationInfoActivity.this, requestCode, intent, 0);
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                        Snackbar.make(findViewById(android.R.id.content),"Notification Set Successfully!",Snackbar.LENGTH_SHORT).show();
+                        Log.v("NOTIF", "SetSuccessNotificationNonAndroid12" + " request Code " + " " + requestCode + finalCurrentDateFormatted + " " + finalReservationTime);
+                    }
                 }
-                else
-                {
-                    pendingIntent = PendingIntent.getBroadcast(ReservationInfoActivity.this, requestCode, intent, 0);
-
-                    Log.v("NOTIF", "SetSuccessNotificationNonAndroid12" + " request Code" + requestCode);
-                }
-
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                Toast.makeText(ReservationInfoActivity.this, "Notification set successfully!", Toast.LENGTH_SHORT).show();
-                Log.v("CHECK", String.valueOf(calendar));
-
                 dialog.dismiss();
             }
         });
@@ -384,8 +415,7 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
                 if(intent.resolveActivity(getPackageManager()) != null){
                     startActivity(intent);
                 }else{
-                    Toast.makeText(ReservationInfoActivity.this,
-                            "Google Calendar is not installed in your device", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(android.R.id.content),"Calendar application is not installed in your device",Snackbar.LENGTH_SHORT).show();
                 }
                 dialog.dismiss();
             }
@@ -465,5 +495,4 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
             finish();
         }
     }
-
 }

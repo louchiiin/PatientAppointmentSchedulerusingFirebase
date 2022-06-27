@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -26,9 +27,12 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class PatientReservationActivity extends AppCompatActivity {
@@ -48,6 +52,7 @@ public class PatientReservationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_reservation);
+        animateLoading();
         dialog = new ProgressDialog(this);
         dialog.setTitle(R.string.loading_dialog);
         dialog.setCanceledOnTouchOutside(false);
@@ -74,8 +79,12 @@ public class PatientReservationActivity extends AppCompatActivity {
         });
 
         displayReservationList();
-        displayTopNavBar(new TopNavBarFragment("Reservations"));
-        displayBottomNavBar(new BottomAppNavBarFragment());
+        displayTopNavBar(new TopNavBarFragment("Reservations", this));
+        displayBottomNavBar(new BottomAppNavBarFragment(this));
+    }
+
+    private void animateLoading() {
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void displayTopNavBar(Fragment fragment) {
@@ -95,17 +104,16 @@ public class PatientReservationActivity extends AppCompatActivity {
     private void displayReservationList() {
         //initialize
         rvReservations = findViewById(R.id.rvReservations);
-        reservationListAdapter = new ReservationListAdapter();
+        reservationListAdapter = new ReservationListAdapter(this);
         rvReservations.setAdapter(reservationListAdapter);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Reservations");
-        /*rvReservations.setHasFixedSize(true);
-        rvReservations.setLayoutManager(new LinearLayoutManager(this));*/
 
-        //list = new ArrayList<>();
-        /*reservationAdapter = new ReservationAdapter(this, list);
-        rvReservations.setAdapter(reservationAdapter);*/
         getValuesFromFirebase();
+        //sort by appointmentDateTime DESC
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        rvReservations.setLayoutManager(linearLayoutManager);
     }
 
     private void getValuesFromFirebase() {
@@ -115,7 +123,6 @@ public class PatientReservationActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         List<ReservationList> listReservation = new ArrayList<>();
-
                         for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                             Log.d("User key", dataSnapshot.getKey());
                             Log.d("User ref", dataSnapshot.getRef().toString());
@@ -125,17 +132,13 @@ public class PatientReservationActivity extends AppCompatActivity {
                             ReservationList reservationList = dataSnapshot.getValue(ReservationList.class);
                             reservationList.setReservationID(uniqueKey);
                             listReservation.add(reservationList);
-                            //list.add(reservationList);
-                            //index++;
                         }
+
                         reservationListAdapter.submitList(listReservation);
-                        //reservationAdapter.notifyDataSetChanged();
-                        //rvReservations.invalidate();
+                        Collections.sort(listReservation);
                         dialog.dismiss();
-                        //mNumberOfItems.setText(" (" + list.size() + ")");
                         mNumberOfItems.setText(" (" + listReservation.size() + ")");
 
-                        //if (list.size() == 0) {
                         if (listReservation.size() == 0) {
                             tvNoResultsFound.setVisibility(View.VISIBLE);
                             btnBackToHome.setVisibility(View.VISIBLE);
@@ -151,10 +154,6 @@ public class PatientReservationActivity extends AppCompatActivity {
                     }
 
                 });
-        //mock data for testing
-        /*listReservation.add(new ReservationList("121", "123", "APE",
-                "Doctor1", "2022-06-19", "16:00", "2022-05-24", "RESERVED"));
-        reservationListAdapter.submitList(listReservation);*/
     }
 
     //onBackPressed

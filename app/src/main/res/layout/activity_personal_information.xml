@@ -64,8 +64,6 @@
                     android:enabled="false"
                     android:fontFamily="@font/ubuntu_regular"
                     android:hint="@string/blank_value"
-                    android:imeOptions="actionNext"
-                    android:maxLines="1"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="#737373" />
@@ -79,8 +77,6 @@
                     android:enabled="false"
                     android:fontFamily="@font/ubuntu_regular"
                     android:hint="@string/blank_value"
-                    android:imeOptions="actionNext"
-                    android:maxLines="1"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="#737373" />
@@ -94,8 +90,6 @@
                     android:enabled="false"
                     android:fontFamily="@font/ubuntu_regular"
                     android:hint="@string/blank_value"
-                    android:imeOptions="actionDone"
-                    android:maxLines="1"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textColorHint="#737373" />
@@ -149,9 +143,9 @@
                 android:id="@+id/linearLayout4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
+                android:layout_marginStart="28dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginEnd="28dp"
                 android:orientation="vertical"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

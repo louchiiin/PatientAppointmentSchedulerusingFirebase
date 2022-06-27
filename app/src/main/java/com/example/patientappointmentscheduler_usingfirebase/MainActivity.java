@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        animateLoading();
         searchView = findViewById(R.id.svSearchNews);
 
         /*mBusinessButton = findViewById(R.id.btnBusiness);
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
 
         searchNews();
         profileInfo();
-        displayBottomNavBar(new BottomAppNavBarFragment());
+        displayBottomNavBar(new BottomAppNavBarFragment(this));
         clickEmailButton();
         clickWebButton();
         clickPhoneButton();
@@ -86,6 +87,10 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         //health news listener
         RequestManager manager = new RequestManager(MainActivity.this);
         manager.getNewsHeadLines(listener, "health", null);
+    }
+
+    private void animateLoading() {
+        overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
     }
 
     private void searchNews() {

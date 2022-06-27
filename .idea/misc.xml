@@ -82,14 +82,16 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/activity_patient_reservation.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_personal_information.xml" value="0.33125" />
-        <entry key="app/src/main/res/layout/activity_reservation_info.xml" value="0.23143115942028986" />
+        <entry key="app/src/main/res/layout/activity_reservation_info.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_schedule.xml" value="0.10638297872340426" />
+        <entry key="app/src/main/res/layout/color_spinner_layout.xml" value="0.1625" />
         <entry key="app/src/main/res/layout/dialog_notification_time.xml" value="0.23143115942028986" />
+        <entry key="app/src/main/res/layout/fragment_bottom_app_nav.xml" value="0.23369565217391305" />
         <entry key="app/src/main/res/layout/fragment_time_picker.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_time_picker_dialog.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_top_nav_bar.xml" value="0.30480072463768115" />
         <entry key="app/src/main/res/layout/fragment_update_reservation.xml" value="0.23143115942028986" />
-        <entry key="app/src/main/res/layout/reservation_list_item.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/reservation_list_item.xml" value="0.3314393939393939" />
         <entry key="app/src/main/res/layout/time_picker.xml" value="0.29981884057971014" />
         <entry key="app/src/main/res/layout/time_picker_spinner.xml" value="0.1" />
       </map>

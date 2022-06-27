@@ -2,6 +2,7 @@ package com.example.patientappointmentscheduler_usingfirebase;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -15,12 +16,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.BottomAppNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.TopNavBarFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +38,7 @@ public class ChangeEmailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_email);
+        animateLoading();
         //initialize
         mAuthEmail = findViewById(R.id.etAuthEmail);
         mAuthPassword = findViewById(R.id.etAuthPassword);
@@ -54,8 +56,12 @@ public class ChangeEmailActivity extends AppCompatActivity {
 
         clickAuthenticateButton();
         clickChangeEmailPass();
-        displayTopNavBar(new TopNavBarFragment("Change Email"));
-        displayBottomNavBar(new BottomAppNavBarFragment());
+        displayTopNavBar(new TopNavBarFragment("Change Email", this));
+        displayBottomNavBar(new BottomAppNavBarFragment(this));
+    }
+
+    private void animateLoading() {
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void clickChangeEmailPass() {
@@ -105,7 +111,7 @@ public class ChangeEmailActivity extends AppCompatActivity {
                                 });
                             } else {
                                 dialog.dismiss();
-                                Toast.makeText(ChangeEmailActivity.this, "Email already exists", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(findViewById(android.R.id.content),"Email already exists",Snackbar.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -120,7 +126,6 @@ public class ChangeEmailActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = mAuthEmail.getText().toString().trim();
                 String password = mAuthPassword.getText().toString().trim();
-                //TODO add validation if password is incorrect
                 if (password.isEmpty()) {
                     mAuthPassword.setError("Password is required");
                     mAuthPassword.requestFocus();
@@ -139,13 +144,17 @@ public class ChangeEmailActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()){
                                 dialog.dismiss();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Authenticated Successfully", Snackbar.LENGTH_LONG);
+                                snackbar.setTextColor(ContextCompat.getColor(ChangeEmailActivity.this,R.color.white));
+                                snackbar.setBackgroundTint(ContextCompat.getColor(ChangeEmailActivity.this,R.color.teal_700));
+                                snackbar.show();
                                 changeEmailLayout.setVisibility(View.VISIBLE);
                                 mAuthPassword.setEnabled(false);
                                 mAuthenticateBtn.setEnabled(false);
                                 mChangeEmail.setText(email);
                             }else{
                                 dialog.dismiss();
-                                Toast.makeText(ChangeEmailActivity.this, "Password is incorrect", Toast.LENGTH_SHORT).show();
+                                Snackbar.make(findViewById(android.R.id.content),"Password is incorrect",Snackbar.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -179,5 +188,13 @@ public class ChangeEmailActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.frameLayoutChangeEmailBottomAppNavBar, fragment);
         fragmentTransaction.commit();
+    }
+
+    //onBackPressed
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+        finish();
     }
 }

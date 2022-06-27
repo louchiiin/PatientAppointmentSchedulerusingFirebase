@@ -1,6 +1,7 @@
 package com.example.patientappointmentscheduler_usingfirebase.Adapter;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +20,11 @@ import com.example.patientappointmentscheduler_usingfirebase.model.ReservationLi
 
 public class ReservationListAdapter extends ListAdapter<ReservationList, ReservationListAdapter.ViewHolder> {
 
-    public ReservationListAdapter() {
+    private Activity mActivity;
+
+    public ReservationListAdapter(Activity activity) {
         super(new ReservationDiffCallback());
+        this.mActivity = activity;
     }
 
     @NonNull
@@ -65,6 +69,7 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
                     intent.putExtra("CREATED DATE", createdDate);
                     intent.putExtra("RESERVATION ID", reservationID);
                     view.getContext().startActivity(intent);
+                    mActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
             });
         }

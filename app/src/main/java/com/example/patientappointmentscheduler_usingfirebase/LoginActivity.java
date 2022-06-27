@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -38,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        animateLoading();
         //firebase
         mAuth = FirebaseAuth.getInstance();
         //castings
@@ -48,6 +50,10 @@ public class LoginActivity extends AppCompatActivity {
         dialog = new ProgressDialog(LoginActivity.this);
         clickedLoginButton();
         clickLinkToRegister();
+    }
+
+    private void animateLoading() {
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     private void clickLinkToRegister() {
@@ -63,17 +69,17 @@ public class LoginActivity extends AppCompatActivity {
             String getPassword = inputPassword.getText().toString().trim();
 
             if (TextUtils.isEmpty(getEmail)){
-                Toast.makeText(LoginActivity.this, "Email is empty", Toast.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(android.R.id.content),"Email is empty",Snackbar.LENGTH_SHORT).show();
                 inputEmail.setError("Email should not be empty");
                 inputEmail.requestFocus();
                 return;
             } else if (TextUtils.isEmpty(getPassword)){
-                Toast.makeText(LoginActivity.this, "Password is empty", Toast.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(android.R.id.content),"Password is empty",Snackbar.LENGTH_SHORT).show();
                 inputPassword.setError("Password should not be empty");
                 inputPassword.requestFocus();
                 return;
             } else if (getPassword.length() < 6) {
-                Toast.makeText(LoginActivity.this, "Password needs 6 or more characters", Toast.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(android.R.id.content),"Password needs 6 or more characters",Snackbar.LENGTH_SHORT).show();
                 inputPassword.setError("Password needs 6 or more characters");
                 inputPassword.requestFocus();
                 return;
@@ -99,8 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                                 }, 2000); // 3000 milliseconds delay
                             } else {
                                 Log.v(TAG, "signInWithCredential:failure", task.getException());
-                                Toast.makeText(LoginActivity.this, "Invalid credentials, please try again",
-                                        Toast.LENGTH_SHORT).show();
+                                Snackbar.make(findViewById(android.R.id.content),"Invalid credentials, please try again!",Snackbar.LENGTH_SHORT).show();
                                 inputEmail.setError("Invalid credentials, please try again");
                                 inputPassword.setError("Invalid credentials, please try again");
                                 inputEmail.requestFocus();
@@ -124,8 +129,7 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             this.finish();
         } else {
-            Toast.makeText(LoginActivity.this,
-                    "Please re-log in again!", Toast.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(android.R.id.content),"Please re-login",Snackbar.LENGTH_SHORT).show();
         }
     }
 
