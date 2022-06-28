@@ -1,4 +1,4 @@
-package com.example.patientappointmentscheduler_usingfirebase;
+package com.example.patientappointmentscheduler_usingfirebase.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.BottomAppNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.TopNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.R;
 import com.example.patientappointmentscheduler_usingfirebase.model.NewsHeadlines;
 import com.squareup.picasso.Picasso;
 

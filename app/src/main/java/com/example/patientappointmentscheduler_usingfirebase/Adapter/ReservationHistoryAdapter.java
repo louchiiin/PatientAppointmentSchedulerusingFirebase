@@ -17,21 +17,15 @@ import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.patientappointmentscheduler_usingfirebase.R;
-import com.example.patientappointmentscheduler_usingfirebase.Activity.ReservationInfoActivity;
 import com.example.patientappointmentscheduler_usingfirebase.model.ReservationList;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
-public class ReservationListAdapter extends ListAdapter<ReservationList, ReservationListAdapter.ViewHolder> {
+public class ReservationHistoryAdapter extends ListAdapter<ReservationList, ReservationHistoryAdapter.ViewHolder> {
 
     private Activity mActivity;
     private Context mContext;
 
-    public ReservationListAdapter(Activity activity, Context context) {
+    public ReservationHistoryAdapter(Activity activity, Context context) {
         super(new ReservationDiffCallback());
         this.mActivity = activity;
         this.mContext = context;
@@ -59,7 +53,7 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
 
             lvReservationItem = itemView.findViewById(R.id.list_reservation_item);
             //on on click each item
-            lvReservationItem.setOnClickListener(new View.OnClickListener() {
+            /*lvReservationItem.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     //values to string
@@ -80,7 +74,7 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
                     view.getContext().startActivity(intent);
                     mActivity.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                 }
-            });
+            });*/
         }
         public void bindTo(ReservationList reservationList){
             tvCategoryName.setText(reservationList.getAppointmentCategory());
@@ -90,28 +84,8 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
             tvCreatedDate.setText(reservationList.getCurrentDate());
             tvReservationID.setText(reservationList.getReservationID());
 
-            String getDateTime = reservationList.getAppointmentDateTime();
-
-            DateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm", Locale.getDefault());
-            Date currentDateTime = new Date();
-            String newDate = inputFormat.format(currentDateTime);
-
-            Date currentDateFormatted = null;
-            Date reservationTime = null;
-            try {
-                currentDateFormatted = inputFormat.parse(newDate);
-                reservationTime = inputFormat.parse(getDateTime);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            //reservation time is less than current Date
-            assert reservationTime != null;
-            if (reservationTime.compareTo(currentDateFormatted) < 0)    {
-                lvReservationItem.setClickable(false);
-                lvReservationItem.setBackgroundColor(ContextCompat.getColor(mContext, R.color.dark_gray));
-            } else {
-                lvReservationItem.setClickable(true);
-            }
+            lvReservationItem.setClickable(false);
+            lvReservationItem.setBackgroundColor(ContextCompat.getColor(mContext, R.color.dark_gray));
         }
     }
 
@@ -134,14 +108,14 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
         @Override
         public boolean areContentsTheSame(@NonNull ReservationList oldItem, @NonNull ReservationList newItem) {
             return
-                oldItem.getReservationID().equals(newItem.getReservationID()) &&
-                oldItem.getLoggedInUid().equals(newItem.getLoggedInUid()) &&
-                oldItem.getAppointmentCategory().equals(newItem.getAppointmentCategory()) &&
-                oldItem.getPatientsName().equals(newItem.getPatientsName()) &&
-                oldItem.getDoctorsName().equals(newItem.getDoctorsName()) &&
-                oldItem.getAppointmentDateTime().equals(newItem.getAppointmentDateTime()) &&
-                oldItem.getCurrentDate().equals(newItem.getCurrentDate()) &&
-                oldItem.getStatus().equals(newItem.getStatus());
+                    oldItem.getReservationID().equals(newItem.getReservationID()) &&
+                            oldItem.getLoggedInUid().equals(newItem.getLoggedInUid()) &&
+                            oldItem.getAppointmentCategory().equals(newItem.getAppointmentCategory()) &&
+                            oldItem.getPatientsName().equals(newItem.getPatientsName()) &&
+                            oldItem.getDoctorsName().equals(newItem.getDoctorsName()) &&
+                            oldItem.getAppointmentDateTime().equals(newItem.getAppointmentDateTime()) &&
+                            oldItem.getCurrentDate().equals(newItem.getCurrentDate()) &&
+                            oldItem.getStatus().equals(newItem.getStatus());
         }
     }
 }

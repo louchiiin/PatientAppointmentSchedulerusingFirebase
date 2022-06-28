@@ -6,28 +6,31 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/background"
-    tools:context=".PatientReservationActivity">
+    tools:context=".Activity.PatientReservationActivity">
 
 
         <FrameLayout
-            android:id="@+id/patientReservationTopNav"
+            android:id="@+id/reservation_top_nav"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+            app:layout_constraintBottom_toTopOf="@+id/top_patient_guide_line"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0" />
 
         <LinearLayout
-            android:id="@+id/scrollView2"
+            android:id="@+id/linear_layout_rv"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:fillViewport="true"
-            app:layout_constraintBottom_toTopOf="@+id/botPatientGuideLine"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:padding="10dp"
+            app:layout_constraintBottom_toTopOf="@+id/bot_patient_guideline"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/topPatientGuideLine"
+            app:layout_constraintTop_toTopOf="@+id/top_patient_guide_line"
             app:layout_constraintVertical_bias="0.0">
             <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/swipe_pull_refresh"
@@ -39,13 +42,12 @@
                 app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
-                android:id="@+id/linearLayout7"
+                android:id="@+id/linear_layout_reservation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/patientReservationTopNav"
+                android:layout_below="@+id/reservation_top_nav"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
-                android:padding="10dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -59,7 +61,7 @@
                         android:fontFamily="@font/ubuntu_bold"
                         android:text="@string/your_reservations"
                         android:textColor="@color/black"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"/>
 
                     <TextView
                         android:id="@+id/number_of_items"
@@ -68,7 +70,21 @@
                         android:fontFamily="@font/ubuntu_bold"
                         android:text="@string/blank_value"
                         android:textColor="@color/black"
-                        android:textSize="20sp" />
+                        android:textSize="20sp"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:id="@+id/reservation_history"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/ubuntu_bold"
+                        android:text="History"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:background="?selectableItemBackground"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:layout_gravity="right"/>
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -89,59 +105,41 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvNoResultsFound"
+            android:id="@+id/no_results_found"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/ubuntu_regular"
             android:gravity="center"
-            android:text="NO RESULTS \nFOUND"
+            android:text="@string/no_results_found"
             android:textSize="40sp"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/frameLayoutReservationsBottomAppNavBar"
+            app:layout_constraintBottom_toTopOf="@+id/reservation_bottom_nav_bar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.31" />
 
-        <Button
-            android:id="@+id/btnBackToHome"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvNoResultsFound"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:backgroundTint="@color/blue_green"
-            android:fontFamily="@font/ubuntu_regular"
-            android:gravity="center"
-            android:text="BACK"
-            android:textColor="@color/white"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@+id/frameLayoutReservationsBottomAppNavBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvNoResultsFound"
-            app:layout_constraintVertical_bias="0.17000002" />
+
         <FrameLayout
-            android:id="@+id/frameLayoutReservationsBottomAppNavBar"
+            android:id="@+id/reservation_bottom_nav_bar"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_alignParentBottom="true"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+            app:layout_constraintTop_toBottomOf="@+id/bot_patient_guideline"
             tools:ignore="NotSibling" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/topPatientGuideLine"
+            android:id="@+id/top_patient_guide_line"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.075" />
+            app:layout_constraintGuide_begin="55dp" />
 
         <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/botPatientGuideLine"
+            android:id="@+id/bot_patient_guideline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

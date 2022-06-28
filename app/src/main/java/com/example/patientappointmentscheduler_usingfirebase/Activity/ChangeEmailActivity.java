@@ -1,4 +1,4 @@
-package com.example.patientappointmentscheduler_usingfirebase;
+package com.example.patientappointmentscheduler_usingfirebase.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.BottomAppNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.TopNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
@@ -77,7 +78,7 @@ public class ChangeEmailActivity extends AppCompatActivity {
                 } else if (changePassword.isEmpty()) {
                     mChangePassword.setError("Password is required");
                     mChangePassword.requestFocus();
-                } else if (!HelperUtilities.isValidEmail(changeEmail)){
+                }else if (!HelperUtilities.isValidEmail(changeEmail)){
                     mChangeEmail.setError("Please enter a valid email");
                     mChangeEmail.requestFocus();
                 } else if (!HelperUtilities.isShortPassword(changePassword)) {
@@ -107,10 +108,12 @@ public class ChangeEmailActivity extends AppCompatActivity {
                                             changeEmailLayout.setVisibility(View.GONE);
                                         } else {
                                             dialog.dismiss();
-                                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "There was an error on the passowrd", Snackbar.LENGTH_LONG);
+                                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Incorrect Credentials", Snackbar.LENGTH_LONG);
                                             snackbar.setTextColor(ContextCompat.getColor(ChangeEmailActivity.this,R.color.white));
                                             snackbar.setBackgroundTint(ContextCompat.getColor(ChangeEmailActivity.this,R.color.red));
                                             snackbar.show();
+                                            mChangePassword.setError("Incorrect Credentials");
+                                            mChangePassword.requestFocus();
                                         }
                                     }
                                 });
@@ -140,7 +143,11 @@ public class ChangeEmailActivity extends AppCompatActivity {
                     mAuthPassword.setError("Password is required");
                     mAuthPassword.requestFocus();
                 } else if (password.length() < 6) {
-                    mAuthPassword.setError("Password is too short: 6 or more is needed");
+                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Password is incorrect", Snackbar.LENGTH_LONG);
+                    snackbar.setTextColor(ContextCompat.getColor(ChangeEmailActivity.this,R.color.white));
+                    snackbar.setBackgroundTint(ContextCompat.getColor(ChangeEmailActivity.this,R.color.red));
+                    snackbar.show();
+                    mAuthPassword.setError("Password is incorrect");
                     mAuthPassword.requestFocus();
                 } else {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -179,7 +186,7 @@ public class ChangeEmailActivity extends AppCompatActivity {
     }
 
     private Dialog changeSuccessDialog() {
-        android.app.AlertDialog.Builder builder = new AlertDialog.Builder(ChangeEmailActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ChangeEmailActivity.this);
         builder.setMessage("Update Successfully")
                 .setTitle("Success")
                 .setCancelable(false)

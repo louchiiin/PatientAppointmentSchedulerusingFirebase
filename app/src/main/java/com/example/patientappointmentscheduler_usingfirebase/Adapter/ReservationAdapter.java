@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.patientappointmentscheduler_usingfirebase.R;
-import com.example.patientappointmentscheduler_usingfirebase.ReservationInfoActivity;
+import com.example.patientappointmentscheduler_usingfirebase.Activity.ReservationInfoActivity;
 import com.example.patientappointmentscheduler_usingfirebase.model.ReservationList;
 
 import java.util.ArrayList;

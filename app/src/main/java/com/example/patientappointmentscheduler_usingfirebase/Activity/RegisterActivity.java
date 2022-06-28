@@ -1,7 +1,8 @@
-package com.example.patientappointmentscheduler_usingfirebase;
+package com.example.patientappointmentscheduler_usingfirebase.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -9,12 +10,13 @@ import androidx.fragment.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.TopNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.R;
 import com.example.patientappointmentscheduler_usingfirebase.model.PatientInfo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -131,13 +133,15 @@ public class RegisterActivity extends AppCompatActivity {
                                         String getUid = getRegisteredUser.getUid();
                                         addPatientInfo(getUid, firstName, lastName, phone);
                                     } else {
-                                        Toast.makeText(RegisterActivity.this,
-                                                "Email already exists", Toast.LENGTH_SHORT).show();
-                                        etEmail.setError("Email already exists");
+                                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Email already exists!", Snackbar.LENGTH_LONG);
+                                        snackbar.setTextColor(ContextCompat.getColor(RegisterActivity.this,R.color.white));
+                                        snackbar.setBackgroundTint(ContextCompat.getColor(RegisterActivity.this,R.color.red));
+                                        snackbar.show();
+                                        etEmail.setError("Email already exists!");
                                         etEmail.requestFocus();
                                     }
                                 } catch (Exception e) {
-                                    Toast.makeText(RegisterActivity.this, "ERROR: " + e, Toast.LENGTH_SHORT).show();
+                                    Log.e("ERROR", "error displayed: " + e);
                                 }
 
                         }
@@ -152,12 +156,16 @@ public class RegisterActivity extends AppCompatActivity {
         patientInfo.setLastName(lastName);
         patientInfo.setPhone(phone);
 
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dialog.dismiss();
                 databaseReference.child(patientInfo.getUid()).setValue(patientInfo);
-                Snackbar.make(findViewById(android.R.id.content),"Successful Registration",Snackbar.LENGTH_SHORT).show();
+                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Successful Registration!", Snackbar.LENGTH_LONG);
+                snackbar.setTextColor(ContextCompat.getColor(RegisterActivity.this,R.color.white));
+                snackbar.setBackgroundTint(ContextCompat.getColor(RegisterActivity.this,R.color.lime_green));
+                snackbar.show();
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                 finish();
             }

@@ -1,4 +1,4 @@
-package com.example.patientappointmentscheduler_usingfirebase;
+package com.example.patientappointmentscheduler_usingfirebase.Activity;
 
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
@@ -10,8 +10,8 @@ import android.util.Log;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
+import com.example.patientappointmentscheduler_usingfirebase.R;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class AlarmReceiver extends BroadcastReceiver {
 

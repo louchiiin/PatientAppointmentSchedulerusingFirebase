@@ -1,4 +1,4 @@
-package com.example.patientappointmentscheduler_usingfirebase;
+package com.example.patientappointmentscheduler_usingfirebase.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -26,6 +26,7 @@ import com.example.patientappointmentscheduler_usingfirebase.Adapter.CustomAdapt
 import com.example.patientappointmentscheduler_usingfirebase.Interfaces.OnFetchDataListener;
 import com.example.patientappointmentscheduler_usingfirebase.Interfaces.SelectListener;
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.BottomAppNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.R;
 import com.example.patientappointmentscheduler_usingfirebase.model.NewsApiResponse;
 import com.example.patientappointmentscheduler_usingfirebase.model.NewsHeadlines;
 import com.google.firebase.auth.FirebaseAuth;

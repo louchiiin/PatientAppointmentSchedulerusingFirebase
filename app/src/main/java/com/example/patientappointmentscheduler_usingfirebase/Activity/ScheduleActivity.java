@@ -1,4 +1,4 @@
-package com.example.patientappointmentscheduler_usingfirebase;
+package com.example.patientappointmentscheduler_usingfirebase.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -26,10 +26,10 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.BottomAppNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.TopNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.R;
 import com.example.patientappointmentscheduler_usingfirebase.model.Reservations;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -259,7 +259,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
             String appointmentTime = timeOfAppointment.getText().toString();
             String dateAndTime = (appointmentDate + " " + appointmentTime);
 
-            String status = "RESERVED";
+            String status = "active";
 
             String getCategory = spAppointmentCategory.getSelectedItem().toString();
 
@@ -272,11 +272,9 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                     emptyTimeDialog().show();
                 } else if (appointmentCategory != null && doctorsName!= null) {
                     Reservations reservations = new Reservations(loggedInUid, appointmentCategory,
-                            doctorsName, patientsName, dateAndTime, currentDate, status);
+                            doctorsName, patientsName, dateAndTime, currentDate, status, loggedInUid + "_" + status);
                     databaseReference.push().setValue(reservations);
                     addSuccessDialog().show();
-                } else {
-                    Toast.makeText(ScheduleActivity.this, "Error has occurred", Toast.LENGTH_SHORT).show();
                 }
             } else {
                 if (appointmentCategory.isEmpty()) {
@@ -285,20 +283,18 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                     emptyTimeDialog().show();
                 } else if (appointmentCategory != null) {
                     String multipleDoctors = "N/A";
-                    Reservations reservations = new Reservations(loggedInUid, appointmentCategory, multipleDoctors,
-                            patientsName, dateAndTime, currentDate, status);
+                    Reservations reservations = new Reservations(loggedInUid, appointmentCategory,
+                            multipleDoctors, patientsName, dateAndTime, currentDate, status, loggedInUid + "_" + status);
                     databaseReference.push().setValue(reservations);
                     //dialog before displaying values
                     dialog.setTitle(R.string.loading_dialog);
                     dialog.setCanceledOnTouchOutside(false);
                     dialog.show();
                     addSuccessDialog().show();
-                } else {
-                    Toast.makeText(ScheduleActivity.this, "Error has occurred", Toast.LENGTH_SHORT).show();
                 }
             }
         } catch (Exception e){
-            Toast.makeText(ScheduleActivity.this, "Error" + e, Toast.LENGTH_SHORT).show();
+            Log.e("ERROR", "error is " + e);
         }
     }
 

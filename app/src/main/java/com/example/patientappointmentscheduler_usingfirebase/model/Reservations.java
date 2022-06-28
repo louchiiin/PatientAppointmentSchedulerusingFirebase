@@ -8,11 +8,12 @@ public class Reservations {
     String appointmentDateTime;
     String currentDate;
     String status;
+    String loggedInUid_status;
 
     public Reservations() {
     }
 
-    public Reservations(String loggedInUid, String appointmentCategory, String doctorsName, String patientsName, String appointmentDateTime, String currentDate, String status) {
+    public Reservations(String loggedInUid, String appointmentCategory, String doctorsName, String patientsName, String appointmentDateTime, String currentDate, String status, String loggedInUid_status) {
         this.loggedInUid = loggedInUid;
         this.appointmentCategory = appointmentCategory;
         this.doctorsName = doctorsName;
@@ -20,6 +21,15 @@ public class Reservations {
         this.appointmentDateTime = appointmentDateTime;
         this.currentDate = currentDate;
         this.status = status;
+        this.loggedInUid_status = loggedInUid_status;
+    }
+
+    public String getLoggedInUid_status() {
+        return loggedInUid_status;
+    }
+
+    public void setLoggedInUid_status(String loggedInUid_status) {
+        this.loggedInUid_status = loggedInUid_status;
     }
 
     public String getLoggedInUid() {

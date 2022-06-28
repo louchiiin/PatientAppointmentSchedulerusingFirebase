@@ -1,4 +1,4 @@
-package com.example.patientappointmentscheduler_usingfirebase;
+package com.example.patientappointmentscheduler_usingfirebase.Activity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -88,7 +88,7 @@ public class HelperUtilities {
     }
 
     public static boolean isShortPassword(String password) {
-        if (password.length() < 5) {
+        if (password.length() <= 5) {
             return false;
         }
         return true;

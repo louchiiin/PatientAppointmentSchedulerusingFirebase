@@ -1,4 +1,4 @@
-package com.example.patientappointmentscheduler_usingfirebase;
+package com.example.patientappointmentscheduler_usingfirebase.Activity;
 
 
 import android.app.ProgressDialog;
@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +19,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.patientappointmentscheduler_usingfirebase.Adapter.ReservationListAdapter;
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.BottomAppNavBarFragment;
 import com.example.patientappointmentscheduler_usingfirebase.Fragments.TopNavBarFragment;
+import com.example.patientappointmentscheduler_usingfirebase.R;
 import com.example.patientappointmentscheduler_usingfirebase.model.ReservationList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -33,13 +33,13 @@ import java.util.Collections;
 import java.util.List;
 
 public class PatientReservationActivity extends AppCompatActivity {
-    private RecyclerView rvReservations;
     private ReservationListAdapter reservationListAdapter;
     private DatabaseReference databaseReference;
     private ProgressDialog dialog;
 
-    private TextView tvNoResultsFound, mNumberOfItems;
-    private Button btnBackToHome;
+    private TextView mNoResults;
+    private TextView mNumberOfItems;
+    private TextView mHistory;
 
     private SwipeRefreshLayout mSwipeRefreshLayout;
 
@@ -63,12 +63,13 @@ public class PatientReservationActivity extends AppCompatActivity {
         });
 
         mNumberOfItems = findViewById(R.id.number_of_items);
-        tvNoResultsFound = findViewById(R.id.tvNoResultsFound);
-        btnBackToHome = findViewById(R.id.btnBackToHome);
-        btnBackToHome.setOnClickListener(new View.OnClickListener() {
+        mNoResults = findViewById(R.id.no_results_found);
+        mHistory = findViewById(R.id.reservation_history);
+
+        mHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(PatientReservationActivity.this, MainActivity.class);
+                Intent intent = new Intent(PatientReservationActivity.this, ReservationHistoryActivity.class);
                 startActivity(intent);
             }
         });
@@ -85,31 +86,31 @@ public class PatientReservationActivity extends AppCompatActivity {
     private void displayTopNavBar(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.patientReservationTopNav, fragment);
+        fragmentTransaction.replace(R.id.reservation_top_nav, fragment);
         fragmentTransaction.commit();
     }
 
     private void displayBottomNavBar(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayoutReservationsBottomAppNavBar, fragment);
+        fragmentTransaction.replace(R.id.reservation_bottom_nav_bar, fragment);
         fragmentTransaction.commit();
     }
 
     private void displayReservationList() {
         //initialize
-        rvReservations = findViewById(R.id.reservation_lists);
+        RecyclerView rvReservations = findViewById(R.id.reservation_lists);
         reservationListAdapter = new ReservationListAdapter(this, PatientReservationActivity.this);
         rvReservations.setAdapter(reservationListAdapter);
-
-        databaseReference = FirebaseDatabase.getInstance().getReference("Reservations");
-
+        //databaseReference = FirebaseDatabase.getInstance().getReference("Reservations");
+        databaseReference = FirebaseDatabase.getInstance().getReference();
         getValuesFromFirebase();
     }
 
     private void getValuesFromFirebase() {
         String currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        databaseReference.orderByChild("loggedInUid").equalTo(currentFirebaseUser)
+        //databaseReference.orderByChild("loggedInUid").equalTo(currentFirebaseUser)
+        databaseReference.child("Reservations").orderByChild("loggedInUid_status").equalTo(currentFirebaseUser+ "_active")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -131,17 +132,15 @@ public class PatientReservationActivity extends AppCompatActivity {
                         mNumberOfItems.setText(" (" + listReservation.size() + ")");
 
                         if (listReservation.size() == 0) {
-                            tvNoResultsFound.setVisibility(View.VISIBLE);
-                            btnBackToHome.setVisibility(View.VISIBLE);
+                            mNoResults.setVisibility(View.VISIBLE);
                         } else {
-                            tvNoResultsFound.setVisibility(View.GONE);
-                            btnBackToHome.setVisibility(View.GONE);
+                            mNoResults.setVisibility(View.GONE);
                         }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
-
+                        Log.e("ERROR", "error: " + error);
                     }
 
                 });

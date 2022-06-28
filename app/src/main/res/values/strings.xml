@@ -55,4 +55,6 @@
     <string name="update_reservation">Update Reservation</string>
     <string name="title_activity_destination">DestinationActivity</string>
     <string name="your_reservations">Your Reservations</string>
+    <string name="no_results_found">NO RESULTS \nFOUND</string>
+    <string name="total_of_history">Total of history:</string>
 </resources>

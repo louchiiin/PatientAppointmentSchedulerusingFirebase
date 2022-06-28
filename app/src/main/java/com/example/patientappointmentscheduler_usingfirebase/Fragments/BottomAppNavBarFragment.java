@@ -15,12 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.patientappointmentscheduler_usingfirebase.LoginActivity;
-import com.example.patientappointmentscheduler_usingfirebase.MainActivity;
-import com.example.patientappointmentscheduler_usingfirebase.PatientReservationActivity;
-import com.example.patientappointmentscheduler_usingfirebase.PersonalInformationActivity;
+import com.example.patientappointmentscheduler_usingfirebase.Activity.LoginActivity;
+import com.example.patientappointmentscheduler_usingfirebase.Activity.MainActivity;
+import com.example.patientappointmentscheduler_usingfirebase.Activity.PatientReservationActivity;
+import com.example.patientappointmentscheduler_usingfirebase.Activity.PersonalInformationActivity;
 import com.example.patientappointmentscheduler_usingfirebase.R;
-import com.example.patientappointmentscheduler_usingfirebase.ScheduleActivity;
+import com.example.patientappointmentscheduler_usingfirebase.Activity.ScheduleActivity;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class BottomAppNavBarFragment extends Fragment {
