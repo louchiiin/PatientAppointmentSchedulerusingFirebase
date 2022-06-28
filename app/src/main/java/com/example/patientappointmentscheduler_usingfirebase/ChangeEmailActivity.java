@@ -71,10 +71,11 @@ public class ChangeEmailActivity extends AppCompatActivity {
                 String changeEmail = mChangeEmail.getText().toString().trim();
                 String changePassword = mChangePassword.getText().toString().trim();
                 FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (changeEmail.isEmpty() || changePassword.isEmpty()) {
+                if (changeEmail.isEmpty()) {
                     mChangeEmail.setError("Email is required");
-                    mChangePassword.setError("Password is required");
                     mChangeEmail.requestFocus();
+                } else if (changePassword.isEmpty()) {
+                    mChangePassword.setError("Password is required");
                     mChangePassword.requestFocus();
                 } else if (!HelperUtilities.isValidEmail(changeEmail)){
                     mChangeEmail.setError("Please enter a valid email");
@@ -106,12 +107,21 @@ public class ChangeEmailActivity extends AppCompatActivity {
                                             changeEmailLayout.setVisibility(View.GONE);
                                         } else {
                                             dialog.dismiss();
+                                            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "There was an error on the passowrd", Snackbar.LENGTH_LONG);
+                                            snackbar.setTextColor(ContextCompat.getColor(ChangeEmailActivity.this,R.color.white));
+                                            snackbar.setBackgroundTint(ContextCompat.getColor(ChangeEmailActivity.this,R.color.red));
+                                            snackbar.show();
                                         }
                                     }
                                 });
                             } else {
                                 dialog.dismiss();
-                                Snackbar.make(findViewById(android.R.id.content),"Email already exists",Snackbar.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Email already exists, please try another email!", Snackbar.LENGTH_LONG);
+                                snackbar.setTextColor(ContextCompat.getColor(ChangeEmailActivity.this,R.color.white));
+                                snackbar.setBackgroundTint(ContextCompat.getColor(ChangeEmailActivity.this,R.color.red));
+                                snackbar.show();
+                                mChangeEmail.setError("Email already exists!");
+                                mChangeEmail.requestFocus();
                             }
                         }
                     });
@@ -146,7 +156,7 @@ public class ChangeEmailActivity extends AppCompatActivity {
                                 dialog.dismiss();
                                 Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Authenticated Successfully", Snackbar.LENGTH_LONG);
                                 snackbar.setTextColor(ContextCompat.getColor(ChangeEmailActivity.this,R.color.white));
-                                snackbar.setBackgroundTint(ContextCompat.getColor(ChangeEmailActivity.this,R.color.teal_700));
+                                snackbar.setBackgroundTint(ContextCompat.getColor(ChangeEmailActivity.this,R.color.lime_green));
                                 snackbar.show();
                                 changeEmailLayout.setVisibility(View.VISIBLE);
                                 mAuthPassword.setEnabled(false);
@@ -154,7 +164,12 @@ public class ChangeEmailActivity extends AppCompatActivity {
                                 mChangeEmail.setText(email);
                             }else{
                                 dialog.dismiss();
-                                Snackbar.make(findViewById(android.R.id.content),"Password is incorrect",Snackbar.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Password is incorrect", Snackbar.LENGTH_LONG);
+                                snackbar.setTextColor(ContextCompat.getColor(ChangeEmailActivity.this,R.color.white));
+                                snackbar.setBackgroundTint(ContextCompat.getColor(ChangeEmailActivity.this,R.color.red));
+                                snackbar.show();
+                                mAuthPassword.setError("Password is incorrect");
+                                mAuthPassword.requestFocus();
                             }
                         }
                     });

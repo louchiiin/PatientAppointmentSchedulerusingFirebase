@@ -108,7 +108,13 @@ public class RegisterActivity extends AppCompatActivity {
             } else if (!HelperUtilities.isShortPassword(password)){
                 etPassword.setError("Password should be more than 5 characters");
                 etPassword.requestFocus();
-            } else {
+            } else if (firstName.isEmpty()) {
+                etFirstName.setError("First Name should not be empty");
+                etFirstName.requestFocus();
+            } else if (lastName.isEmpty()) {
+                etLastName.setError("Last Name should not be empty");
+                etLastName.requestFocus();
+            } else{
                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                 firebaseAuth.createUserWithEmailAndPassword(email, password)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -116,13 +122,13 @@ public class RegisterActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 try {
                                     if (task.isSuccessful()) {
-                                        FirebaseUser getRegisteredUser = FirebaseAuth.getInstance().getCurrentUser();
-                                        String getUid = getRegisteredUser.getUid();
                                         //progress dialog bar
                                         dialog = new ProgressDialog(RegisterActivity.this);
                                         dialog.setTitle(R.string.loading_dialog);
                                         dialog.setCanceledOnTouchOutside(false);
                                         dialog.show();
+                                        FirebaseUser getRegisteredUser = FirebaseAuth.getInstance().getCurrentUser();
+                                        String getUid = getRegisteredUser.getUid();
                                         addPatientInfo(getUid, firstName, lastName, phone);
                                     } else {
                                         Toast.makeText(RegisterActivity.this,

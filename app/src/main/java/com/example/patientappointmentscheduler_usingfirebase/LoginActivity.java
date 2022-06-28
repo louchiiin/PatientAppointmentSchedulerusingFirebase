@@ -3,6 +3,7 @@ package com.example.patientappointmentscheduler_usingfirebase;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -68,19 +69,20 @@ public class LoginActivity extends AppCompatActivity {
             String getEmail = inputEmail.getText().toString().trim();
             String getPassword = inputPassword.getText().toString().trim();
 
-            if (TextUtils.isEmpty(getEmail)){
-                Snackbar.make(findViewById(android.R.id.content),"Email is empty",Snackbar.LENGTH_SHORT).show();
-                inputEmail.setError("Email should not be empty");
+            if (TextUtils.isEmpty(getEmail) || !HelperUtilities.isValidEmail(getEmail)){
+                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Email is incorrect!", Snackbar.LENGTH_SHORT);
+                snackbar.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.white));
+                snackbar.setBackgroundTint(ContextCompat.getColor(LoginActivity.this, R.color.red));
+                snackbar.show();
+                inputEmail.setError("Email is incorrect");
                 inputEmail.requestFocus();
                 return;
-            } else if (TextUtils.isEmpty(getPassword)){
-                Snackbar.make(findViewById(android.R.id.content),"Password is empty",Snackbar.LENGTH_SHORT).show();
-                inputPassword.setError("Password should not be empty");
-                inputPassword.requestFocus();
-                return;
-            } else if (getPassword.length() < 6) {
-                Snackbar.make(findViewById(android.R.id.content),"Password needs 6 or more characters",Snackbar.LENGTH_SHORT).show();
-                inputPassword.setError("Password needs 6 or more characters");
+            } else if (getPassword.length() < 6 || TextUtils.isEmpty(getPassword)) {
+                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Password is incorrect!", Snackbar.LENGTH_SHORT);
+                snackbar.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.white));
+                snackbar.setBackgroundTint(ContextCompat.getColor(LoginActivity.this, R.color.red));
+                snackbar.show();
+                inputPassword.setError("Password was incorrect");
                 inputPassword.requestFocus();
                 return;
             }
@@ -105,7 +107,10 @@ public class LoginActivity extends AppCompatActivity {
                                 }, 2000); // 3000 milliseconds delay
                             } else {
                                 Log.v(TAG, "signInWithCredential:failure", task.getException());
-                                Snackbar.make(findViewById(android.R.id.content),"Invalid credentials, please try again!",Snackbar.LENGTH_SHORT).show();
+                                Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Invalid credentials, please try again", Snackbar.LENGTH_SHORT);
+                                snackbar.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.white));
+                                snackbar.setBackgroundTint(ContextCompat.getColor(LoginActivity.this, R.color.red));
+                                snackbar.show();
                                 inputEmail.setError("Invalid credentials, please try again");
                                 inputPassword.setError("Invalid credentials, please try again");
                                 inputEmail.requestFocus();
@@ -115,7 +120,8 @@ public class LoginActivity extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(LoginActivity.this, "Error " + e, Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(LoginActivity.this, "Error " + e, Toast.LENGTH_SHORT).show();
+                            Log.e("loginError", "error:" + e);
                         }
                     });
         });
@@ -128,8 +134,6 @@ public class LoginActivity extends AppCompatActivity {
         if (currentUser != null) {
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             this.finish();
-        } else {
-            Snackbar.make(findViewById(android.R.id.content),"Please re-login",Snackbar.LENGTH_SHORT).show();
         }
     }
 
