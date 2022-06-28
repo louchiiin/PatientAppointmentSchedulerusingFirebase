@@ -65,7 +65,7 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
             tvCreatedDate = itemView.findViewById(R.id.tvCreatedDate);
             tvReservationID = itemView.findViewById(R.id.tvReservationID);
 
-            lvReservationItem = itemView.findViewById(R.id.lvReservationItem);
+            lvReservationItem = itemView.findViewById(R.id.list_reservation_item);
 
             lvReservationItem.setOnClickListener(new View.OnClickListener() {
                 @Override

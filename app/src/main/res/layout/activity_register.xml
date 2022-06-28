@@ -128,7 +128,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:backgroundTint="#056A7C"
+                android:backgroundTint="@color/blue_green"
                 android:fontFamily="@font/ubuntu_regular"
                 android:text="Register"
                 android:textColor="@color/white" />

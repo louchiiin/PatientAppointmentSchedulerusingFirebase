@@ -127,18 +127,18 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
         DateFormat outputHour = new SimpleDateFormat("H", Locale.getDefault()); //to not display leading zeroes
         DateFormat outputMinutes = new SimpleDateFormat("mm", Locale.getDefault());
 
-        Date date = null;
+        Date reservationTime = null;
         try {
-            date = inputFormat.parse(getScheduleDateTime);
+            reservationTime = inputFormat.parse(getScheduleDateTime);
         } catch (ParseException e) {
             e.printStackTrace();
         }
         //cast as String for each values from getScheduleDateTime
-        String getMonth = outputMonth.format(date);
-        String getDay = outputDay.format(date);
-        String getYear = outputYear.format(date);
-        String getHour = outputHour.format(date);
-        String getMinutes = outputMinutes.format(date);
+        String getMonth = outputMonth.format(reservationTime);
+        String getDay = outputDay.format(reservationTime);
+        String getYear = outputYear.format(reservationTime);
+        String getHour = outputHour.format(reservationTime);
+        String getMinutes = outputMinutes.format(reservationTime);
 
         //get Calendar instance
         calendar = Calendar.getInstance();
@@ -147,20 +147,19 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(getDay));
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(getHour));
         calendar.set(Calendar.MINUTE, Integer.parseInt(getMinutes));
-        /*calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);*/
+
         String formattedTime = String.format(Locale.getDefault(), "%02d:%02d", Integer.parseInt(getHour), Integer.parseInt(getMinutes));
-        String checkTimeSet = getMonth + "-" + getDay + "-" + getYear + " " + formattedTime;
+        //String checkTimeSet = getMonth + "-" + getDay + "-" + getYear + " " + formattedTime;
 
         DateFormat alarmFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm", Locale.getDefault());
         Date currentDateTime = new Date();
         String newDate = alarmFormat.format(currentDateTime);
 
         Date currentDateFormatted = null;
-        Date reservationTime = null;
+        //Date reservationTime = null;
         try {
             currentDateFormatted = alarmFormat.parse(newDate);
-            reservationTime = alarmFormat.parse(checkTimeSet);
+            //reservationTime = alarmFormat.parse(checkTimeSet);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -190,7 +189,7 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
                     if (finalReservationTime.compareTo(finalCurrentDateFormatted) > 0) {
-                        pendingIntent = PendingIntent.getBroadcast(ReservationInfoActivity.this, requestCode, intent, PendingIntent.FLAG_IMMUTABLE);
+                        pendingIntent = PendingIntent.getBroadcast(ReservationInfoActivity.this, requestCode, intent, PendingIntent.FLAG_MUTABLE);
                         alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                         Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Notification Set Successfully!", Snackbar.LENGTH_SHORT);
                         snackbar.setTextColor(ContextCompat.getColor(ReservationInfoActivity.this, R.color.white));
@@ -198,13 +197,11 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
                         snackbar.show();
                         Log.v("NOTIF", "SetSuccessNotification" + " request Code " + requestCode + " " + finalCurrentDateFormatted + " " + finalReservationTime);
                     } else if (finalCurrentDateFormatted.compareTo(finalReservationTime) == 0 || finalCurrentDateFormatted.compareTo(finalReservationTime) > 0) {
-                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Unable to set current/past date and time", Snackbar.LENGTH_LONG);
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Unable to set current/past stringToDate and time", Snackbar.LENGTH_LONG);
                         snackbar.setTextColor(ContextCompat.getColor(ReservationInfoActivity.this, R.color.white));
                         snackbar.setBackgroundTint(ContextCompat.getColor(ReservationInfoActivity.this, R.color.crimson_red));
                         snackbar.show();
                         Log.v("NOTIF", "Could not set alarm on past dates");
-                    } else {
-                        Log.v("NOTIF", "WTF");
                     }
                 }else {
                         pendingIntent = PendingIntent.getBroadcast(ReservationInfoActivity.this, requestCode, intent, 0);

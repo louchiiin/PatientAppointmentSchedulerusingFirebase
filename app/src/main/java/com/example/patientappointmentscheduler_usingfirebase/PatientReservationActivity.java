@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
@@ -27,20 +26,16 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class PatientReservationActivity extends AppCompatActivity {
-    RecyclerView rvReservations;
-    //ReservationAdapter reservationAdapter;
-    ReservationListAdapter reservationListAdapter;
-    DatabaseReference databaseReference;
-    //ArrayList<ReservationList> list;
+    private RecyclerView rvReservations;
+    private ReservationListAdapter reservationListAdapter;
+    private DatabaseReference databaseReference;
     private ProgressDialog dialog;
 
     private TextView tvNoResultsFound, mNumberOfItems;
@@ -103,17 +98,13 @@ public class PatientReservationActivity extends AppCompatActivity {
 
     private void displayReservationList() {
         //initialize
-        rvReservations = findViewById(R.id.rvReservations);
-        reservationListAdapter = new ReservationListAdapter(this);
+        rvReservations = findViewById(R.id.reservation_lists);
+        reservationListAdapter = new ReservationListAdapter(this, PatientReservationActivity.this);
         rvReservations.setAdapter(reservationListAdapter);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("Reservations");
 
         getValuesFromFirebase();
-        //sort by appointmentDateTime DESC
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setReverseLayout(true);
-        rvReservations.setLayoutManager(linearLayoutManager);
     }
 
     private void getValuesFromFirebase() {
@@ -133,9 +124,9 @@ public class PatientReservationActivity extends AppCompatActivity {
                             reservationList.setReservationID(uniqueKey);
                             listReservation.add(reservationList);
                         }
-
                         reservationListAdapter.submitList(listReservation);
                         Collections.sort(listReservation);
+
                         dialog.dismiss();
                         mNumberOfItems.setText(" (" + listReservation.size() + ")");
 

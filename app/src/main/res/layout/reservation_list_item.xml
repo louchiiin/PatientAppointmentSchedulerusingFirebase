@@ -13,9 +13,8 @@
         android:backgroundTint="@color/light_gray">
 
         <LinearLayout
-            android:id="@+id/lvReservationItem"
+            android:id="@+id/list_reservation_item"
             android:background="?selectableItemBackground"
-            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -37,15 +36,16 @@
                         android:fontFamily= "@font/ubuntu_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="RESERVATION ID: "
-                        android:textColor="@color/black"/>
+                        android:text="@string/reservation_id"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sixteen_sp"/>
                     <TextView
                         android:fontFamily= "@font/ubuntu_regular"
                         android:id="@+id/tvReservationID"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/blank_value"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/twelve_sp"
                         android:textColor="@color/black"/>
                 </LinearLayout>
 
@@ -55,9 +55,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/blank_value"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
-                    android:textColor="#056A7C"/>
+                    android:textSize="@dimen/eighteen_sp"
+                    android:textColor="@color/blue_green"/>
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -70,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/blank_value"
                         android:textStyle="bold"
-                        android:textSize="16sp"
+                        android:textSize="@dimen/sixteen_sp"
                         android:textAllCaps="true"
                         android:textColor="@color/black"/>
                 </LinearLayout>
@@ -85,7 +84,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="DR."
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sixteen_sp"/>
                     <TextView
                         android:fontFamily= "@font/ubuntu_italic"
                         android:id="@+id/tvDoctorsName"
@@ -93,7 +93,8 @@
                         android:layout_height="wrap_content"
                         android:text="@string/blank_value"
                         android:layout_marginStart="5dp"
-                        android:textColor="@color/black" />
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fourteen_sp"/>
 
 
                 </LinearLayout>
@@ -106,15 +107,17 @@
                         android:fontFamily= "@font/ubuntu_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="SCHEDULE DATE"
-                        android:textColor="@color/black"/>
+                        android:text="@string/schedule_date"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sixteen_sp"/>
                     <TextView
                         android:fontFamily= "@font/ubuntu_regular"
                         android:id="@+id/tvReservationScheduleDateTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/blank_value"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fourteen_sp"/>
                 </LinearLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -125,15 +128,17 @@
                         android:fontFamily= "@font/ubuntu_bold"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="CREATED DATE"
-                        android:textColor="@color/black"/>
+                        android:text="@string/created_date"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/sixteen_sp"/>
                     <TextView
                         android:fontFamily= "@font/ubuntu_regular"
                         android:id="@+id/tvCreatedDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/blank_value"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/fourteen_sp"/>
                 </LinearLayout>
 
             </LinearLayout>

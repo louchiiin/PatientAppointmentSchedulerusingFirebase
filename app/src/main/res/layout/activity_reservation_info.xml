@@ -47,7 +47,7 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="220dp"
+                    android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:backgroundTint="#E7E7EC"
                     app:cardCornerRadius="10dp"
@@ -57,9 +57,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="10dp"
-                        android:layout_marginTop="25dp"
+                        android:layout_marginTop="30dp"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_marginBottom="15dp"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -74,17 +74,17 @@
                                 android:fontFamily="@font/ubuntu_bold"
                                 android:text="@string/reservation_id"
                                 android:textColor="@color/black"
-                                android:textSize="14sp" />
+                                android:textSize="@dimen/sixteen_sp" />
 
                             <TextView
                                 android:id="@+id/tvGetReservationID"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="5dp"
-                                android:fontFamily="@font/ubuntu_regular"
+                                android:fontFamily="@font/ubuntu_bold"
                                 android:text="@string/blank_value"
-                                android:textColor="@color/black"
-                                android:textSize="12sp" />
+                                android:textSize="@dimen/fourteen_sp"
+                                android:textColor="@color/blue_green" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -99,7 +99,7 @@
                                 android:fontFamily="@font/ubuntu_bold"
                                 android:text="@string/category_name"
                                 android:textColor="@color/black"
-                                android:textSize="14sp" />
+                                android:textSize="@dimen/sixteen_sp" />
 
                             <TextView
                                 android:id="@+id/tvGetCategoryName"
@@ -109,7 +109,7 @@
                                 android:layout_marginStart="5dp"
                                 android:text="@string/blank_value"
                                 android:textColor="@color/black"
-                                android:textSize="12sp" />
+                                android:textSize="@dimen/sixteen_sp"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -124,7 +124,7 @@
                                 android:fontFamily="@font/ubuntu_bold"
                                 android:text="@string/doctors_name"
                                 android:textColor="@color/black"
-                                android:textSize="14sp" />
+                                android:textSize="@dimen/sixteen_sp"/>
 
                             <TextView
                                 android:id="@+id/tvGetDoctorsName"
@@ -134,7 +134,7 @@
                                 android:fontFamily="@font/ubuntu_regular"
                                 android:text="@string/blank_value"
                                 android:textColor="@color/black"
-                                android:textSize="12sp" />
+                                android:textSize="@dimen/sixteen_sp"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -149,7 +149,7 @@
                                 android:fontFamily="@font/ubuntu_bold"
                                 android:text="@string/patients_name"
                                 android:textColor="@color/black"
-                                android:textSize="14sp" />
+                                android:textSize="@dimen/sixteen_sp"/>
 
                             <TextView
                                 android:id="@+id/tvGetPatientsName"
@@ -158,7 +158,7 @@
                                 android:layout_marginStart="5dp"
                                 android:text="@string/blank_value"
                                 android:textColor="@color/black"
-                                android:textSize="12sp" />
+                                android:textSize="@dimen/sixteen_sp"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -173,7 +173,7 @@
                                 android:fontFamily="@font/ubuntu_bold"
                                 android:text="@string/schedule_date"
                                 android:textColor="@color/black"
-                                android:textSize="14sp" />
+                                android:textSize="@dimen/sixteen_sp"/>
 
                             <TextView
                                 android:id="@+id/tvGetScheduleDateTime"
@@ -183,7 +183,7 @@
                                 android:layout_marginEnd="5dp"
                                 android:text="@string/blank_value"
                                 android:textColor="@color/black"
-                                android:textSize="12sp" />
+                                android:textSize="@dimen/sixteen_sp"/>
 
                         </LinearLayout>
 
@@ -199,7 +199,7 @@
                                 android:fontFamily="@font/ubuntu_bold"
                                 android:text="@string/created_date"
                                 android:textColor="@color/black"
-                                android:textSize="14sp" />
+                                android:textSize="@dimen/sixteen_sp"/>
 
                             <TextView
                                 android:id="@+id/tvGetCreatedDate"
@@ -209,7 +209,7 @@
                                 android:fontFamily="@font/ubuntu_regular"
                                 android:text="@string/blank_value"
                                 android:textColor="@color/black"
-                                android:textSize="12sp" />
+                                android:textSize="@dimen/sixteen_sp"/>
                         </LinearLayout>
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
@@ -227,11 +227,11 @@
                         android:layout_gravity="center_vertical"
                         android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:backgroundTint="#056A7C"
+                        android:backgroundTint="@color/blue_green"
                         android:fontFamily="@font/ubuntu_bold"
                         android:text="@string/cancel"
                         android:textColor="@color/white"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/fourteen_sp" />
 
                     <Button
                         android:id="@+id/btnAddToGoogleCalendar"
@@ -240,7 +240,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:backgroundTint="#056A7C"
+                        android:backgroundTint="@color/blue_green"
                         android:drawableTop="@drawable/google_calendar_add_icon"
                         android:fontFamily="@font/ubuntu_bold"/>
 
@@ -251,11 +251,11 @@
                         android:layout_gravity="center_vertical"
                         android:layout_margin="5dp"
                         android:layout_weight="1"
-                        android:backgroundTint="#056A7C"
+                        android:backgroundTint="@color/blue_green"
                         android:fontFamily="@font/ubuntu_bold"
                         android:text="@string/update"
                         android:textColor="@color/white"
-                        android:textSize="14sp"/>
+                        android:textSize="@dimen/sixteen_sp"/>
                 </LinearLayout>
 
             </LinearLayout>

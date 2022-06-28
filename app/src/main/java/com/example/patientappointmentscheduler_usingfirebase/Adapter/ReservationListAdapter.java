@@ -2,6 +2,7 @@ package com.example.patientappointmentscheduler_usingfirebase.Adapter;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,26 +20,34 @@ import com.example.patientappointmentscheduler_usingfirebase.R;
 import com.example.patientappointmentscheduler_usingfirebase.ReservationInfoActivity;
 import com.example.patientappointmentscheduler_usingfirebase.model.ReservationList;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.Objects;
+
 public class ReservationListAdapter extends ListAdapter<ReservationList, ReservationListAdapter.ViewHolder> {
 
     private Activity mActivity;
+    private Context mContext;
 
-    public ReservationListAdapter(Activity activity) {
+    public ReservationListAdapter(Activity activity, Context context) {
         super(new ReservationDiffCallback());
         this.mActivity = activity;
+        this.mContext = context;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        return
-                new ViewHolder(inflater.inflate(R.layout.reservation_list_item, parent , false));
+        return new ViewHolder(inflater.inflate(R.layout.reservation_list_item, parent , false));
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder  {
-        TextView tvCategoryName, tvDoctorsName, tvPatientsName, tvReservationScheduleDateTime, tvCreatedDate, tvReservationID;
-        LinearLayout lvReservationItem;
+        private final TextView tvCategoryName, tvDoctorsName, tvPatientsName, tvReservationScheduleDateTime, tvCreatedDate, tvReservationID;
+        private final LinearLayout lvReservationItem;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -48,7 +58,7 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
             tvCreatedDate = itemView.findViewById(R.id.tvCreatedDate);
             tvReservationID = itemView.findViewById(R.id.tvReservationID);
 
-            lvReservationItem = itemView.findViewById(R.id.lvReservationItem);
+            lvReservationItem = itemView.findViewById(R.id.list_reservation_item);
             //on on click each item
             lvReservationItem.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -80,6 +90,29 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
             tvReservationScheduleDateTime.setText(reservationList.getAppointmentDateTime());
             tvCreatedDate.setText(reservationList.getCurrentDate());
             tvReservationID.setText(reservationList.getReservationID());
+
+            String getDateTime = reservationList.getAppointmentDateTime();
+
+            DateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm", Locale.getDefault());
+            Date currentDateTime = new Date();
+            String newDate = inputFormat.format(currentDateTime);
+
+            Date currentDateFormatted = null;
+            Date reservationTime = null;
+            try {
+                currentDateFormatted = inputFormat.parse(newDate);
+                reservationTime = inputFormat.parse(getDateTime);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            //reservation time is less than current Date
+            assert reservationTime != null;
+            if (reservationTime.compareTo(currentDateFormatted) < 0)    {
+                lvReservationItem.setClickable(false);
+                lvReservationItem.setBackgroundColor(ContextCompat.getColor(mContext, R.color.dark_gray));
+            } else {
+                lvReservationItem.setClickable(true);
+            }
         }
     }
 
@@ -92,8 +125,7 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
     public static class ReservationDiffCallback extends DiffUtil.ItemCallback<ReservationList>{
         @Override
         public boolean areItemsTheSame(@NonNull ReservationList oldItem, @NonNull ReservationList newItem) {
-            return
-                oldItem.getReservationID().equals(newItem.getReservationID());
+            return oldItem.getReservationID().equals(newItem.getReservationID());
         }
 
         @Override

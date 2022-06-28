@@ -38,14 +38,14 @@
                 android:text="@string/update_reservation"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
-                android:textSize="22sp" />
+                android:textSize="@dimen/twenty_two_sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ubuntu_bold"
                 android:text="@string/category_name"
-                android:textSize="18sp"
+                android:textSize="@dimen/eighteen_sp"
                 android:textColor="@color/black"
                 android:layout_marginTop="20dp"/>
 
@@ -87,7 +87,7 @@
                     android:fontFamily="@font/ubuntu_bold"
                     android:text="@string/schedule_of_visit"
                     android:textAllCaps="true"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/eighteen_sp"
                     android:textColor="@color/black"/>
             </LinearLayout>
 
@@ -131,16 +131,20 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/cancel"
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:textSize="@dimen/fourteen_sp"
                     android:layout_margin="5dp"
-                    android:backgroundTint="#056A7C"/>
+                    android:backgroundTint="@color/blue_green"/>
                 <Button
                     android:id="@+id/btnUpdateSave"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/save"
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:textSize="@dimen/fourteen_sp"
                     android:layout_margin="5dp"
-                    android:backgroundTint="#056A7C"/>
+                    android:backgroundTint="@color/blue_green"/>
             </LinearLayout>
         </LinearLayout>
 

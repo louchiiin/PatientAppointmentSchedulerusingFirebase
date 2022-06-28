@@ -72,11 +72,15 @@
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvReservations"
+                    android:id="@+id/reservation_lists"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/ubuntu_regular"
+                    android:scrollbars="vertical"
+                    android:splitMotionEvents="false"
+                    app:stackFromEnd="true"
+                    app:reverseLayout="true"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
             </LinearLayout>
@@ -107,7 +111,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:backgroundTint="#056A7C"
+            android:backgroundTint="@color/blue_green"
             android:fontFamily="@font/ubuntu_regular"
             android:gravity="center"
             android:text="BACK"
