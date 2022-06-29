@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +13,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -44,10 +46,10 @@ public class LoginActivity extends AppCompatActivity {
         //firebase
         mAuth = FirebaseAuth.getInstance();
         //castings
-        inputEmail = findViewById(R.id.etUserEmail);
-        inputPassword = findViewById(R.id.etUserPassword);
-        tvLinkToRegister = findViewById(R.id.tvRegistrationLink);
-        btnLogin = findViewById(R.id.btnLogin);
+        inputEmail = findViewById(R.id.login_email);
+        inputPassword = findViewById(R.id.login_password);
+        tvLinkToRegister = findViewById(R.id.registration_link);
+        btnLogin = findViewById(R.id.login_button);
         dialog = new ProgressDialog(LoginActivity.this);
         clickedLoginButton();
         clickLinkToRegister();
@@ -68,6 +70,13 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(view -> {
             String getEmail = inputEmail.getText().toString().trim();
             String getPassword = inputPassword.getText().toString().trim();
+            dialog.setTitle(R.string.loading_dialog);
+            dialog.setCanceledOnTouchOutside(false);
+            dialog.setCancelable(false);
+            dialog.show();
+            InputMethodManager imm = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+            //Hide keyboard
+            imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
             if (TextUtils.isEmpty(getEmail) || !HelperUtilities.isValidEmail(getEmail)){
                 Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Email is incorrect!", Snackbar.LENGTH_SHORT);
@@ -90,23 +99,15 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                dialog.dismiss();
                                 //progress dialog bar
                                 Log.v(TAG, "signInWithCredential:success");
-                                dialog.setTitle(R.string.loading_dialog);
-                                dialog.setCanceledOnTouchOutside(false);
-                                dialog.setCancelable(false);
-                                dialog.show();
-                                Handler handler = new Handler();
-                                handler.postDelayed(new Runnable() {
-                                    public void run() {
-                                        dialog.dismiss();
-                                        Intent loggedIn = new Intent(LoginActivity.this, MainActivity.class);
-                                        startActivity(loggedIn);
-                                        finish();
-                                    }
-                                }, 2000); // 3000 milliseconds delay
+                                Intent loggedIn = new Intent(LoginActivity.this, MainActivity.class);
+                                startActivity(loggedIn);
+                                finish();
                             } else {
                                 Log.v(TAG, "signInWithCredential:failure", task.getException());
+                                dialog.dismiss();
                                 Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Invalid credentials, please try again", Snackbar.LENGTH_SHORT);
                                 snackbar.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.white));
                                 snackbar.setBackgroundTint(ContextCompat.getColor(LoginActivity.this, R.color.red));
@@ -120,6 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+                            dialog.dismiss();
                             //Toast.makeText(LoginActivity.this, "Error " + e, Toast.LENGTH_SHORT).show();
                             Log.e("loginError", "error:" + e);
                         }

@@ -89,35 +89,34 @@ public class ReservationListAdapter extends ListAdapter<ReservationList, Reserva
             tvReservationScheduleDateTime.setText(reservationList.getAppointmentDateTime());
             tvCreatedDate.setText(reservationList.getCurrentDate());
             tvReservationID.setText(reservationList.getReservationID());
-
-            String getDateTime = reservationList.getAppointmentDateTime();
-
-            DateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm", Locale.getDefault());
-            Date currentDateTime = new Date();
-            String newDate = inputFormat.format(currentDateTime);
-
-            Date currentDateFormatted = null;
-            Date reservationTime = null;
-            try {
-                currentDateFormatted = inputFormat.parse(newDate);
-                reservationTime = inputFormat.parse(getDateTime);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            //reservation time is less than current Date
-            assert reservationTime != null;
-            if (reservationTime.compareTo(currentDateFormatted) < 0)    {
-                lvReservationItem.setClickable(false);
-                lvReservationItem.setBackgroundColor(ContextCompat.getColor(mContext, R.color.dark_gray));
-            } else {
-                lvReservationItem.setClickable(true);
-            }
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bindTo(getItem(position));
+        String getDateTime = getItem(position).getAppointmentDateTime();
+
+        DateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm", Locale.getDefault());
+        Date currentDateTime = new Date();
+        String newDate = inputFormat.format(currentDateTime);
+
+        Date currentDateFormatted = null;
+        Date reservationTime = null;
+        try {
+            currentDateFormatted = inputFormat.parse(newDate);
+            reservationTime = inputFormat.parse(getDateTime);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //reservation time is less than current Date
+        assert reservationTime != null;
+        if (reservationTime.compareTo(currentDateFormatted) < 0)    {
+            holder.lvReservationItem.setClickable(false);
+            holder.lvReservationItem.setBackgroundColor(ContextCompat.getColor(mContext, R.color.dark_gray));
+        } else {
+            holder.lvReservationItem.setClickable(true);
+        }
     }
 
     @Override
