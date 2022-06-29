@@ -13,7 +13,10 @@
     <color name="red">#ff0000</color>
     <color name="crimson_red">#DC143C</color>
     <color name="light_gray">#EBEBEB</color>
+    <color name="steel_gray">#71797E</color>
     <color name="dark_gray">#5E5E5E</color>
     <color name="lime_green">#32CD32</color>
     <color name="blue_green">#056A7C</color>
+    <color name="light_blue_green">#3a969e</color>
+    <color name="dark_blue_green">#005259</color>
 </resources>

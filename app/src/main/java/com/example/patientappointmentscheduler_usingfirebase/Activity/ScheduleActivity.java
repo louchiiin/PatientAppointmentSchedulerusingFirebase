@@ -13,8 +13,10 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -65,6 +68,8 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
     private int hour, minute;
 
     private ProgressDialog dialog;
+
+    public static final int TIME_PICKER_INTERVAL=10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -138,7 +143,6 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
         timeOfAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //displayTimePickerDialog(new TimePickerDialogFragment());
                 TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener()
                 {
                     @Override
@@ -149,13 +153,14 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
                         timeOfAppointment.setText(String.format(Locale.getDefault(), "%02d:%02d",hour, minute));
                     }
                 };
+
                 TimePickerDialog timePickerDialog = new TimePickerDialog(ScheduleActivity.this, TimePickerDialog.THEME_HOLO_LIGHT, onTimeSetListener, hour, minute, true);
                 timePickerDialog.setTitle("Select a time");
                 timePickerDialog.show();
             }
         });
-
     }
+
 
     private void selectDate() {
         dateOfAppointment.setOnClickListener(new View.OnClickListener() {
