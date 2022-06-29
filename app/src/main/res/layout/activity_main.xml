@@ -26,7 +26,7 @@
             android:fontFamily="@font/ubuntu_bold"
             android:gravity="center_horizontal"
             android:text="MyClinicPH"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="30sp" />
     </FrameLayout>
 
@@ -218,7 +218,7 @@
                             android:textColor="@color/white"
                             android:textSize="12sp" />
 
-                        <!--<Button
+                        <Button
                             android:id="@+id/btnHealth"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -228,7 +228,7 @@
                             android:padding="5dp"
                             android:text="Health"
                             android:textColor="@color/white"
-                            android:textSize="12sp" />-->
+                            android:textSize="12sp" />
 
                         <Button
                             android:visibility="gone"
@@ -277,36 +277,18 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="2dp"
                     app:cardElevation="10dp">
-                    <LinearLayout
+
+                    <androidx.appcompat.widget.SearchView
+                        android:id="@+id/svSearchNews"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-                        <androidx.appcompat.widget.SearchView
-                            android:id="@+id/search_news"
-                            android:layout_width="0dp"
-                            android:layout_weight="1"
-                            android:layout_height="?attr/actionBarSize"
-                            android:actionViewClass="android.support.v7.widget.SearchView"
-                            app:defaultQueryHint="Search News..."
-                            app:iconifiedByDefault="false" />
-                        <TextView
-                            android:id="@+id/refresh_health_news"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_margin="5dp"
-                            android:drawableStart="@drawable/ic_baseline_refresh_24"
-                            android:backgroundTint="@color/blue_green"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"
-                            android:layout_gravity="center_vertical"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:background="?selectableItemBackground"/>
-                    </LinearLayout>
+                        android:layout_height="?attr/actionBarSize"
+                        android:actionViewClass="android.support.v7.widget.SearchView"
+                        app:defaultQueryHint="Search News..."
+                        app:iconifiedByDefault="false" />
                 </androidx.cardview.widget.CardView>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/health_recycler_view"
+                    android:id="@+id/rvMain"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="10dp" />

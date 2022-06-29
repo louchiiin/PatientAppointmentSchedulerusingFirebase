@@ -75,13 +75,6 @@
         <entry key="..\:/Github Clones/Android/PatientAppointmentSchedulerusingFirebase/app/src/main/res/layout/spinner_dropdown_layout.xml" value="0.4282238442822384" />
         <entry key="app/src/main/res/drawable/custom_border_shadow_bottom.xml" value="0.1465" />
         <entry key="app/src/main/res/drawable/custom_border_shadow_left.xml" value="0.1465" />
-        <entry key="app/src/main/res/drawable/custom_border_shadow_top.xml" value="0.182" />
-        <entry key="app/src/main/res/drawable/custom_calendar_icon_for_nav.xml" value="0.182" />
-        <entry key="app/src/main/res/drawable/custom_home_icon_for_nav.xml" value="0.182" />
-        <entry key="app/src/main/res/drawable/custom_logout_icon_for_nav.xml" value="0.182" />
-        <entry key="app/src/main/res/drawable/custom_profile_icon_for_nav.xml" value="0.182" />
-        <entry key="app/src/main/res/drawable/custom_schedule_icon_for_nav.xml" value="0.182" />
-        <entry key="app/src/main/res/drawable/nav_bar_back_2.xml" value="0.182" />
         <entry key="app/src/main/res/layout/activity_alarm.xml" value="0.29981884057971014" />
         <entry key="app/src/main/res/layout/activity_change_email.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/activity_destination.xml" value="0.33125" />
@@ -89,7 +82,6 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33125" />
         <entry key="app/src/main/res/layout/activity_patient_reservation.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_personal_information.xml" value="0.33125" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.1734375" />
         <entry key="app/src/main/res/layout/activity_reservation_history.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_reservation_info.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_schedule.xml" value="0.10638297872340426" />

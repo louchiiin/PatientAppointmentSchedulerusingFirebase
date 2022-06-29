@@ -46,6 +46,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/patientInformationTopNav"
                 app:layout_constraintVertical_bias="0.0">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:fontFamily="@font/ubuntu_bold"
+                    android:text="@string/patient_info"
+                    android:textColor="@color/black"
+                    android:textSize="22sp" />
+
                 <EditText
                     android:id="@+id/etUpdateFirstName"
                     android:layout_width="match_parent"
@@ -97,7 +107,7 @@
                         android:layout_width="150dp"
                         android:layout_height="wrap_content"
                         android:backgroundTint="@color/blue_green"
-                        android:fontFamily="@font/ubuntu_bold"
+                        android:fontFamily="@font/ubuntu_regular"
                         android:text="@string/update"
                         android:textColor="@color/white" />
                 </LinearLayout>
@@ -117,7 +127,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="15dp"
                         android:backgroundTint="@color/blue_green"
-                        android:fontFamily="@font/ubuntu_bold"
                         android:text="@string/cancel" />
 
                     <Button
@@ -126,7 +135,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="15dp"
                         android:backgroundTint="@color/blue_green"
-                        android:fontFamily="@font/ubuntu_bold"
                         android:text="@string/save" />
                 </LinearLayout>
             </LinearLayout>
@@ -147,13 +155,12 @@
 
                 <Button
                     android:id="@+id/btnChangeEmail"
-                    android:layout_width="150dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:backgroundTint="@color/blue_green"
-                    android:fontFamily="@font/ubuntu_bold"
+                    android:fontFamily="@font/ubuntu_regular"
                     android:text="@string/change_email_password"
-                    android:textColor="@color/white"
-                    android:layout_gravity="center"/>
+                    android:textColor="@color/white" />
             </LinearLayout>
         </TableLayout>
     </ScrollView>

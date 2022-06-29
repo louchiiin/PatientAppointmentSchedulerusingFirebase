@@ -12,11 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,26 +43,23 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
     private TextView txtLoggedInUser;
     private Button btnWebsite, btnEmail, btnPhone, btnFacebook;
     private ProgressDialog dialog, newsDialog;
-    //private Button mBusinessButton, mEntertainmentButton, mGeneralButton, mHealthRefresh, mScienceButton, mSportsButton, mTechnologyButton;
-    private TextView mHealthRefresh;
-    private RecyclerView recyclerView;
-    private CustomAdapter customAdapter;
+    private Button mBusinessButton, mEntertainmentButton, mGeneralButton, mHealthButton, mScienceButton, mSportsButton, mTechnologyButton;
+    RecyclerView recyclerView;
+    CustomAdapter customAdapter;
     private SearchView searchView;
-
-    public static String FACEBOOK_URL = "https://www.facebook.com/FortyDegreesCelsiusInc";
-    public static String FACEBOOK_PAGE_ID = "FortyDegreesCelsiusInc";
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         animateLoading();
-        searchView = findViewById(R.id.search_news);
+        searchView = findViewById(R.id.svSearchNews);
 
         /*mBusinessButton = findViewById(R.id.btnBusiness);
         mEntertainmentButton = findViewById(R.id.btnEntertainment);
         mGeneralButton = findViewById(R.id.btnGeneral);*/
-        mHealthRefresh = findViewById(R.id.refresh_health_news);
+        mHealthButton = findViewById(R.id.btnHealth);
         /*mScienceButton = findViewById(R.id.btnScience);
         mSportsButton = findViewById(R.id.btnSports);
         mTechnologyButton = findViewById(R.id.btnTechnology);*/
@@ -73,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         /*mBusinessButton.setOnClickListener(this);
         mEntertainmentButton.setOnClickListener(this);
         mGeneralButton.setOnClickListener(this);*/
-        mHealthRefresh.setOnClickListener(this);
+        mHealthButton.setOnClickListener(this);
         /*mScienceButton.setOnClickListener(this);
         mSportsButton.setOnClickListener(this);
         mTechnologyButton.setOnClickListener(this);*/
@@ -97,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
     }
 
     private void animateLoading() {
-        overridePendingTransition(R.anim.popup_open_enter, R.anim.popup_open_exit);
+        overridePendingTransition(R.anim.animation_enter, R.anim.animation_leave);
     }
 
     private void searchNews() {
@@ -109,8 +103,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
                 newsDialog.setCancelable(false);
                 newsDialog.show();
                 RequestManager manager = new RequestManager(MainActivity.this);
-                //manager.getNewsHeadLines(listener, "general", query);
-                manager.getNewsHeadLines(listener, "Health", query);
+                manager.getNewsHeadLines(listener, "general", query);
                 return true;
             }
 
@@ -123,19 +116,16 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
 
     @Override
     public void onClick(View v) {
-        //Button button = (Button) v;
-        TextView textView = (TextView) v;
-        String category = textView.getText().toString();
+        Button button = (Button) v;
+        String category = button.getText().toString();
 
-        //newsDialog.setTitle("Fetching news articles of " + category);
-        newsDialog.setTitle("Fetching news articles of Health");
+        newsDialog.setTitle("Fetching news articles of " + category);
         newsDialog.setCanceledOnTouchOutside(false);
         newsDialog.setCancelable(false);
         newsDialog.show();
 
         RequestManager manager = new RequestManager(MainActivity.this);
-        //manager.getNewsHeadLines(listener, category, null);
-        manager.getNewsHeadLines(listener, "Health", null);
+        manager.getNewsHeadLines(listener, category, null);
     }
 
     private void loadProfileDialog() {
@@ -161,13 +151,14 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
             } else {
                 showNews(list);
             }
+
             searchView.clearFocus();
             newsDialog.dismiss();
         }
 
         @Override
         public void onError(String message) {
-            Toast.makeText(MainActivity.this, "Check your internet connection!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "An error occurred", Toast.LENGTH_SHORT).show();
         }
     };
 
@@ -185,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
     }
 
     private void showNews(List<NewsHeadlines> list) {
-        recyclerView = findViewById(R.id.health_recycler_view);
+        recyclerView = findViewById(R.id.rvMain);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
 
@@ -211,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
         btnFacebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String url = "http://facebook.com/FortyDegreesCelsiusInc";
+                String url = "http://facebook.com/";
                 Intent fbSite = new Intent(Intent.ACTION_VIEW);
                 fbSite.setData(Uri.parse(url));
                 startActivity(fbSite);

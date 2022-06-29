@@ -8,7 +8,7 @@
     tools:context=".Activity.LoginActivity">
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/top_login_guideline"
+        android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -16,25 +16,25 @@
 
 
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/bottom_login_guideline"
+        android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.8" />
 
     <LinearLayout
-        android:id="@+id/login_form"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="360dp"
         android:orientation="vertical"
         android:padding="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_login_guideline"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/top_login_guideline">
+        app:layout_constraintTop_toTopOf="@+id/guideline4">
 
         <EditText
-            android:id="@+id/login_email"
+            android:id="@+id/etUserEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autofillHints="emailAddress"
@@ -48,7 +48,7 @@
             android:padding="15dp" />
 
         <EditText
-            android:id="@+id/login_password"
+            android:id="@+id/etUserPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -64,7 +64,7 @@
             android:padding="15dp" />
 
         <TextView
-            android:id="@+id/registration_link"
+            android:id="@+id/tvRegistrationLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -74,13 +74,13 @@
             android:textColor="@color/black"/>
 
         <Button
-            android:id="@+id/login_button"
+            android:id="@+id/btnLogin"
             android:layout_gravity="center"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/blue_green"
-            android:fontFamily="@font/ubuntu_bold"
+            android:fontFamily="@font/ubuntu_regular"
             android:text="@string/btnLogin"
             android:textColor="@color/white"/>
     </LinearLayout>
@@ -94,6 +94,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/login_form"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
         app:layout_constraintVertical_bias="0.827" />
 </androidx.constraintlayout.widget.ConstraintLayout>

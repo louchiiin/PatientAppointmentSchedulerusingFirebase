@@ -61,14 +61,14 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void registerUser() {
         //initialize
-        etEmail = (EditText) findViewById(R.id.register_email);
-        etPassword = (EditText) findViewById(R.id.register_password);
-        etConfirmPassword = (EditText) findViewById(R.id.register_confirm_password);
+        etEmail = (EditText) findViewById(R.id.etRegisterEmail);
+        etPassword = (EditText) findViewById(R.id.etRegisterPassword);
+        etConfirmPassword = (EditText) findViewById(R.id.etRegisterConfirmPassword);
 
-        etFirstName = (EditText) findViewById(R.id.register_first_name);
-        etLastName = (EditText) findViewById(R.id.register_last_name);
-        etPhone = (EditText) findViewById(R.id.register_phone);
-        btnRegister = (Button) findViewById(R.id.register_button);
+        etFirstName = (EditText) findViewById(R.id.etRegisterFirstName);
+        etLastName = (EditText) findViewById(R.id.etRegisterLastName);
+        etPhone = (EditText) findViewById(R.id.etRegisterPhone);
+        btnRegister = (Button) findViewById(R.id.btnRegister);
         //realtime database
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("PatientInfo");
@@ -178,7 +178,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void backToLoginTxt() {
-        tvAlreadyHaveAnAccount = findViewById(R.id.already_have_an_account);
+        tvAlreadyHaveAnAccount = findViewById(R.id.tvAlreadyHaveAnAccount);
         tvAlreadyHaveAnAccount.setOnClickListener(view -> {
             Intent intentToLogin = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(intentToLogin);

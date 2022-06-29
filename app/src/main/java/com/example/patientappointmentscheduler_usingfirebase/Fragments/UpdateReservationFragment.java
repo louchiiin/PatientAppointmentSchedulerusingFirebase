@@ -34,12 +34,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -102,7 +98,8 @@ public class UpdateReservationFragment extends Fragment implements AdapterView.O
 
         //date picker
         dateOfAppointment = view.findViewById(R.id.btnUpdateAppointmentDate);
-
+        selectDate();
+        initDatePicker();
         //time picker
         timeOfAppointment = view.findViewById(R.id.btnUpdateAppointmentTime);
         mCloseButton = view.findViewById(R.id.ivCloseButton);
@@ -110,8 +107,6 @@ public class UpdateReservationFragment extends Fragment implements AdapterView.O
         mUpdateReservationButton = view.findViewById(R.id.btnUpdateSave);
 
         getBundles();
-        selectDate();
-        initDatePicker();
         selectTime();
         getUpdateAppointmentCategory();
         getUpdateDoctor();
@@ -239,25 +234,10 @@ public class UpdateReservationFragment extends Fragment implements AdapterView.O
             }
         };
 
-        DateFormat inputFormat = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault());
-        DateFormat outputMonth = new SimpleDateFormat("MM", Locale.getDefault());
-        DateFormat outputDay = new SimpleDateFormat("dd", Locale.getDefault());
-        DateFormat outputYear = new SimpleDateFormat("yyyy", Locale.getDefault());
-
-        Date date = null;
-        try {
-            date = inputFormat.parse(scheduleDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        //cast as String for each values from getScheduleDateTime
-        String getMonth = outputMonth.format(date);
-        String getDay = outputDay.format(date);
-        String getYear = outputYear.format(date);
-
-        int year = Integer.parseInt(getYear);
-        int month = Integer.parseInt(getMonth) -1 ;
-        int day = Integer.parseInt(getDay);
+        Calendar cal = Calendar.getInstance();
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
         int style = AlertDialog.THEME_HOLO_LIGHT;
 
         datePickerDialog = new DatePickerDialog(getActivity(), style, dateSetListener, year, month, day);

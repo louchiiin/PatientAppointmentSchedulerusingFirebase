@@ -1,7 +1,6 @@
 package com.example.patientappointmentscheduler_usingfirebase.Activity;
 
 
-import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -31,13 +30,13 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class PatientReservationActivity extends AppCompatActivity {
     private ReservationListAdapter reservationListAdapter;
     private DatabaseReference databaseReference;
     private ProgressDialog dialog;
 
-    private RecyclerView rvReservations;
     private TextView mNoResults;
     private TextView mNumberOfItems;
     private TextView mHistory;
@@ -58,8 +57,8 @@ public class PatientReservationActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                getValuesFromFirebase();
                 mSwipeRefreshLayout.setRefreshing(false);
+                getValuesFromFirebase();
             }
         });
 
@@ -100,7 +99,7 @@ public class PatientReservationActivity extends AppCompatActivity {
 
     private void displayReservationList() {
         //initialize
-        rvReservations = findViewById(R.id.reservation_lists);
+        RecyclerView rvReservations = findViewById(R.id.reservation_lists);
         reservationListAdapter = new ReservationListAdapter(this, PatientReservationActivity.this);
         rvReservations.setAdapter(reservationListAdapter);
         //databaseReference = FirebaseDatabase.getInstance().getReference("Reservations");
@@ -113,10 +112,9 @@ public class PatientReservationActivity extends AppCompatActivity {
         //databaseReference.orderByChild("loggedInUid").equalTo(currentFirebaseUser)
         databaseReference.child("Reservations").orderByChild("loggedInUid_status").equalTo(currentFirebaseUser+ "_active")
                 .addValueEventListener(new ValueEventListener() {
-                    @SuppressLint("SetTextI18n")
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        ArrayList<ReservationList> listReservation = new ArrayList<>();
+                        List<ReservationList> listReservation = new ArrayList<>();
                         for(DataSnapshot dataSnapshot : snapshot.getChildren()){
                             Log.d("User key", dataSnapshot.getKey());
                             Log.d("User ref", dataSnapshot.getRef().toString());
@@ -129,8 +127,7 @@ public class PatientReservationActivity extends AppCompatActivity {
                         }
                         reservationListAdapter.submitList(listReservation);
                         Collections.sort(listReservation);
-                        rvReservations.setItemViewCacheSize(listReservation.size());
-                        reservationListAdapter.notifyDataSetChanged();
+
                         dialog.dismiss();
                         mNumberOfItems.setText(" (" + listReservation.size() + ")");
 

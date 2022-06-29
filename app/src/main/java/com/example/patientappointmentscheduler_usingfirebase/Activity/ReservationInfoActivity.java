@@ -143,7 +143,7 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
         //get Calendar instance
         calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, Integer.parseInt(getYear));
-        calendar.set(Calendar.MONTH, Integer.parseInt(getMonth) - 1);
+        calendar.set(Calendar.MONTH, Integer.parseInt(getMonth)-1);
         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(getDay));
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(getHour));
         calendar.set(Calendar.MINUTE, Integer.parseInt(getMinutes));
@@ -181,7 +181,7 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
             public void onClick(DialogInterface dialog, int which) {
                 alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 
-                Intent intent = new Intent(ReservationInfoActivity.this, AlarmReceiver.class);
+                Intent intent = new Intent (ReservationInfoActivity.this, AlarmReceiver.class);
                 intent.putExtra("CATEGORY", category);
                 //different request code each time
                 //TODO request code
@@ -197,21 +197,21 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
                         snackbar.show();
                         Log.v("NOTIF", "SetSuccessNotification" + " request Code " + requestCode + " " + finalCurrentDateFormatted + " " + finalReservationTime);
                     } else if (finalCurrentDateFormatted.compareTo(finalReservationTime) == 0 || finalCurrentDateFormatted.compareTo(finalReservationTime) > 0) {
-                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Unable to set current/past Date and time", Snackbar.LENGTH_LONG);
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Unable to set current/past stringToDate and time", Snackbar.LENGTH_LONG);
                         snackbar.setTextColor(ContextCompat.getColor(ReservationInfoActivity.this, R.color.white));
                         snackbar.setBackgroundTint(ContextCompat.getColor(ReservationInfoActivity.this, R.color.crimson_red));
                         snackbar.show();
                         Log.v("NOTIF", "Could not set alarm on past dates");
                     }
-                } else {
-                    pendingIntent = PendingIntent.getBroadcast(ReservationInfoActivity.this, requestCode, intent, 0);
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-                    Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Notification Set Successfully!", Snackbar.LENGTH_SHORT);
-                    snackbar.setTextColor(ContextCompat.getColor(ReservationInfoActivity.this, R.color.white));
-                    snackbar.setBackgroundTint(ContextCompat.getColor(ReservationInfoActivity.this, R.color.lime_green));
-                    snackbar.show();
-                    Log.v("NOTIF", "SetSuccessNotificationNonAndroid12" + " request Code " + " " + requestCode + finalCurrentDateFormatted + " " + finalReservationTime);
-                }
+                }else {
+                        pendingIntent = PendingIntent.getBroadcast(ReservationInfoActivity.this, requestCode, intent, 0);
+                        alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content),"Notification Set Successfully!",Snackbar.LENGTH_SHORT);
+                        snackbar.setTextColor(ContextCompat.getColor(ReservationInfoActivity.this,R.color.white));
+                        snackbar.setBackgroundTint(ContextCompat.getColor(ReservationInfoActivity.this,R.color.lime_green));
+                        snackbar.show();
+                        Log.v("NOTIF", "SetSuccessNotificationNonAndroid12" + " request Code " + " " + requestCode + finalCurrentDateFormatted + " " + finalReservationTime);
+                    }
 
                 dialog.dismiss();
             }
@@ -365,7 +365,7 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
         AlertDialog.Builder builder = new AlertDialog.Builder(ReservationInfoActivity.this);
         builder.setCancelable(false);
         builder.setTitle("Confirmation");
-        builder.setMessage("Do you want to add this appointment to a Calendar?");
+        builder.setMessage("Do you want to add this appointment to Google Calendar?");
 
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.O)
@@ -381,7 +381,7 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
                 intent.putExtra(CalendarContract.Events.TITLE, CALENDAR_TITLE);
                 intent.putExtra(CalendarContract.Events.DESCRIPTION,
                         "Good day! \n" + getPatientsName + "," + "\n\nPlease be there on the clinic before your scheduled appointment.\n\nAppointment Details\n"
-                                + getCategoryName + "\n" + getDoctorsName + "\n" + getPatientsName + "\n" + getScheduleDateTime + "\n\nThank you, \nmyClinicPH Team");
+                                + getCategoryName + "\n" + getDoctorsName + "\n" + getPatientsName + "\n" + getScheduleDateTime +"\n\nThank you, \nmyClinicPH Team");
                 intent.putExtra(CalendarContract.Events.EVENT_LOCATION, CALENDAR_LOCATION);
                 intent.putExtra(CalendarContract.Events.ALL_DAY, false);
 
@@ -409,18 +409,18 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
 
                 //convert String to int all values from getScheduleDateTime
                 Calendar startTime = Calendar.getInstance();
-                startTime.set(Integer.parseInt(getYear), Integer.parseInt(getMonth) - 1, Integer.parseInt(getDay), Integer.parseInt(getHour), Integer.parseInt(getMinutes));
+                startTime.set(Integer.parseInt(getYear), Integer.parseInt(getMonth)-1, Integer.parseInt(getDay), Integer.parseInt(getHour), Integer.parseInt(getMinutes));
                 Calendar endTime = Calendar.getInstance();
-                endTime.set(Integer.parseInt(getYear), Integer.parseInt(getMonth) - 1, Integer.parseInt(getDay), Integer.parseInt(getHour) + 1, Integer.parseInt(getMinutes));
+                endTime.set(Integer.parseInt(getYear), Integer.parseInt(getMonth)-1, Integer.parseInt(getDay), Integer.parseInt(getHour)+1, Integer.parseInt(getMinutes));
 
                 intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, startTime.getTimeInMillis());
                 intent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis());
                 intent.putExtra(Intent.EXTRA_EMAIL, getCurrentUserEmail);
 
-                if (intent.resolveActivity(getPackageManager()) != null) {
+                if(intent.resolveActivity(getPackageManager()) != null){
                     startActivity(intent);
-                } else {
-                    Snackbar.make(findViewById(android.R.id.content), "Calendar application is not installed in your device", Snackbar.LENGTH_SHORT).show();
+                }else{
+                    Snackbar.make(findViewById(android.R.id.content),"Calendar application is not installed in your device",Snackbar.LENGTH_SHORT).show();
                 }
                 dialog.dismiss();
             }
@@ -450,12 +450,11 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
                 loginQuery.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot removeFromDB : dataSnapshot.getChildren()) {
+                        for (DataSnapshot removeFromDB: dataSnapshot.getChildren()) {
                             removeFromDB.getRef().removeValue();
                             removeReservationDialog().show();
                         }
                     }
-
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Log.e(ERROR, "onCancelled", databaseError.toException());
@@ -493,10 +492,10 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         Fragment fragment = fragmentManager.findFragmentById(R.id.frameLayoutUpdateReservation);
-        if (fragment != null) {
+        if(fragment!=null){
             fragmentTransaction.remove(fragment);
             fragmentTransaction.commit();
-        } else {
+        }else{
             super.onBackPressed();
             finish();
         }

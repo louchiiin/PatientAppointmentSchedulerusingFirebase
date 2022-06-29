@@ -44,7 +44,7 @@
     <string name="select_a_date">Select a date</string>
     <string name="select_time">Select Time</string>
     <string name="title_activity_update_reservation">UpdateReservationActivity</string>
-
+    <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
@@ -57,12 +57,4 @@
     <string name="your_reservations">Your Reservations</string>
     <string name="no_results_found">NO RESULTS \nFOUND</string>
     <string name="total_of_history">Total of history:</string>
-    <string name="already_have_an_account_click_here">Already have an account? Click here!</string>
-    <string name="register">Register</string>
-    <string name="confirm_password">Confirm Password</string>
-    <string name="enter_password">Enter Password</string>
-    <string name="enter_phone_number">Enter Phone number</string>
-    <string name="enter_email">Enter Email</string>
-    <string name="enter_last_name">Enter Last Name</string>
-    <string name="enter_first_name">Enter First Name</string>
 </resources>
