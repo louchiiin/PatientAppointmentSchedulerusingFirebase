@@ -51,11 +51,10 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
     private Button btnSubmit;
     private TextView tvDoctor, tvSchedulePatientsName;
     private Spinner spAppointmentCategory, spDoctors;
-
+    //test
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     Reservations reservations;
-    ////
     //date picker for visit
     private DatePickerDialog datePickerDialog;
     private Button dateOfAppointment;
