@@ -55,7 +55,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     Reservations reservations;
-    //test
+    //asdasdas
     //date picker for visit
     private DatePickerDialog datePickerDialog;
     private Button dateOfAppointment;
