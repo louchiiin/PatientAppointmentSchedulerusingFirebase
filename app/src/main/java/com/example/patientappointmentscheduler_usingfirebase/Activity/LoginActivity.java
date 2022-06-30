@@ -7,8 +7,11 @@ import androidx.core.content.ContextCompat;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -42,6 +45,16 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        checkNetworkConnection();
+        if (checkNetworkConnection()){
+            Log.d("LOUCHIN", "connection status=OK");
+        } else {
+            Log.d("LOUCHIN", "connection status=NO INTERNET");
+            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Check your internet connection!", Snackbar.LENGTH_SHORT);
+            snackbar.setTextColor(ContextCompat.getColor(LoginActivity.this, R.color.white));
+            snackbar.setBackgroundTint(ContextCompat.getColor(LoginActivity.this, R.color.black));
+            snackbar.show();
+        }
         animateLoading();
         //firebase
         mAuth = FirebaseAuth.getInstance();
@@ -53,6 +66,16 @@ public class LoginActivity extends AppCompatActivity {
         dialog = new ProgressDialog(LoginActivity.this);
         clickedLoginButton();
         clickLinkToRegister();
+    }
+
+    private boolean checkNetworkConnection() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
+                || connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void animateLoading() {

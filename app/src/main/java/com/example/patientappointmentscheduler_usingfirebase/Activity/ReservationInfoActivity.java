@@ -298,7 +298,7 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
     private void displayUpdateReservation(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayoutUpdateReservation, fragment);
+        fragmentTransaction.replace(R.id.layout_update_reservation_modal, fragment);
         fragmentTransaction.commit();
     }
 
@@ -492,7 +492,7 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
     public void onBackPressed() {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        Fragment fragment = fragmentManager.findFragmentById(R.id.frameLayoutUpdateReservation);
+        Fragment fragment = fragmentManager.findFragmentById(R.id.layout_update_reservation_modal);
         if (fragment != null) {
             fragmentTransaction.remove(fragment);
             fragmentTransaction.commit();

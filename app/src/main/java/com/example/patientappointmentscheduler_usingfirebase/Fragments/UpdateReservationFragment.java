@@ -293,8 +293,7 @@ public class UpdateReservationFragment extends Fragment implements AdapterView.O
                     categories.add(categoryName);
                 }
 
-                ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getActivity(),
-                        R.layout.color_spinner_layout, categories);
+                ArrayAdapter<String> categoryAdapter = new ArrayAdapter<String>(getActivity(), R.layout.color_spinner_layout, categories);
                 categoryAdapter.setDropDownViewResource(R.layout.spinner_dropdown_layout);
                 spAppointmentCategory.setAdapter(categoryAdapter);
 

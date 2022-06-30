@@ -4,19 +4,24 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +37,7 @@ import com.example.patientappointmentscheduler_usingfirebase.Fragments.BottomApp
 import com.example.patientappointmentscheduler_usingfirebase.R;
 import com.example.patientappointmentscheduler_usingfirebase.model.NewsApiResponse;
 import com.example.patientappointmentscheduler_usingfirebase.model.NewsHeadlines;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -51,49 +57,81 @@ public class MainActivity extends AppCompatActivity implements SelectListener, V
     private RecyclerView recyclerView;
     private CustomAdapter customAdapter;
     private SearchView searchView;
+    private SwipeRefreshLayout mSwipeRefreshMain;
 
-    public static String FACEBOOK_URL = "https://www.facebook.com/FortyDegreesCelsiusInc";
-    public static String FACEBOOK_PAGE_ID = "FortyDegreesCelsiusInc";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        checkNetworkConnection();
+        if (checkNetworkConnection()){
+            Log.d("LOUCHIN", "connection status=OK");
+            animateLoading();
+            mSwipeRefreshMain = findViewById(R.id.main_swipe_refresh);
+            searchView = findViewById(R.id.search_news);
+            /*mBusinessButton = findViewById(R.id.btnBusiness);
+            mEntertainmentButton = findViewById(R.id.btnEntertainment);
+            mGeneralButton = findViewById(R.id.btnGeneral);*/
+            mHealthRefresh = findViewById(R.id.refresh_health_news);
+            /*mScienceButton = findViewById(R.id.btnScience);
+            mSportsButton = findViewById(R.id.btnSports);
+            mTechnologyButton = findViewById(R.id.btnTechnology);*/
 
-        animateLoading();
-        searchView = findViewById(R.id.search_news);
+            /*mBusinessButton.setOnClickListener(this);
+            mEntertainmentButton.setOnClickListener(this);
+            mGeneralButton.setOnClickListener(this);*/
+            mHealthRefresh.setOnClickListener(this);
+            /*mScienceButton.setOnClickListener(this);
+            mSportsButton.setOnClickListener(this);
+            mTechnologyButton.setOnClickListener(this);*/
+            loadValues();
 
-        /*mBusinessButton = findViewById(R.id.btnBusiness);
-        mEntertainmentButton = findViewById(R.id.btnEntertainment);
-        mGeneralButton = findViewById(R.id.btnGeneral);*/
-        mHealthRefresh = findViewById(R.id.refresh_health_news);
-        /*mScienceButton = findViewById(R.id.btnScience);
-        mSportsButton = findViewById(R.id.btnSports);
-        mTechnologyButton = findViewById(R.id.btnTechnology);*/
+            mSwipeRefreshMain.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                @Override
+                public void onRefresh() {
+                    checkNetworkConnection();
+                    loadValues();
+                    mSwipeRefreshMain.setRefreshing(false);
+                }
+            });
 
-        /*mBusinessButton.setOnClickListener(this);
-        mEntertainmentButton.setOnClickListener(this);
-        mGeneralButton.setOnClickListener(this);*/
-        mHealthRefresh.setOnClickListener(this);
-        /*mScienceButton.setOnClickListener(this);
-        mSportsButton.setOnClickListener(this);
-        mTechnologyButton.setOnClickListener(this);*/
+            displayBottomNavBar(new BottomAppNavBarFragment(this));
+            clickEmailButton();
+            clickWebButton();
+            clickPhoneButton();
+            clickFacebookButton();
+        } else {
+            newsDialog.dismiss();
+            dialog.dismiss();
+            Log.d("LOUCHIN", "connection status=NO INTERNET");
+            Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Check your internet connection!", Snackbar.LENGTH_SHORT);
+            snackbar.setTextColor(ContextCompat.getColor(MainActivity.this, R.color.white));
+            snackbar.setBackgroundTint(ContextCompat.getColor(MainActivity.this, R.color.black));
+            snackbar.show();
+        }
 
-        //progress dialog bar
-        dialog = new ProgressDialog(this);
+    }
+
+    private void loadValues() {
+        dialog = new ProgressDialog(MainActivity.this);
         loadProfileDialog();
-        newsDialog = new ProgressDialog(this);
+        newsDialog = new ProgressDialog(MainActivity.this);
         loadNewsDialog();
-
         searchNews();
         profileInfo();
-        displayBottomNavBar(new BottomAppNavBarFragment(this));
-        clickEmailButton();
-        clickWebButton();
-        clickPhoneButton();
-        clickFacebookButton();
         //health news listener
         RequestManager manager = new RequestManager(MainActivity.this);
         manager.getNewsHeadLines(listener, "health", null);
+    }
+
+    private boolean checkNetworkConnection() {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED
+                || connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     private void animateLoading() {
