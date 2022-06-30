@@ -148,7 +148,7 @@ public class ReservationInfoActivity extends AppCompatActivity implements CloseM
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(getHour));
         calendar.set(Calendar.MINUTE, Integer.parseInt(getMinutes));
 
-        String formattedTime = String.format(Locale.getDefault(), "%02d:%02d", Integer.parseInt(getHour), Integer.parseInt(getMinutes));
+        //String formattedTime = String.format(Locale.getDefault(), "%02d:%02d", Integer.parseInt(getHour), Integer.parseInt(getMinutes));
         //String checkTimeSet = getMonth + "-" + getDay + "-" + getYear + " " + formattedTime;
 
         DateFormat alarmFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm", Locale.getDefault());

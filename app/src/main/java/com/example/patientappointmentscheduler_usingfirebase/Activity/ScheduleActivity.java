@@ -13,10 +13,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +23,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -107,14 +104,14 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
     private void displayTopNavBar(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.scheduleTopNav, fragment);
+        fragmentTransaction.replace(R.id.schedule_top_nav, fragment);
         fragmentTransaction.commit();
     }
 
     private void displayBottomNavBar(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.frameLayoutScheduleBottomAppNavBar, fragment);
+        fragmentTransaction.replace(R.id.layout_schedule_bottom_app_navbar, fragment);
         fragmentTransaction.commit();
     }
 
@@ -128,7 +125,7 @@ public class ScheduleActivity extends AppCompatActivity implements AdapterView.O
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String firstName = snapshot.child("firstName").getValue(String.class);
                 String lastName = snapshot.child("lastName").getValue(String.class);
-                tvSchedulePatientsName = findViewById(R.id.tvSchedulePatientsName);
+                tvSchedulePatientsName = findViewById(R.id.schedule_patients_name);
                 tvSchedulePatientsName.setText(firstName + " " + lastName);
             }
 

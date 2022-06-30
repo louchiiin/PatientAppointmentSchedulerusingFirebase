@@ -38,8 +38,8 @@ public class TopNavBarFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_top_nav_bar, container, false);
 
-        tvBack = view.findViewById(R.id.tvBack);
-        tvTopNavTitle = view.findViewById(R.id.tvTopNavTitle);
+        tvBack = view.findViewById(R.id.back_top_nav);
+        tvTopNavTitle = view.findViewById(R.id.top_nav_title);
         tvTopNavTitle.setText(navBarTitle);
 
         finishActivity();

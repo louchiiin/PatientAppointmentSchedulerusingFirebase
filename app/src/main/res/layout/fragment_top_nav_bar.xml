@@ -18,7 +18,7 @@
             android:background="@drawable/custom_border_shadow_bottom">
 
             <TextView
-                android:id="@+id/tvBack"
+                android:id="@+id/back_top_nav"
                 android:layout_width="0dp"
                 android:layout_height="70dp"
                 android:layout_weight="0.2"
@@ -28,7 +28,7 @@
                 app:drawableEndCompat="@drawable/nav_bar_back_2" />
 
             <TextView
-                android:id="@+id/tvTopNavTitle"
+                android:id="@+id/top_nav_title"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"

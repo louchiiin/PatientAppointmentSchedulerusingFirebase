@@ -94,20 +94,20 @@ public class UpdateReservationFragment extends Fragment implements AdapterView.O
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_update_reservation, container, false);
 
-        spAppointmentCategory = view.findViewById(R.id.spUpdateCategory);
+        spAppointmentCategory = view.findViewById(R.id.update_category);
         spAppointmentCategory.setOnItemSelectedListener(this);
 
-        spDoctors = view.findViewById(R.id.spUpdateDoctorsName);
-        tvUpdateDoctorsName = view.findViewById(R.id.tvUpdateDoctorsName);
+        spDoctors = view.findViewById(R.id.update_doctors_name);
+        tvUpdateDoctorsName = view.findViewById(R.id.doctors_name);
 
         //date picker
-        dateOfAppointment = view.findViewById(R.id.btnUpdateAppointmentDate);
+        dateOfAppointment = view.findViewById(R.id.update_appointment_date);
 
         //time picker
-        timeOfAppointment = view.findViewById(R.id.btnUpdateAppointmentTime);
-        mCloseButton = view.findViewById(R.id.ivCloseButton);
-        mUpdateCancelButton = view.findViewById(R.id.btnUpdateCancel);
-        mUpdateReservationButton = view.findViewById(R.id.btnUpdateSave);
+        timeOfAppointment = view.findViewById(R.id.update_appointment_time);
+        mCloseButton = view.findViewById(R.id.close_button);
+        mUpdateCancelButton = view.findViewById(R.id.update_cancel);
+        mUpdateReservationButton = view.findViewById(R.id.update_save);
 
         getBundles();
         selectDate();

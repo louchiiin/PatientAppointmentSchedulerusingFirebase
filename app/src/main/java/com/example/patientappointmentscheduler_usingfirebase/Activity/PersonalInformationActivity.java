@@ -53,13 +53,13 @@ public class PersonalInformationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_personal_information);
         animateLoading();
 
-        etUpdateFirstName = findViewById(R.id.etUpdateFirstName);
-        etUpdateLastName = findViewById(R.id.etUpdateLastName);
-        etUpdatePhone = findViewById(R.id.etUpdatePhone);
+        etUpdateFirstName = findViewById(R.id.update_first_name);
+        etUpdateLastName = findViewById(R.id.update_last_name);
+        etUpdatePhone = findViewById(R.id.update_phone);
         //initialize
-        layoutSave = findViewById(R.id.layoutSave);
-        layoutUpdate = findViewById(R.id.layoutUpdate);
-        btnChangeEmail = findViewById(R.id.btnChangeEmail);
+        layoutSave = findViewById(R.id.layout_save);
+        layoutUpdate = findViewById(R.id.layout_update);
+        btnChangeEmail = findViewById(R.id.change_email_button);
 
         displayTopNavBar(new TopNavBarFragment("Personal Information", this));
         displayBottomNavBar(new BottomAppNavBarFragment(this));

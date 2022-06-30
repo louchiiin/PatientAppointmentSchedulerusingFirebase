@@ -50,7 +50,7 @@
                 android:layout_marginTop="20dp"/>
 
             <Spinner
-                android:id="@+id/spUpdateCategory"
+                android:id="@+id/update_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ubuntu_bold"
@@ -59,7 +59,7 @@
 
             <TextView
                 android:visibility="gone"
-                android:id="@+id/tvUpdateDoctorsName"
+                android:id="@+id/doctors_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ubuntu_bold"
@@ -69,7 +69,7 @@
 
             <Spinner
                 android:visibility="gone"
-                android:id="@+id/spUpdateDoctorsName"
+                android:id="@+id/update_doctors_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/ubuntu_bold"
@@ -97,7 +97,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/btnUpdateAppointmentDate"
+                    android:id="@+id/update_appointment_date"
                     style="?android:spinnerStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -109,7 +109,7 @@
                     android:textColor="@color/black" />
 
                 <Button
-                    android:id="@+id/btnUpdateAppointmentTime"
+                    android:id="@+id/update_appointment_time"
                     style="?android:spinnerStyle"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -126,7 +126,7 @@
                 android:orientation="horizontal"
                 android:layout_marginTop="20dp">
                 <Button
-                    android:id="@+id/btnUpdateCancel"
+                    android:id="@+id/update_cancel"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -136,7 +136,7 @@
                     android:layout_margin="5dp"
                     android:backgroundTint="@color/blue_green"/>
                 <Button
-                    android:id="@+id/btnUpdateSave"
+                    android:id="@+id/update_save"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -151,7 +151,7 @@
     </androidx.cardview.widget.CardView>
 
     <ImageView
-        android:id="@+id/ivCloseButton"
+        android:id="@+id/close_button"
         android:layout_width="45dp"
         android:layout_height="55dp"
         android:layout_alignParentEnd="true"

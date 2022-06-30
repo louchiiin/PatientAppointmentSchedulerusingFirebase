@@ -46,14 +46,14 @@
 
                     <TextView
                         android:fontFamily="@font/ubuntu_bold"
-                        android:id="@+id/tvNewsDetailsTitle"
+                        android:id="@+id/news_detail_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/black"
                         android:textSize="22sp"/>
 
                     <ImageView
-                        android:id="@+id/ivDetailNewsImg"
+                        android:id="@+id/details_news_image"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
                         android:layout_margin="6dp"
@@ -62,7 +62,7 @@
 
                     <TextView
                         android:fontFamily="@font/ubuntu_bold"
-                        android:id="@+id/tvNewsAuthor"
+                        android:id="@+id/news_author"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
@@ -72,7 +72,7 @@
 
                     <TextView
                         android:fontFamily="@font/ubuntu_regular"
-                        android:id="@+id/tvNewsTime"
+                        android:id="@+id/news_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="6dp"
@@ -84,7 +84,7 @@
 
             <TextView
                 android:fontFamily="@font/ubuntu_regular"
-                android:id="@+id/tvNewsDetails"
+                android:id="@+id/news_detail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -94,7 +94,7 @@
 
             <TextView
                 android:fontFamily="@font/ubuntu_regular"
-                android:id="@+id/tvNewsContent"
+                android:id="@+id/news_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"

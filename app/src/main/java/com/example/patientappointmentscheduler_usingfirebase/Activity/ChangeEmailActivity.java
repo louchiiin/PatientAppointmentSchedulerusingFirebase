@@ -43,15 +43,15 @@ public class ChangeEmailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change_email);
         animateLoading();
         //initialize
-        mAuthEmail = findViewById(R.id.etAuthEmail);
-        mAuthPassword = findViewById(R.id.etAuthPassword);
-        mChangeEmail = findViewById(R.id.etChangeEmail);
+        mAuthEmail = findViewById(R.id.auth_email);
+        mAuthPassword = findViewById(R.id.auth_password);
+        mChangeEmail = findViewById(R.id.change_email);
         mChangePassword = findViewById(R.id.change_password);
 
-        mAuthenticateBtn = findViewById(R.id.btnAuthenticate);
+        mAuthenticateBtn = findViewById(R.id.authenticate_button);
         mChangeEmailPassword = findViewById(R.id.change_email_pass);
 
-        changeEmailLayout = findViewById(R.id.changeEmailLayout);
+        changeEmailLayout = findViewById(R.id.change_email_layout);
 
         dialog = new ProgressDialog(ChangeEmailActivity.this);
         String currentUserEmail = FirebaseAuth.getInstance().getCurrentUser().getEmail();

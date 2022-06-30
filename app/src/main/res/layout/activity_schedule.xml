@@ -10,7 +10,7 @@
     android:fontFamily="">
 
     <FrameLayout
-        android:id="@+id/scheduleTopNav"
+        android:id="@+id/schedule_top_nav"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="@+id/topScheduleGuideLine"
@@ -27,7 +27,7 @@
         app:layout_constraintBottom_toTopOf="@+id/botScheduleGuideLine"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scheduleTopNav"
+        app:layout_constraintTop_toBottomOf="@+id/schedule_top_nav"
         app:layout_constraintVertical_bias="0.0">
 
         <LinearLayout
@@ -41,7 +41,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scheduleTopNav"
+            app:layout_constraintTop_toBottomOf="@+id/schedule_top_nav"
             app:layout_constraintVertical_bias="0.0">
 
             <TextView
@@ -53,7 +53,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/tvSchedulePatientsName"
+                android:id="@+id/schedule_patients_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
@@ -156,10 +156,10 @@
         app:layout_constraintBottom_toBottomOf="@+id/scheduleScrollView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/scheduleScrollView"
-        app:layout_constraintTop_toBottomOf="@+id/scheduleTopNav"/>
+        app:layout_constraintTop_toBottomOf="@+id/schedule_top_nav"/>
 
     <FrameLayout
-        android:id="@+id/frameLayoutScheduleBottomAppNavBar"
+        android:id="@+id/layout_schedule_bottom_app_navbar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

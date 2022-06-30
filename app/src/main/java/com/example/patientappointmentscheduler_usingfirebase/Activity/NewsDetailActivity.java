@@ -25,12 +25,12 @@ public class NewsDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_detail);
         //initialize
-        tvNewsDetailsTitle = findViewById(R.id.tvNewsDetailsTitle);
-        tvNewsAuthor = findViewById(R.id.tvNewsAuthor);
-        tvNewsTime = findViewById(R.id.tvNewsTime);
-        tvNewsDetails = findViewById(R.id.tvNewsDetails);
-        tvNewsContent = findViewById(R.id.tvNewsContent);
-        ivDetailNewsImg = findViewById(R.id.ivDetailNewsImg);
+        tvNewsDetailsTitle = findViewById(R.id.news_detail_title);
+        tvNewsAuthor = findViewById(R.id.news_author);
+        tvNewsTime = findViewById(R.id.news_time);
+        tvNewsDetails = findViewById(R.id.news_detail);
+        tvNewsContent = findViewById(R.id.news_content);
+        ivDetailNewsImg = findViewById(R.id.details_news_image);
 
         headlines = (NewsHeadlines) getIntent().getSerializableExtra("data");
         tvNewsDetailsTitle.setText(headlines.getTitle());

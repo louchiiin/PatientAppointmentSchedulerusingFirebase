@@ -36,7 +36,7 @@
             android:layout_height="wrap_content"
             android:text="@string/email_disabled"/>
         <EditText
-            android:id="@+id/etAuthEmail"
+            android:id="@+id/auth_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/authentication_email"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:text="@string/password_authentication"/>
         <EditText
-            android:id="@+id/etAuthPassword"
+            android:id="@+id/auth_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/authentication_password"
@@ -63,7 +63,7 @@
             android:maxLines="1"
             android:imeOptions="actionDone"/>
         <Button
-            android:id="@+id/btnAuthenticate"
+            android:id="@+id/authenticate_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/blue_green"
@@ -73,7 +73,7 @@
 
     <LinearLayout
         android:visibility="gone"
-        android:id="@+id/changeEmailLayout"
+        android:id="@+id/change_email_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -94,7 +94,7 @@
             android:text="@string/please_enter_new_email"/>
 
         <EditText
-            android:id="@+id/etChangeEmail"
+            android:id="@+id/change_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/custom_input"

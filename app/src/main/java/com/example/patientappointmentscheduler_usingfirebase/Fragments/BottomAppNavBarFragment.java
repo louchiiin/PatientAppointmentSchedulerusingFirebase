@@ -51,7 +51,7 @@ public class BottomAppNavBarFragment extends Fragment {
     }
 
     private void clickHome() {
-        btnHome = view.findViewById(R.id.btnHome);
+        btnHome = view.findViewById(R.id.bottom_home);
         btnHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,7 +62,7 @@ public class BottomAppNavBarFragment extends Fragment {
     }
 
     private void clickView() {
-        btnView = view.findViewById(R.id.btnViewPersonalInfo);
+        btnView = view.findViewById(R.id.bottom_personal_info);
         btnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,7 +73,7 @@ public class BottomAppNavBarFragment extends Fragment {
     }
 
     private void clickReservationsButton() {
-        btnReservation = view.findViewById(R.id.btnReservation);
+        btnReservation = view.findViewById(R.id.bottom_reservation);
         btnReservation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,7 +84,7 @@ public class BottomAppNavBarFragment extends Fragment {
     }
 
     private void clickScheduleButton() {
-        btnSchedule = view.findViewById(R.id.btnSchedule);
+        btnSchedule = view.findViewById(R.id.bottom_schedule);
         btnSchedule.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +95,7 @@ public class BottomAppNavBarFragment extends Fragment {
     }
 
     private void clickLogoutButton() {
-        btnLogout = view.findViewById(R.id.btnLogout);
+        btnLogout = view.findViewById(R.id.bottom_logout);
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
